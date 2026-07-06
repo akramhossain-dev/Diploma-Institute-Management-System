@@ -28,6 +28,12 @@ import teacherAssignmentRoutes from "../modules/teacherAssignments/teacherAssign
 import classRoutineRoutes      from "../modules/classRoutines/classRoutine.routes.js";
 import attendanceRoutes        from "../modules/attendance/attendance.routes.js";
 
+// ── Phase 7: Examination & result modules ────────────────────────────────────────────────────────
+import examRoutes               from "../modules/exams/exam.routes.js";
+import examCourseMappingRoutes  from "../modules/examCourseMappings/examCourseMapping.routes.js";
+import markRoutes               from "../modules/marks/mark.routes.js";
+import resultRoutes             from "../modules/results/result.routes.js";
+
 /**
  * Root API Router — mounts all module routers under /api
  *
@@ -95,9 +101,13 @@ router.use("/teacher-assignments", teacherAssignmentRoutes);
 router.use("/class-routines",      classRoutineRoutes);
 router.use("/attendance",          attendanceRoutes);
 
-// ── Phase 7+ (to be mounted in future phases) ─────────────────────────────
-// router.use("/exams",       examRoutes);
-// router.use("/results",     resultRoutes);
+// ── Phase 7: Examination & Result Processing ──────────────────────────────
+router.use("/exams",                examRoutes);
+router.use("/exam-course-mappings", examCourseMappingRoutes);
+router.use("/marks",                markRoutes);
+router.use("/results",              resultRoutes);
+
+// ── Phase 8+ (to be mounted in future phases) ─────────────────────────────
 // router.use("/fees",        feeRoutes);
 // router.use("/dashboard",   dashboardRoutes);
 // router.use("/upload",      uploadRoutes);
