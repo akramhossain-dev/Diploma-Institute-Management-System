@@ -18,6 +18,11 @@ import studentRoutes     from "../modules/students/student.routes.js";
 import teacherRoutes     from "../modules/teachers/teacher.routes.js";
 import accountantRoutes  from "../modules/accountants/accountant.routes.js";
 
+// ── Phase 5: Communication & setup modules ────────────────────────────────────────────────────────
+import admissionRoutes         from "../modules/admissions/admission.routes.js";
+import noticeRoutes            from "../modules/notices/notice.routes.js";
+import instituteSettingsRoutes from "../modules/institute/institute.routes.js";
+
 /**
  * Root API Router — mounts all module routers under /api
  *
@@ -75,13 +80,15 @@ router.use("/students",    studentRoutes);
 router.use("/teachers",    teacherRoutes);
 router.use("/accountants", accountantRoutes);
 
-// ── Phase 5+ (to be mounted in future phases) ─────────────────────────────
+// ── Phase 5: Communication & Setup ────────────────────────────────────────
+router.use("/admissions",        admissionRoutes);
+router.use("/notices",           noticeRoutes);
+router.use("/institute-settings", instituteSettingsRoutes);
+
+// ── Phase 6+ (to be mounted in future phases) ─────────────────────────────
 // router.use("/attendance",  attendanceRoutes);
 // router.use("/results",     resultRoutes);
 // router.use("/fees",        feeRoutes);
-// router.use("/notices",     noticeRoutes);
-// router.use("/admissions",  admissionRoutes);
-// router.use("/institute",   instituteRoutes);
 // router.use("/dashboard",   dashboardRoutes);
 // router.use("/upload",      uploadRoutes);
 
