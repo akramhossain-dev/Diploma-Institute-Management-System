@@ -34,6 +34,11 @@ import examCourseMappingRoutes  from "../modules/examCourseMappings/examCourseMa
 import markRoutes               from "../modules/marks/mark.routes.js";
 import resultRoutes             from "../modules/results/result.routes.js";
 
+// ── Phase 8: Finance modules ────────────────────────────────────────────────────────
+import feeStructureRoutes          from "../modules/feeStructures/feeStructure.routes.js";
+import studentFeeAssignmentRoutes  from "../modules/studentFeeAssignments/studentFeeAssignment.routes.js";
+import paymentRoutes               from "../modules/payments/payment.routes.js";
+
 /**
  * Root API Router — mounts all module routers under /api
  *
@@ -107,9 +112,14 @@ router.use("/exam-course-mappings", examCourseMappingRoutes);
 router.use("/marks",                markRoutes);
 router.use("/results",              resultRoutes);
 
-// ── Phase 8+ (to be mounted in future phases) ─────────────────────────────
-// router.use("/fees",        feeRoutes);
-// router.use("/dashboard",   dashboardRoutes);
-// router.use("/upload",      uploadRoutes);
+// ── Phase 8: Finance ────────────────────────────────────────────────────────
+router.use("/fee-structures",          feeStructureRoutes);
+router.use("/student-fee-assignments", studentFeeAssignmentRoutes);
+router.use("/payments",               paymentRoutes);
+
+// ── Phase 9+ (to be mounted in future phases) ─────────────────────────────
+// router.use("/dashboard",  dashboardRoutes);
+// router.use("/reports",    reportRoutes);
+// router.use("/upload",     uploadRoutes);
 
 export default router;
