@@ -1,32 +1,90 @@
 import mongoose from "mongoose";
 
+const { ObjectId } = mongoose.Schema.Types;
+
+const addressSchema = new mongoose.Schema(
+  {
+    village:  { type: String, trim: true },
+    district: { type: String, trim: true },
+    division: { type: String, trim: true },
+    postCode: { type: String, trim: true },
+  },
+  { _id: false }
+);
+
+const emergencyContactSchema = new mongoose.Schema(
+  {
+    name:         { type: String, trim: true },
+    phone:        { type: String, trim: true },
+    relationship: { type: String, trim: true },
+  },
+  { _id: false }
+);
+
 /**
- * Teacher entity profile collection.
+ * Teacher — entity profile collection.
+ * Auth credentials live in teacher_auth (Phase 2).
  */
 const teacherSchema = new mongoose.Schema(
   {
-    employeeId:     { type: String, unique: true, trim: true },        // e.g. TCH-2024-001
-    fullName:       { type: String, required: true, trim: true },
-    email:          { type: String, required: true, lowercase: true, trim: true },
-    phone:          { type: String, trim: true },
-    photo:          { type: String, default: null },
-    designation:    { type: String, trim: true },                      // Lecturer, HOD, etc.
-    qualification:  { type: String, trim: true },
-    specialization: { type: String, trim: true },
-    departmentId:   { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
-    assignedCourses:[{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
-    joiningDate:    { type: Date },
+    // ── Identity ──────────────────────────────────────────────────────────
+    employeeId: {
+      type: String, unique: true, trim: true,    // e.g. TCH-2024-001
+    },
+    fullName: {
+      type: String, required: [true, "Full name is required"], trim: true,
+    },
+    email: {
+      type: String, required: [true, "Email is required"], lowercase: true, trim: true,
+    },
+    phone:       { type: String, trim: true, default: null },
+    photo:       { type: String, default: null },
+    gender:      { type: String, enum: ["Male", "Female", "Other"] },
+    dateOfBirth: { type: Date, default: null },
+    bloodGroup: {
+      type: String,
+      enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", null],
+      default: null,
+    },
+
+    // ── Professional ──────────────────────────────────────────────────────
+    departmentId: {
+      type: ObjectId, ref: "Department", required: [true, "Department is required"],
+    },
+    designation:    { type: String, trim: true },           // Lecturer, Sr. Lecturer, HOD
+    qualification:  { type: String, trim: true },           // B.Sc, M.Sc, PhD
+    specialization: { type: String, trim: true, default: null },
+    joiningDate:    { type: Date, default: null },
+
+    // Future-ready: courses assigned to this teacher
+    assignedCourses: [{ type: ObjectId, ref: "Course" }],
+
+    // ── Address / Contact ─────────────────────────────────────────────────
+    presentAddress:   { type: addressSchema, default: null },
+    permanentAddress: { type: addressSchema, default: null },
+    emergencyContact: { type: emergencyContactSchema, default: null },
+
+    // ── System ────────────────────────────────────────────────────────────
+    linkedAuthId: {
+      type: ObjectId, ref: "TeacherAuth", default: null,
+    },
+    createdByAdminId: {
+      type: ObjectId, ref: "Admin", default: null,
+    },
+    notes:  { type: String, trim: true, default: null },
     status: {
       type: String,
-      enum: ["active", "on_leave", "resigned"],
+      enum: ["active", "inactive", "on_leave", "resigned"],
       default: "active",
     },
   },
   { timestamps: true }
 );
 
-teacherSchema.index({ employeeId: 1 }, { unique: true, sparse: true });
+teacherSchema.index({ employeeId:   1 }, { unique: true, sparse: true });
+teacherSchema.index({ email:        1 });
 teacherSchema.index({ departmentId: 1 });
+teacherSchema.index({ status:       1 });
 
 const Teacher = mongoose.model("Teacher", teacherSchema);
 export default Teacher;

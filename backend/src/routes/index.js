@@ -13,6 +13,11 @@ import semesterRoutes        from "../modules/semesters/semester.routes.js";
 import academicSessionRoutes from "../modules/academicSessions/academicSession.routes.js";
 import courseRoutes          from "../modules/courses/course.routes.js";
 
+// ── Phase 4: Core people modules ─────────────────────────────────────────
+import studentRoutes     from "../modules/students/student.routes.js";
+import teacherRoutes     from "../modules/teachers/teacher.routes.js";
+import accountantRoutes  from "../modules/accountants/accountant.routes.js";
+
 /**
  * Root API Router — mounts all module routers under /api
  *
@@ -37,7 +42,7 @@ const router = Router();
 router.get("/", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "DIMS API v1.0 — Phase 3 Core Structure Active",
+    message: "DIMS API v1.0 — Phase 4 People Modules Active",
     endpoints: {
       auth:             "/api/auth/{student|teacher|accountant|admin}",
       admins:           "/api/admins",
@@ -45,6 +50,9 @@ router.get("/", (req, res) => {
       semesters:        "/api/semesters",
       academicSessions: "/api/academic-sessions",
       courses:          "/api/courses",
+      students:         "/api/students",
+      teachers:         "/api/teachers",
+      accountants:      "/api/accountants",
     },
   });
 });
@@ -62,10 +70,12 @@ router.use("/semesters",         semesterRoutes);
 router.use("/academic-sessions", academicSessionRoutes);
 router.use("/courses",           courseRoutes);
 
-// ── Phase 4+ (to be mounted in future phases) ─────────────────────────────
-// router.use("/students",    studentRoutes);
-// router.use("/teachers",    teacherRoutes);
-// router.use("/batches",     batchRoutes);
+// ── Phase 4: Core People Modules ──────────────────────────────────────────
+router.use("/students",    studentRoutes);
+router.use("/teachers",    teacherRoutes);
+router.use("/accountants", accountantRoutes);
+
+// ── Phase 5+ (to be mounted in future phases) ─────────────────────────────
 // router.use("/attendance",  attendanceRoutes);
 // router.use("/results",     resultRoutes);
 // router.use("/fees",        feeRoutes);
