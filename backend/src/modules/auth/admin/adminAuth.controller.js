@@ -1,5 +1,10 @@
+import { createAuthController } from "../shared/createAuthController.js";
+import adminAuthService from "./adminAuth.service.js";
+
 /**
- * AdminAuth Controller
- * TODO: Implement auth handlers in Phase 2
+ * Admin auth controller — all handlers built from shared factory.
+ * Extend with Admin-specific handlers here if needed.
  */
-export const adminAuthController = {};
+const adminAuthController = createAuthController(adminAuthService);
+
+export default adminAuthController;

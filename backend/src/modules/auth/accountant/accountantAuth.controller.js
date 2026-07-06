@@ -1,5 +1,10 @@
+import { createAuthController } from "../shared/createAuthController.js";
+import accountantAuthService from "./accountantAuth.service.js";
+
 /**
- * AccountantAuth Controller
- * TODO: Implement auth handlers in Phase 2
+ * Accountant auth controller — all handlers built from shared factory.
+ * Extend with Accountant-specific handlers here if needed.
  */
-export const accountantAuthController = {};
+const accountantAuthController = createAuthController(accountantAuthService);
+
+export default accountantAuthController;

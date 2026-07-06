@@ -1,16 +1,40 @@
 import mongoose from "mongoose";
 
 /**
- * AdminAuth Model
- * TODO: Define auth schema in Phase 2
+ * AdminAuth — authentication credentials for admins.
+ * Linked to the admins collection via adminId.
  */
-const adminAuthSchema = new mongoose.Schema({
-  email:       { type: String },
-  passwordHash:{ type: String, select: false },
-  adminId: { type: mongoose.Schema.Types.ObjectId, ref: "Admin" },
-  isActive:    { type: Boolean, default: true },
-  refreshToken:{ type: String, select: false },
-}, { timestamps: true });
+const adminAuthSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    passwordHash: {
+      type: String,
+      required: true,
+      select: false,
+    },
+    adminId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin",
+      required: true,
+      unique: true,
+    },
+    isActive:           { type: Boolean, default: true },
+    mustChangePassword: { type: Boolean, default: false },
+    refreshToken:       { type: String, default: null, select: false },
+    lastLoginAt:        { type: Date, default: null },
+    passwordChangedAt:  { type: Date, default: null },
+  },
+  { timestamps: true }
+);
+
+adminAuthSchema.index({ email: 1 }, { unique: true });
+adminAuthSchema.index({ adminId: 1 }, { unique: true });
 
 const AdminAuth = mongoose.model("AdminAuth", adminAuthSchema);
 export default AdminAuth;

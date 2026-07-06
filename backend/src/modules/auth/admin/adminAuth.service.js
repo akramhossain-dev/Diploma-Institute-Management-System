@@ -1,5 +1,12 @@
-/**
- * AdminAuth Service
- * TODO: Implement login, refresh, logout logic in Phase 2
- */
-export const adminAuthService = {};
+import { createAuthService } from "../shared/createAuthService.js";
+import AdminAuth from "./adminAuth.model.js";
+import Admin from "../../admins/admin.model.js";
+
+const adminAuthService = createAuthService({
+  AuthModel: AdminAuth,
+  EntityModel: Admin,
+  entityIdField: "adminId",
+  entityType: "admin",
+});
+
+export default adminAuthService;
