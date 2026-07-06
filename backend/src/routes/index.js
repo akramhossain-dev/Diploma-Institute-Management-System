@@ -23,6 +23,11 @@ import admissionRoutes         from "../modules/admissions/admission.routes.js";
 import noticeRoutes            from "../modules/notices/notice.routes.js";
 import instituteSettingsRoutes from "../modules/institute/institute.routes.js";
 
+// ── Phase 6: Academic operations modules ────────────────────────────────────────────────────────
+import teacherAssignmentRoutes from "../modules/teacherAssignments/teacherAssignment.routes.js";
+import classRoutineRoutes      from "../modules/classRoutines/classRoutine.routes.js";
+import attendanceRoutes        from "../modules/attendance/attendance.routes.js";
+
 /**
  * Root API Router — mounts all module routers under /api
  *
@@ -85,8 +90,13 @@ router.use("/admissions",        admissionRoutes);
 router.use("/notices",           noticeRoutes);
 router.use("/institute-settings", instituteSettingsRoutes);
 
-// ── Phase 6+ (to be mounted in future phases) ─────────────────────────────
-// router.use("/attendance",  attendanceRoutes);
+// ── Phase 6: Academic Operations ──────────────────────────────────────────
+router.use("/teacher-assignments", teacherAssignmentRoutes);
+router.use("/class-routines",      classRoutineRoutes);
+router.use("/attendance",          attendanceRoutes);
+
+// ── Phase 7+ (to be mounted in future phases) ─────────────────────────────
+// router.use("/exams",       examRoutes);
 // router.use("/results",     resultRoutes);
 // router.use("/fees",        feeRoutes);
 // router.use("/dashboard",   dashboardRoutes);
