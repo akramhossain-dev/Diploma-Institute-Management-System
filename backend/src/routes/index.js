@@ -39,6 +39,12 @@ import feeStructureRoutes          from "../modules/feeStructures/feeStructure.r
 import studentFeeAssignmentRoutes  from "../modules/studentFeeAssignments/studentFeeAssignment.routes.js";
 import paymentRoutes               from "../modules/payments/payment.routes.js";
 
+// ── Phase 9: Dashboard, Reports, Analytics, Self-service ──────────────────────────
+import dashboardRoutes  from "../modules/dashboard/dashboard.routes.js";
+import reportRoutes     from "../modules/reports/report.routes.js";
+import analyticsRoutes  from "../modules/analytics/analytics.routes.js";
+import meRoutes         from "../modules/me/me.routes.js";
+
 /**
  * Root API Router — mounts all module routers under /api
  *
@@ -117,9 +123,10 @@ router.use("/fee-structures",          feeStructureRoutes);
 router.use("/student-fee-assignments", studentFeeAssignmentRoutes);
 router.use("/payments",               paymentRoutes);
 
-// ── Phase 9+ (to be mounted in future phases) ─────────────────────────────
-// router.use("/dashboard",  dashboardRoutes);
-// router.use("/reports",    reportRoutes);
-// router.use("/upload",     uploadRoutes);
+// ── Phase 9: Dashboard, Reports, Analytics, Self-service ──────────────────
+router.use("/dashboard",  dashboardRoutes);
+router.use("/reports",    reportRoutes);
+router.use("/analytics",  analyticsRoutes);
+router.use("/me",         meRoutes);
 
 export default router;
