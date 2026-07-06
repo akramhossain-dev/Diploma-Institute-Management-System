@@ -1,20 +1,35 @@
 import { Router } from "express";
 
-// ── Auth routes ──────────────────────────────────────────────────────────
+// ── Phase 2: Auth routes ─────────────────────────────────────────────────
 import studentAuthRoutes    from "../modules/auth/student/studentAuth.routes.js";
 import teacherAuthRoutes    from "../modules/auth/teacher/teacherAuth.routes.js";
 import accountantAuthRoutes from "../modules/auth/accountant/accountantAuth.routes.js";
 import adminAuthRoutes      from "../modules/auth/admin/adminAuth.routes.js";
 
+// ── Phase 3: Core institute structure routes ──────────────────────────────
+import adminRoutes           from "../modules/admins/admin.routes.js";
+import departmentRoutes      from "../modules/departments/department.routes.js";
+import semesterRoutes        from "../modules/semesters/semester.routes.js";
+import academicSessionRoutes from "../modules/academicSessions/academicSession.routes.js";
+import courseRoutes          from "../modules/courses/course.routes.js";
+
 /**
- * Root API Router
- * All entity module routes are mounted here.
+ * Root API Router — mounts all module routers under /api
  *
- * Auth:       /api/auth/{student|teacher|accountant|admin}
- * Entities:   /api/{students|teachers|accountants|admins}   (Phase 3)
- * Academic:   /api/{courses|batches|exams|attendance}        (Phase 3)
- * Operations: /api/{results|fees|notices|admissions}         (Phase 3)
- * System:     /api/institute | /api/dashboard | /api/upload  (Phase 3)
+ * Phase 2 (Auth):
+ *   /api/auth/{student|teacher|accountant|admin}
+ *
+ * Phase 3 (Core Structure):
+ *   /api/admins
+ *   /api/departments
+ *   /api/semesters
+ *   /api/academic-sessions
+ *   /api/courses
+ *
+ * Phase 4+ (Entity & Operations — coming soon):
+ *   /api/students | /api/teachers | /api/attendance
+ *   /api/results  | /api/fees     | /api/notices
+ *   /api/admissions | /api/institute | /api/dashboard
  */
 const router = Router();
 
@@ -22,26 +37,42 @@ const router = Router();
 router.get("/", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "DIMS API v1.0 — Phase 2 Auth Layer Active",
-    authEndpoints: {
-      student:    "/api/auth/student/{login|logout|refresh|me|change-password}",
-      teacher:    "/api/auth/teacher/{login|logout|refresh|me|change-password}",
-      accountant: "/api/auth/accountant/{login|logout|refresh|me|change-password}",
-      admin:      "/api/auth/admin/{login|logout|refresh|me|change-password}",
+    message: "DIMS API v1.0 — Phase 3 Core Structure Active",
+    endpoints: {
+      auth:             "/api/auth/{student|teacher|accountant|admin}",
+      admins:           "/api/admins",
+      departments:      "/api/departments",
+      semesters:        "/api/semesters",
+      academicSessions: "/api/academic-sessions",
+      courses:          "/api/courses",
     },
   });
 });
 
-// ── Auth routes ────────────────────────────────────────────────────────────
+// ── Phase 2: Auth ─────────────────────────────────────────────────────────
 router.use("/auth/student",    studentAuthRoutes);
 router.use("/auth/teacher",    teacherAuthRoutes);
 router.use("/auth/accountant", accountantAuthRoutes);
 router.use("/auth/admin",      adminAuthRoutes);
 
-// ── Entity & operational routes (mounted in Phase 3) ──────────────────────
+// ── Phase 3: Core Institute Structure ─────────────────────────────────────
+router.use("/admins",            adminRoutes);
+router.use("/departments",       departmentRoutes);
+router.use("/semesters",         semesterRoutes);
+router.use("/academic-sessions", academicSessionRoutes);
+router.use("/courses",           courseRoutes);
+
+// ── Phase 4+ (to be mounted in future phases) ─────────────────────────────
 // router.use("/students",    studentRoutes);
 // router.use("/teachers",    teacherRoutes);
-// router.use("/courses",     courseRoutes);
-// ...
+// router.use("/batches",     batchRoutes);
+// router.use("/attendance",  attendanceRoutes);
+// router.use("/results",     resultRoutes);
+// router.use("/fees",        feeRoutes);
+// router.use("/notices",     noticeRoutes);
+// router.use("/admissions",  admissionRoutes);
+// router.use("/institute",   instituteRoutes);
+// router.use("/dashboard",   dashboardRoutes);
+// router.use("/upload",      uploadRoutes);
 
 export default router;
