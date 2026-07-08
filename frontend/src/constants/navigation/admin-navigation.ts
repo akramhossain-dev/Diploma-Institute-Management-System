@@ -12,8 +12,9 @@ export const adminNavigation: NavItem[] = [
     icon: 'GraduationCap',
     children: [
       { label: 'Departments', route: '/admin/departments' },
+      { label: 'Semesters', route: '/admin/semesters' },
+      { label: 'Sessions', route: '/admin/sessions' },
       { label: 'Courses', route: '/admin/courses' },
-      { label: 'Batches', route: '/admin/batches' },
     ],
   },
   {
@@ -40,7 +41,7 @@ export const adminNavigation: NavItem[] = [
   },
   {
     label: 'Settings',
-    route: '/admin/institute',
+    route: '/admin/settings',
     icon: 'Building',
   },
 ];
