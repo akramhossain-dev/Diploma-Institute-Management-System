@@ -1,77 +1,179 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { PublicContainer } from '@/components/public/PublicContainer';
+import { PublicSection } from '@/components/public/PublicSection';
+import { useDepartments } from '@/hooks/public/useDepartments';
+import { useNotices } from '@/hooks/public/useNotices';
+import { LucideIcon } from '@/components/shared/navigation/LucideIcon';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function HomePage() {
+  const { data: departments = [], isLoading: deptsLoading } = useDepartments();
+  const { data: noticesData, isLoading: noticesLoading } = useNotices({ page: 1, limit: 3 });
+  
+  const notices = noticesData?.data || [];
+
   return (
-    <div className="flex flex-col min-h-[70vh]">
+    <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative bg-linear-to-r from-primary to-indigo-700 text-white py-20 px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mb-6 leading-tight">
-          Diploma Institute Management System
-        </h1>
-        <p className="text-lg sm:text-xl max-w-2xl text-indigo-100 mb-8">
-          An enterprise administration portal designed specifically for Diploma Institutes, structuring academic modules, attendance tracking, exams, and financials.
-        </p>
-        <div className="flex gap-4">
-          <Link href="/login">
-            <Button size="lg" className="bg-white text-primary hover:bg-indigo-50 font-semibold shadow-md">
-              Go to Portal Login
-            </Button>
-          </Link>
-          <Link href="/admission">
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-semibold">
-              Apply for Admission
-            </Button>
-          </Link>
-        </div>
+      <section className="relative bg-linear-to-r from-primary to-indigo-700 text-primary-foreground py-24 sm:py-32 border-b">
+        <PublicContainer className="text-center flex flex-col items-center justify-center">
+          <Badge className="bg-white/10 text-white border-white/20 mb-4 px-3 py-1">
+            Now Accepting Applications
+          </Badge>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mb-6 leading-tight">
+            National Engineering Diploma Institute
+          </h1>
+          <p className="text-lg sm:text-xl max-w-2xl text-indigo-100 mb-8 leading-relaxed">
+            Elevating professional vocational capabilities with structured semesters, advanced laboratories practice, and industry-aligned technical skillsets.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <Link href="/admission" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full bg-white text-primary hover:bg-indigo-50 font-bold shadow-md">
+                Apply for Admission
+              </Button>
+            </Link>
+            <Link href="/admission/status" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full border-white text-white hover:bg-white/10 font-semibold">
+                Track Application
+              </Button>
+            </Link>
+          </div>
+        </PublicContainer>
       </section>
 
-      {/* Info Cards Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <Card className="border shadow-sm">
-          <CardContent className="pt-6">
-            <div className="rounded-full bg-primary/10 text-primary h-12 w-12 flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84a50.58 50.58 0 00-2.657.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-2">Academics</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Define departments, semesters, theory and practical courses, and structure class batches seamlessly.
+      {/* Programs Preview Section */}
+      <PublicSection bg="default">
+        <PublicContainer>
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl font-extrabold tracking-tight">Our Diploma Programs</h2>
+            <p className="text-muted-foreground text-sm mt-2">
+              4-year Diploma in Engineering qualifications accredited by the Technical Education Board.
             </p>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card className="border shadow-sm">
-          <CardContent className="pt-6">
-            <div className="rounded-full bg-primary/10 text-primary h-12 w-12 flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-2">Tracking & Grades</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Track daily student attendance session-by-session, enter exam marks, and publish grades transparently.
-            </p>
-          </CardContent>
-        </Card>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {deptsLoading ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <Card key={i} className="border shadow-xs">
+                  <CardContent className="pt-6 space-y-4">
+                    <Skeleton className="h-12 w-12 rounded-full" />
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-20 w-full" />
+                  </CardContent>
+                </Card>
+              ))
+            ) : departments.length > 0 ? (
+              departments.slice(0, 3).map((dept) => (
+                <Card key={dept._id} className="border shadow-xs hover:shadow-md transition-all">
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="rounded-full bg-primary/10 text-primary h-12 w-12 flex items-center justify-center">
+                      <LucideIcon name="Cpu" size={24} />
+                    </div>
+                    <h3 className="text-xl font-bold">{dept.name}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{dept.description}</p>
+                    <Link href="/departments" className="inline-flex items-center text-sm font-semibold text-primary hover:underline">
+                      View Curriculum
+                      <LucideIcon name="ArrowRight" size={14} className="ml-1" />
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <div className="col-span-3 text-center text-muted-foreground">No programs found.</div>
+            )}
+          </div>
+        </PublicContainer>
+      </PublicSection>
 
-        <Card className="border shadow-sm">
-          <CardContent className="pt-6">
-            <div className="rounded-full bg-primary/10 text-primary h-12 w-12 flex items-center justify-center mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.214.19A3.64 3.64 0 0012 16.5c2.185 0 3.963-1.662 3.963-3.712 0-2.05-1.778-3.712-3.963-3.712-.132 0-.263.007-.393.02a4.011 4.011 0 01-1.895-.772L9.5 8.182m0 9a3 3 0 01-3-3V12M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+      {/* Latest Notices Preview */}
+      <PublicSection bg="muted">
+        <PublicContainer>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-5 mb-10 gap-4">
+            <div>
+              <h2 className="text-3xl font-extrabold tracking-tight">Latest Announcements</h2>
+              <p className="text-muted-foreground text-sm mt-1">Keep updated with recent circulars from the academic board.</p>
             </div>
-            <h3 className="text-xl font-bold mb-2">Financial Records</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Manage student fee ledgers, process partial payments, and pull structured financial collections reports.
+            <Link href="/notices">
+              <Button variant="outline" size="sm">
+                View All Circulars
+              </Button>
+            </Link>
+          </div>
+
+          <div className="space-y-4">
+            {noticesLoading ? (
+              Array.from({ length: 2 }).map((_, i) => (
+                <Card key={i} className="border shadow-xs">
+                  <CardContent className="pt-6 space-y-3">
+                    <Skeleton className="h-6 w-1/3" />
+                    <Skeleton className="h-14 w-full" />
+                  </CardContent>
+                </Card>
+              ))
+            ) : notices.length > 0 ? (
+              notices.map((notice) => (
+                <Card key={notice._id} className="border shadow-xs hover:border-primary/30 transition-all">
+                  <CardContent className="pt-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="secondary" className="capitalize text-xs">
+                          {notice.category}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">{notice.publishDate}</span>
+                      </div>
+                      <h3 className="text-lg font-bold text-foreground hover:text-primary transition-colors">
+                        {notice.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground line-clamp-2 max-w-4xl">{notice.content}</p>
+                    </div>
+                    <Link href="/notices" className="shrink-0">
+                      <Button size="sm" variant="ghost">Read Notice</Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <div className="text-center text-muted-foreground py-8">No notices available.</div>
+            )}
+          </div>
+        </PublicContainer>
+      </PublicSection>
+
+      {/* Contact highlight section */}
+      <PublicSection bg="default">
+        <PublicContainer className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <h2 className="text-3xl font-extrabold tracking-tight">Need Assistance?</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              If you have any questions regarding admission requirements, credentials submission, or payment procedures, feel free to visit our campus or contact our help desk directly.
             </p>
-          </CardContent>
-        </Card>
-      </section>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3 text-sm text-muted-foreground">
+                <LucideIcon name="Phone" className="text-primary" />
+                <span>+8802-99887766 (Help Desk: 9 AM - 5 PM)</span>
+              </div>
+              <div className="flex items-center space-x-3 text-sm text-muted-foreground">
+                <LucideIcon name="Mail" className="text-primary" />
+                <span>admission@ndi.edu.bd</span>
+              </div>
+            </div>
+            <Link href="/contact">
+              <Button>Send Message</Button>
+            </Link>
+          </div>
+          <div className="h-64 border bg-muted/40 rounded-lg flex flex-col items-center justify-center text-muted-foreground p-8 text-center">
+            <LucideIcon name="Map" size={40} className="mb-3 text-primary" />
+            <span className="font-semibold block text-foreground">Campus Location Map</span>
+            <span className="text-xs mt-1">12/A Academic Avenue, Dhaka, Bangladesh</span>
+          </div>
+        </PublicContainer>
+      </PublicSection>
     </div>
   );
 }
