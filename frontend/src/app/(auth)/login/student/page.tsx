@@ -1,29 +1,48 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { AuthLayout } from '@/components/layouts/AuthLayout';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { LoginForm } from '@/components/auth/LoginForm';
+import { studentLoginSchema, StudentLoginInput } from '@/types/auth/student-login.schema';
+import { studentAuthService } from '@/services/auth/student-auth.service';
+import { useStudentAuthStore } from '@/store/auth/studentAuthStore';
+import { AppError } from '@/types/shared/api.types';
 
 export default function StudentLoginPage() {
+  const router = useRouter();
+  const setSession = useStudentAuthStore((state) => state.setSession);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleSubmit = async (data: StudentLoginInput) => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    try {
+      const response = await studentAuthService.login(data);
+      setSession(response.accessToken, response.profile);
+      router.replace('/student/dashboard');
+    } catch (err: any) {
+      const errorObj = err as AppError;
+      setErrorMessage(errorObj.message || 'Login failed. Please verify credentials.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <AuthLayout
       title="Student Portal Login"
       description="Enter credentials to check profiles, classes, grades, and fee balances."
     >
-      <div className="space-y-4">
-        <div className="space-y-1">
-          <label className="text-sm font-semibold text-foreground">Student Email</label>
-          <Input type="email" placeholder="student@dims.edu.bd" disabled />
-        </div>
-        <div className="space-y-1">
-          <label className="text-sm font-semibold text-foreground">Password</label>
-          <Input type="password" placeholder="••••••••" disabled />
-        </div>
-        <Button className="w-full font-semibold bg-emerald-600 hover:bg-emerald-700 text-white" disabled>
-          Sign In (F1 Placeholder)
-        </Button>
-      </div>
+      <LoginForm
+        schema={studentLoginSchema}
+        onSubmit={handleSubmit}
+        isLoading={isLoading}
+        errorMessage={errorMessage}
+        identifierLabel="Student Email"
+        identifierPlaceholder="student@dims.edu.bd"
+      />
     </AuthLayout>
   );
 }
