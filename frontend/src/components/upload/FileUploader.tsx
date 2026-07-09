@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { LucideIcon } from '../shared/navigation/LucideIcon';
 import { cn } from '@/lib/utils';
+import { adminFileManagerService } from '@/services/admin/file-manager.service';
 
 interface FileUploaderProps {
   onUploadSuccess: (url: string) => void;
@@ -61,17 +62,14 @@ export function FileUploader({
     }, 100);
 
     try {
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      // Call real file upload API endpoint
+      const uploadedFile = await adminFileManagerService.uploadFile(file);
       clearInterval(interval);
       setProgress(100);
 
-      // Generate a mock Cloudinary/S3 URL
-      const mockUrl = `https://cdn.dims.edu.bd/uploads/mock_${Date.now()}_${file.name}`;
-      
       setTimeout(() => {
         setUploading(false);
-        onUploadSuccess(mockUrl);
+        onUploadSuccess(uploadedFile.url);
       }, 300);
     } catch (err) {
       clearInterval(interval);

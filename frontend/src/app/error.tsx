@@ -3,6 +3,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 
+import { captureException } from '@/lib/errorReporting';
+
 interface ErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
@@ -11,7 +13,7 @@ interface ErrorProps {
 export default function GlobalError({ error, reset }: ErrorProps) {
   React.useEffect(() => {
     // Log the error to an error reporting service
-    console.error('[Global Error Boundary]:', error);
+    captureException(error, { context: 'Global Error Boundary' });
   }, [error]);
 
   return (

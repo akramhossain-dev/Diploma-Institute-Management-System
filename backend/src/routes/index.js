@@ -12,6 +12,7 @@ import departmentRoutes      from "../modules/departments/department.routes.js";
 import semesterRoutes        from "../modules/semesters/semester.routes.js";
 import academicSessionRoutes from "../modules/academicSessions/academicSession.routes.js";
 import courseRoutes          from "../modules/courses/course.routes.js";
+import batchRoutes           from "../modules/batches/batch.routes.js";
 
 // ── Phase 4: Core people modules ─────────────────────────────────────────
 import studentRoutes     from "../modules/students/student.routes.js";
@@ -48,6 +49,8 @@ import meRoutes         from "../modules/me/me.routes.js";
 // ── Phase 10: Notifications & Audit Logs ──────────────────────────────────────────
 import notificationRoutes from "../modules/notifications/notification.routes.js";
 import auditLogRoutes     from "../modules/auditLogs/auditLog.routes.js";
+import fileRoutes         from "../modules/files/file.routes.js";
+import importExportRoutes from "../modules/importExport/importExport.routes.js";
 
 /**
  * Root API Router — mounts all module routers under /api
@@ -100,6 +103,7 @@ router.use("/departments",       departmentRoutes);
 router.use("/semesters",         semesterRoutes);
 router.use("/academic-sessions", academicSessionRoutes);
 router.use("/courses",           courseRoutes);
+router.use("/batches",           batchRoutes);
 
 // ── Phase 4: Core People Modules ──────────────────────────────────────────
 router.use("/students",    studentRoutes);
@@ -136,5 +140,7 @@ router.use("/me",         meRoutes);
 // ── Phase 10: Notifications & Audit Logs ──────────────────────────────────
 router.use("/notifications", notificationRoutes);
 router.use("/audit-logs",    auditLogRoutes);
+router.use("/files",         fileRoutes);
+router.use("/import-export", importExportRoutes);
 
 export default router;

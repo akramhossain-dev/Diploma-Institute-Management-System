@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
-
+import csrfProtection from "./middlewares/csrf.js";
 import env from "./config/env.js";
 import requestLogger from "./middlewares/requestLogger.js";
 import notFound from "./middlewares/notFound.js";
@@ -57,6 +57,7 @@ app.use("/api", globalLimiter);
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
+app.use(csrfProtection);
 
 // ── Request Logging ───────────────────────────────────────────────────────
 app.use(requestLogger);

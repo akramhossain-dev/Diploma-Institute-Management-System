@@ -2,6 +2,7 @@ import ApiError from "../utils/ApiError.js";
 import { errorResponse } from "../utils/response.js";
 import logger from "../utils/logger.js";
 import env from "../config/env.js";
+import { captureException } from "../utils/errorReporting.js";
 
 /**
  * Global Express error handler.
@@ -20,8 +21,12 @@ const errorHandler = (err, req, res, next) => {
   // Log the error
   if (env.isProd && !err.isOperational) {
     logger.error(`[UNHANDLED] ${err.stack}`);
+    captureException(err, { req, severity: "critical" });
   } else {
     logger.error(err.stack || err.message);
+    if (!err.isOperational) {
+      captureException(err, { req, severity: "error" });
+    }
   }
 
   // ── Operational: ApiError thrown intentionally ───────────────────────────
