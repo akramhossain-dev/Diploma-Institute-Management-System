@@ -23,7 +23,7 @@ const fallbackCourses: CourseInfo[] = [
 export const courseService = {
   getCourses: async (departmentId?: string): Promise<CourseInfo[]> => {
     try {
-      const url = departmentId ? `/courses?departmentId=${departmentId}` : '/courses';
+      const url = departmentId ? `/courses/public?departmentId=${departmentId}` : '/courses/public';
       const response = await publicAxios.get<ApiResponse<CourseInfo[]>>(url);
       return response.data.data;
     } catch (e) {

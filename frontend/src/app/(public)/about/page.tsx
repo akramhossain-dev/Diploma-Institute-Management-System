@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
+import { BookOpen, Target, Sparkles } from 'lucide-react';
 import MRIST from '@/config/mrist.config';
 
 export const metadata: Metadata = {
@@ -55,7 +56,7 @@ export default function AboutPage() {
         {/* History */}
         <section id="history" className="bg-card border rounded-xl p-8">
           <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
-            <span className="text-[#1D4ED8]">📖</span> History of MRIST
+            <BookOpen className="h-6 w-6 text-[#1D4ED8] shrink-0" /> History of MRIST
           </h2>
           <p className="text-[#475569] leading-relaxed text-sm">{MRIST.about.history}</p>
         </section>
@@ -64,13 +65,13 @@ export default function AboutPage() {
         <section id="mission-vision" className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#DBEAFE]/40 border border-[#1D4ED8]/20 rounded-xl p-8">
             <h2 className="text-xl font-bold text-[#1D4ED8] mb-4 flex items-center gap-2">
-              <span>🎯</span> Our Mission
+              <Target className="h-5 w-5 text-[#1D4ED8] shrink-0" /> Our Mission
             </h2>
             <p className="text-[#334155] leading-relaxed text-sm">{MRIST.about.mission}</p>
           </div>
           <div className="bg-[#EDE9FE]/40 border border-[#7C3AED]/20 rounded-xl p-8">
             <h2 className="text-xl font-bold text-[#7C3AED] mb-4 flex items-center gap-2">
-              <span>🌟</span> Our Vision
+              <Sparkles className="h-5 w-5 text-[#7C3AED] shrink-0" /> Our Vision
             </h2>
             <p className="text-[#334155] leading-relaxed text-sm">{MRIST.about.vision}</p>
           </div>

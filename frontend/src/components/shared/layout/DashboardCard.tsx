@@ -1,6 +1,8 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
+import { ArrowUp, ArrowDown } from 'lucide-react';
+
 interface DashboardCardProps {
   title: string;
   value: string | number;
@@ -64,8 +66,8 @@ export function DashboardCard({
                 trend.type === 'neutral' && 'bg-muted text-muted-foreground',
               )}
             >
-              {trend.type === 'positive' && '↑'}
-              {trend.type === 'negative' && '↓'}
+              {trend.type === 'positive' && <ArrowUp size={11} className="stroke-[3]" />}
+              {trend.type === 'negative' && <ArrowDown size={11} className="stroke-[3]" />}
               {trend.value}
             </span>
           )}

@@ -16,6 +16,12 @@ const courseController = {
     return successResponse(res, { statusCode: 200, message: "Courses retrieved successfully", data: courses, pagination });
   }),
 
+  // GET /api/courses/public
+  getPublic: asyncHandler(async (req, res) => {
+    const { courses, pagination } = await courseService.getAllCourses({ ...req.query, status: "active" });
+    return successResponse(res, { statusCode: 200, message: "Courses retrieved successfully", data: courses, pagination });
+  }),
+
   // GET /api/courses/:id
   getById: asyncHandler(async (req, res) => {
     const course = await courseService.getCourseById(req.params.id);

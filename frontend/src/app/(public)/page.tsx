@@ -24,8 +24,9 @@ export default function HomePage() {
       <section className="aurora-hero py-24 sm:py-32 border-b border-border/60">
         <PublicContainer className="flex flex-col items-center text-center gap-8">
           {/* Eyebrow badge */}
-          <Badge variant="soft-primary" className="px-4 py-1.5 text-[12px] font-semibold rounded-full shadow-sm animate-fade-in">
-            🎓 &nbsp;Now Accepting Applications — Session 2025–26
+          <Badge variant="soft-primary" className="px-4 py-1.5 text-[12px] font-semibold rounded-full shadow-sm animate-fade-in flex items-center gap-1.5">
+            <LucideIcon name="GraduationCap" size={14} />
+            Now Accepting Applications — Session 2025–26
           </Badge>
 
           {/* Hero title */}

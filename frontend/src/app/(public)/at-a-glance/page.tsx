@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
+import { Building2, Calendar, Award, BookOpen, Layers, Users, Presentation, Home } from 'lucide-react';
 import MRIST from '@/config/mrist.config';
 
 export const metadata: Metadata = {
@@ -32,17 +33,17 @@ export default function AtAGlancePage() {
           <h2 className="text-2xl font-bold text-foreground mb-6 text-center">Quick Facts</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {[
-              { icon: '🏛️', label: 'Institute Name', value: MRIST.shortName },
-              { icon: '📅', label: 'Established', value: g.established },
-              { icon: '🎓', label: 'Affiliation', value: g.affiliation },
-              { icon: '📚', label: 'Programs', value: g.programs },
-              { icon: '🏫', label: 'Departments', value: `${g.departments} Technologies` },
-              { icon: '👥', label: 'Total Students', value: g.totalStudents },
-              { icon: '👨‍🏫', label: 'Faculty Members', value: g.totalFaculty },
-              { icon: '🏠', label: 'Classrooms', value: g.classrooms },
+              { icon: <Building2 className="h-6 w-6 text-[#1D4ED8] mx-auto" />, label: 'Institute Name', value: MRIST.shortName },
+              { icon: <Calendar className="h-6 w-6 text-[#1D4ED8] mx-auto" />, label: 'Established', value: g.established },
+              { icon: <Award className="h-6 w-6 text-[#1D4ED8] mx-auto" />, label: 'Affiliation', value: g.affiliation },
+              { icon: <BookOpen className="h-6 w-6 text-[#1D4ED8] mx-auto" />, label: 'Programs', value: g.programs },
+              { icon: <Layers className="h-6 w-6 text-[#1D4ED8] mx-auto" />, label: 'Departments', value: `${g.departments} Technologies` },
+              { icon: <Users className="h-6 w-6 text-[#1D4ED8] mx-auto" />, label: 'Total Students', value: g.totalStudents },
+              { icon: <Presentation className="h-6 w-6 text-[#1D4ED8] mx-auto" />, label: 'Faculty Members', value: g.totalFaculty },
+              { icon: <Home className="h-6 w-6 text-[#1D4ED8] mx-auto" />, label: 'Classrooms', value: g.classrooms },
             ].map(({ icon, label, value }) => (
               <div key={label} className="bg-card border rounded-xl p-5 text-center hover:border-[#1D4ED8]/40 transition-colors">
-                <div className="text-2xl mb-2">{icon}</div>
+                <div className="mb-3 flex justify-center">{icon}</div>
                 <div className="text-[15px] font-bold text-foreground">{value}</div>
                 <div className="text-xs text-muted-foreground mt-1">{label}</div>
               </div>

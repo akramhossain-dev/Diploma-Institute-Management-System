@@ -7,6 +7,7 @@ const router = Router();
 const adminOnly = [authenticate, authorizeEntity("admin")];
 
 router.get("/",         ...adminOnly, dashboardController.getAdmin);
+router.get("/summary",  ...adminOnly, dashboardController.getAdmin);
 router.get("/finance",  ...adminOnly, dashboardController.getFinance);
 router.get("/academic", ...adminOnly, dashboardController.getAcademic);
 

@@ -14,6 +14,9 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
+// GET — public access
+router.get(  "/public",     courseController.getPublic);
+
 // GET — all authenticated entities
 router.get(  "/",           authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), courseController.getAll);
 router.get(  "/:id",        authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), validateMongoId, courseController.getById);

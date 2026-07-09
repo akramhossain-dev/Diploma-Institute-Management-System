@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
+import { Check, Phone, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 import MRIST from '@/config/mrist.config';
 
@@ -17,7 +18,8 @@ export default function AdmissionPage() {
       <section className="bg-[#0F172A] py-14 px-4">
         <div className="mx-auto max-w-4xl text-center">
           <div className="inline-flex items-center gap-2 bg-[#059669]/20 border border-[#059669]/30 text-[#6EE7B7] text-xs font-semibold px-3 py-1 rounded-full mb-4">
-            🟢 Admission Open — Session 2025–26
+            <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
+            Admission Open — Session 2025–26
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Online Admission</h1>
           <p className="text-[#94A3B8] text-base max-w-2xl mx-auto">{adm.intro}</p>
@@ -68,8 +70,8 @@ export default function AdmissionPage() {
             <div className="space-y-3">
               {adm.eligibility.map((item, i) => (
                 <div key={i} className="flex items-start gap-3 bg-card border rounded-lg p-4">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#059669]/15 text-[#059669] text-xs font-bold shrink-0 mt-0.5">
-                    ✓
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#059669]/15 text-[#059669] shrink-0 mt-0.5">
+                    <Check className="h-3 w-3" />
                   </div>
                   <span className="text-sm text-foreground">{item}</span>
                 </div>
@@ -117,7 +119,9 @@ export default function AdmissionPage() {
         {/* Helpline + Note */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#DBEAFE]/40 border border-[#1D4ED8]/20 rounded-xl p-6">
-            <h3 className="text-base font-bold text-[#1D4ED8] mb-2">📞 Admission Helpline</h3>
+            <h3 className="text-base font-bold text-[#1D4ED8] mb-2 flex items-center gap-2">
+              <Phone className="h-4 w-4 shrink-0" /> Admission Helpline
+            </h3>
             <p className="text-2xl font-black text-foreground mb-1">{MRIST.contact.phone}</p>
             <p className="text-sm text-muted-foreground mb-3">{adm.helpline.split('(')[1]?.replace(')', '') || 'Sun–Thu, 9 AM – 5 PM'}</p>
             <a
@@ -129,7 +133,9 @@ export default function AdmissionPage() {
           </div>
 
           <div className="bg-[#FEF3C7]/40 border border-[#D97706]/20 rounded-xl p-6">
-            <h3 className="text-base font-bold text-[#D97706] mb-2">⚠️ Important Note</h3>
+            <h3 className="text-base font-bold text-[#D97706] mb-2 flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 shrink-0" /> Important Note
+            </h3>
             <p className="text-sm text-[#334155] leading-relaxed">{adm.note}</p>
           </div>
         </section>

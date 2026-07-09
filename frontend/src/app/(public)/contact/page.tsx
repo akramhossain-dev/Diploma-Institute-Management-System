@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
+import { MapPin, Phone, Mail, Globe, Clock, Megaphone, Map } from 'lucide-react';
 import MRIST from '@/config/mrist.config';
 
 export const metadata: Metadata = {
@@ -29,33 +30,33 @@ export default function ContactPage() {
               <div className="space-y-4">
                 {[
                   {
-                    icon: '📍',
+                    icon: <MapPin className="h-5 w-5 text-[#1D4ED8]" />,
                     label: 'Campus Address',
                     value: MRIST.contact.address,
                   },
                   {
-                    icon: '📞',
+                    icon: <Phone className="h-5 w-5 text-[#1D4ED8]" />,
                     label: 'Phone',
                     value: `${MRIST.contact.phone}\n${MRIST.contact.phone2}`,
                   },
                   {
-                    icon: '✉️',
+                    icon: <Mail className="h-5 w-5 text-[#1D4ED8]" />,
                     label: 'Email',
                     value: MRIST.contact.email,
                   },
                   {
-                    icon: '🌐',
+                    icon: <Globe className="h-5 w-5 text-[#1D4ED8]" />,
                     label: 'Website',
                     value: 'mrist.edu.bd',
                   },
                   {
-                    icon: '🕐',
+                    icon: <Clock className="h-5 w-5 text-[#1D4ED8]" />,
                     label: 'Office Hours',
                     value: 'Sunday – Thursday: 8:00 AM – 5:00 PM',
                   },
                 ].map(({ icon, label, value }) => (
                   <div key={label} className="flex items-start gap-4 bg-card border rounded-xl p-5">
-                    <div className="text-2xl w-10 text-center shrink-0">{icon}</div>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#DBEAFE]/50 text-center shrink-0">{icon}</div>
                     <div>
                       <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">{label}</div>
                       <div className="text-sm font-medium text-foreground whitespace-pre-line">{value}</div>
@@ -67,7 +68,9 @@ export default function ContactPage() {
 
             {/* Admission Helpline */}
             <div className="bg-[#DBEAFE]/40 border border-[#1D4ED8]/20 rounded-xl p-6">
-              <h3 className="text-base font-bold text-[#1D4ED8] mb-2">📣 Admission Helpline</h3>
+              <h3 className="text-base font-bold text-[#1D4ED8] mb-2 flex items-center gap-2">
+                <Megaphone className="h-5 w-5 shrink-0" /> Admission Helpline
+              </h3>
               <p className="text-sm text-[#334155]">
                 For admission-related queries, call our helpline or email{' '}
                 <a href={`mailto:${MRIST.contact.admissionEmail}`} className="text-[#1D4ED8] font-medium underline">
@@ -107,7 +110,7 @@ export default function ContactPage() {
             {/* Map Embed Placeholder */}
             <div className="rounded-xl overflow-hidden border h-[320px] bg-[#F1F5F9] flex items-center justify-center">
               <div className="text-center text-muted-foreground p-6">
-                <div className="text-4xl mb-3">🗺️</div>
+                <Map className="h-10 w-10 text-muted-foreground/70 mx-auto mb-3" />
                 <p className="text-sm font-medium">Matuail, Demra Road, Jatrabari, Dhaka-1362</p>
                 <p className="text-xs mt-1">
                   <a

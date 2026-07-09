@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { ArrowUp, ArrowDown } from 'lucide-react';
 
 export function TrendBadge({
   value,
@@ -17,8 +18,8 @@ export function TrendBadge({
         type === 'neutral' && 'bg-muted text-muted-foreground',
       )}
     >
-      {type === 'positive' && '↑'}
-      {type === 'negative' && '↓'}
+      {type === 'positive' && <ArrowUp size={11} className="stroke-[3]" />}
+      {type === 'negative' && <ArrowDown size={11} className="stroke-[3]" />}
       {value}
     </span>
   );

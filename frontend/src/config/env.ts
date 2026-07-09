@@ -10,7 +10,7 @@ const parseEnv = () => {
   });
 
   if (!result.success) {
-    console.error('❌ Invalid environment variables:', result.error.format());
+    console.error('[DIMS Config Error] Invalid environment variables:', result.error.format());
     // In production we don't want to crash the server instantly, but in dev or during build it's useful.
     if (process.env.NODE_ENV === 'development') {
       throw new Error(`Invalid environment variables: ${JSON.stringify(result.error.format())}`);

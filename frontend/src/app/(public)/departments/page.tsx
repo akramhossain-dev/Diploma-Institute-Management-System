@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
+import { Laptop, Zap, HardHat, Cog, Car, GraduationCap } from 'lucide-react';
 import MRIST from '@/config/mrist.config';
 
 export const metadata: Metadata = {
@@ -7,13 +8,12 @@ export const metadata: Metadata = {
   description: 'Explore the 5 engineering technologies offered at MRIST: CST, Electrical Technology, Civil Technology, Mechanical Technology, and Automobile Technology.',
 };
 
-// Icon map using emoji as fallback (avoids lucide import complexity in server component)
-const deptIcons: Record<string, string> = {
-  CST: '💻',
-  ET:  '⚡',
-  CT:  '🏗️',
-  MT:  '⚙️',
-  AT:  '🚗',
+const deptIcons: Record<string, React.ReactNode> = {
+  CST: <Laptop className="h-7 w-7" />,
+  ET:  <Zap className="h-7 w-7" />,
+  CT:  <HardHat className="h-7 w-7" />,
+  MT:  <Cog className="h-7 w-7" />,
+  AT:  <Car className="h-7 w-7" />,
 };
 
 export default function DepartmentsPage() {
@@ -43,8 +43,8 @@ export default function DepartmentsPage() {
             >
               {/* Card Header */}
               <div className="flex items-start gap-4 p-6 border-b">
-                <div className={`flex h-14 w-14 items-center justify-center rounded-xl ${dept.bgColor} shrink-0 text-2xl`}>
-                  {deptIcons[dept.code] || '🎓'}
+                <div className={`flex h-14 w-14 items-center justify-center rounded-xl ${dept.bgColor} shrink-0`}>
+                  {deptIcons[dept.code] || <GraduationCap className="h-7 w-7" />}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">

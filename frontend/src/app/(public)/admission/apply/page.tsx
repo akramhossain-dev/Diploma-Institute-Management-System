@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
+import { ClipboardCheck, FolderOpen, Phone } from 'lucide-react';
 import Link from 'next/link';
 import { AdmissionForm } from '@/components/admission/AdmissionForm';
 import MRIST from '@/config/mrist.config';
@@ -27,7 +28,8 @@ export default function AdmissionApplyPage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-2 bg-[#059669]/20 border border-[#059669]/30 text-[#6EE7B7] text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                🟢 Admission Open — Session 2025–26
+                <span className="h-2 w-2 rounded-full bg-[#10B981] animate-pulse" />
+                Admission Open — Session 2025–26
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold text-white">Online Admission Application</h1>
               <p className="text-[#94A3B8] text-sm mt-1">
@@ -48,9 +50,9 @@ export default function AdmissionApplyPage() {
       <div className="bg-[#DBEAFE] border-b border-[#BFDBFE]">
         <div className="mx-auto max-w-4xl px-4 py-3">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-[#1E40AF] font-medium">
-            <span>📋 <strong>Eligibility:</strong> SSC / equivalent with GPA 2.0+</span>
-            <span>📂 <strong>Required:</strong> SSC marksheet, photo, birth certificate</span>
-            <span>📞 <strong>Helpline:</strong> {MRIST.contact.phone} (Sun–Thu, 9 AM–5 PM)</span>
+            <span className="flex items-center gap-1.5"><ClipboardCheck className="h-3.5 w-3.5 shrink-0" /> <strong>Eligibility:</strong> SSC / equivalent with GPA 2.0+</span>
+            <span className="flex items-center gap-1.5"><FolderOpen className="h-3.5 w-3.5 shrink-0" /> <strong>Required:</strong> SSC marksheet, photo, birth certificate</span>
+            <span className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5 shrink-0" /> <strong>Helpline:</strong> {MRIST.contact.phone} (Sun–Thu, 9 AM–5 PM)</span>
           </div>
         </div>
       </div>
