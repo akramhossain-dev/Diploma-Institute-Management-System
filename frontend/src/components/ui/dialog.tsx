@@ -28,11 +28,11 @@ const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/55 backdrop-blur-xs transition-opacity duration-300"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-200 animate-fade-in"
         onClick={() => onOpenChange(false)}
       />
       {/* Content wrapper */}
-      <div className="relative z-10 w-full max-w-lg scale-100 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative z-10 w-full max-w-lg animate-fade-in-up">
         {children}
       </div>
     </div>,
@@ -49,7 +49,8 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
     <div
       ref={ref}
       className={cn(
-        'grid w-full max-w-lg gap-4 border bg-card p-6 shadow-lg rounded-lg text-card-foreground',
+        'relative w-full max-w-lg rounded-2xl border border-border bg-card p-6 text-card-foreground',
+        'shadow-[0_20px_25px_-5px_rgba(0,0,0,0.10),0_8px_10px_-6px_rgba(0,0,0,0.08)]',
         className
       )}
       {...props}
@@ -58,22 +59,15 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
       {onClose && (
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          className={cn(
+            'absolute right-4 top-4 rounded-lg p-1.5 text-muted-foreground transition-colors',
+            'hover:bg-muted hover:text-foreground',
+            'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2'
+          )}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-4 w-4"
-          >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
           <span className="sr-only">Close</span>
         </button>
@@ -84,12 +78,12 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
 DialogContent.displayName = 'DialogContent';
 
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)} {...props} />
+  <div className={cn('flex flex-col space-y-1.5 mb-5', className)} {...props} />
 );
 DialogHeader.displayName = 'DialogHeader';
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)} {...props} />
+  <div className={cn('flex flex-col-reverse gap-2 sm:flex-row sm:justify-end pt-4 mt-2 border-t border-border', className)} {...props} />
 );
 DialogFooter.displayName = 'DialogFooter';
 
@@ -97,7 +91,7 @@ const DialogTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HT
   ({ className, ...props }, ref) => (
     <h2
       ref={ref}
-      className={cn('text-lg font-semibold leading-none tracking-tight', className)}
+      className={cn('text-lg font-bold tracking-tight text-foreground leading-snug', className)}
       {...props}
     />
   )
@@ -106,7 +100,7 @@ DialogTitle.displayName = 'DialogTitle';
 
 const DialogDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
+    <p ref={ref} className={cn('text-sm text-muted-foreground leading-relaxed', className)} {...props} />
   )
 );
 DialogDescription.displayName = 'DialogDescription';

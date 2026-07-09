@@ -18,30 +18,20 @@ export function ErrorState({
   return (
     <div
       className={cn(
-        'flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-destructive/20 bg-destructive/5 p-8 text-center animate-in fade-in-50 duration-300',
+        'flex min-h-[300px] flex-col items-center justify-center rounded-xl border border-[#FCA5A5]/40 bg-[#FEF2F2] p-10 text-center',
+        'animate-fade-in',
         className
       )}
     >
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10 text-destructive mb-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="h-6 w-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-          />
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FEE2E2] text-[#DC2626]">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-7 w-7">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
         </svg>
       </div>
-      <h3 className="text-lg font-semibold text-destructive mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground max-w-sm mb-6">{message}</p>
+      <h3 className="text-base font-semibold text-[#991B1B] mb-1.5">{title}</h3>
+      <p className="text-sm text-[#B91C1C]/80 max-w-xs leading-relaxed mb-6">{message}</p>
       {onRetry && (
-        <Button onClick={onRetry} variant="outline" size="sm">
+        <Button onClick={onRetry} variant="outline" size="sm" className="border-[#FCA5A5] text-[#DC2626] hover:bg-[#FEE2E2]">
           Try Again
         </Button>
       )}

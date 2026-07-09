@@ -10,10 +10,10 @@ export function PublicSection({ children, bg = 'default', className, ...props }:
   return (
     <section
       className={cn(
-        'py-16 sm:py-20 border-b last:border-b-0',
+        'py-16 sm:py-20 border-b border-border last:border-b-0',
         {
-          'bg-background text-foreground': bg === 'default',
-          'bg-muted/30 text-foreground': bg === 'muted',
+          'bg-white text-foreground': bg === 'default',
+          'bg-[#F8FAFC] text-foreground': bg === 'muted',
           'bg-primary text-primary-foreground': bg === 'primary',
         },
         className

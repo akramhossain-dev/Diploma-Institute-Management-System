@@ -2,8 +2,8 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
-  size?: 'default' | 'sm' | 'lg' | 'icon';
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | 'soft';
+  size?: 'default' | 'sm' | 'lg' | 'icon' | 'icon-sm';
   isLoading?: boolean;
 }
 
@@ -12,19 +12,25 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
-          {
-            'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90': variant === 'default',
-            'bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90': variant === 'destructive',
-            'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground': variant === 'outline',
-            'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80': variant === 'secondary',
-            'hover:bg-accent hover:text-accent-foreground': variant === 'ghost',
-            'text-primary underline-offset-4 hover:underline': variant === 'link',
-            'h-9 px-4 py-2': size === 'default',
-            'h-8 rounded-md px-3 text-xs': size === 'sm',
-            'h-10 rounded-md px-8': size === 'lg',
-            'h-9 w-9': size === 'icon',
-          },
+          // Base
+          'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-all duration-150',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+          'disabled:pointer-events-none disabled:opacity-50',
+          'tracking-[-0.01em]',
+          // Variants
+          variant === 'default' && 'bg-primary text-primary-foreground shadow-[0_1px_2px_rgba(29,78,216,0.25)] hover:bg-[#1E40AF] active:scale-[0.99]',
+          variant === 'destructive' && 'bg-destructive text-destructive-foreground shadow-sm hover:bg-[#B91C1C] active:scale-[0.99]',
+          variant === 'outline' && 'border border-border bg-card text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:bg-muted hover:border-[#CBD5E1] active:scale-[0.99]',
+          variant === 'secondary' && 'bg-secondary text-secondary-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:bg-[#E2E8F0] active:scale-[0.99]',
+          variant === 'ghost' && 'text-muted-foreground hover:bg-muted hover:text-foreground',
+          variant === 'link' && 'text-primary underline-offset-4 hover:underline p-0 h-auto',
+          variant === 'soft' && 'bg-primary-soft text-primary hover:bg-[#BFDBFE] active:scale-[0.99]',
+          // Sizes
+          size === 'default' && 'h-10 px-4 py-2',
+          size === 'sm' && 'h-8 px-3 py-1.5 text-xs rounded-md',
+          size === 'lg' && 'h-11 px-6 py-2.5 text-base rounded-xl',
+          size === 'icon' && 'h-9 w-9 rounded-lg',
+          size === 'icon-sm' && 'h-7 w-7 rounded-md',
           className
         )}
         ref={ref}
@@ -32,7 +38,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isLoading ? (
-          <svg className="mr-2 h-4 w-4 animate-spin text-current" fill="none" viewBox="0 0 24 24">
+          <svg className="h-4 w-4 animate-spin text-current shrink-0" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path
               className="opacity-75"

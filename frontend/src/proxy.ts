@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
+
   // Read the lightweight entity indicator cookie
   const dimsEntity = request.cookies.get('dims_entity')?.value;
 
@@ -35,7 +35,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // Redirect from login selector or login sub-routes if already authenticated
+  // Redirect from login routes if already authenticated
   if (pathname === '/login' || pathname.startsWith('/login/')) {
     if (dimsEntity) {
       return NextResponse.redirect(new URL(`/${dimsEntity}/dashboard`, request.url));
@@ -44,6 +44,8 @@ export function middleware(request: NextRequest) {
 
   return NextResponse.next();
 }
+
+export default proxy;
 
 // Config to specify matching route paths
 export const config = {

@@ -82,6 +82,49 @@ const noticeService = {
     return { notices, pagination: buildPaginationMeta(total, page, limit) };
   },
 
+  // ────────────────────────────────────────────────────────────────────────
+  // PUBLIC LIST — published notices only, no auth required
+  // Used by the public website homepage and notices page
+  // ────────────────────────────────────────────────────────────────────────
+  async getPublicNotices(query) {
+    const { page, limit, skip } = getPaginationParams(query);
+    const { category, search } = query;
+
+    const filter = {
+      publishStatus: "published",
+      $and: [
+        { $or: [{ expiresAt: null }, { expiresAt: { $gt: new Date() } }] },
+      ],
+    };
+
+    if (category) filter.noticeType = category;
+    if (search) {
+      filter.$or = [
+        { title:   { $regex: search, $options: "i" } },
+        { content: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const [notices, total] = await Promise.all([
+      Notice.find(filter)
+        .select("title content noticeType targetAudience publishedAt expiresAt priority")
+        .sort({ publishedAt: -1 })
+        .skip(skip).limit(limit).lean(),
+      Notice.countDocuments(filter),
+    ]);
+
+    // Map to public-safe shape expected by frontend
+    const mapped = notices.map((n) => ({
+      _id:         n._id,
+      title:       n.title,
+      content:     n.content,
+      category:    n.noticeType || "general",
+      publishDate: n.publishedAt ? new Date(n.publishedAt).toISOString().split("T")[0] : null,
+    }));
+
+    return { notices: mapped, pagination: buildPaginationMeta(total, page, limit) };
+  },
+
   async getNoticeById(id) {
     const notice = await Notice.findById(id)
       .populate("createdByAdminId",         "fullName adminId")

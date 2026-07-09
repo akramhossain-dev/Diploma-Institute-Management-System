@@ -11,8 +11,7 @@ interface StudentLayoutProps {
 
 export function StudentLayout({ children }: StudentLayoutProps) {
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
-      {/* Entity Sidebar */}
+    <div className="flex h-screen w-full overflow-hidden bg-[#F8FAFC]">
       <Sidebar
         title="Student Portal"
         items={studentNavigation}
@@ -20,13 +19,9 @@ export function StudentLayout({ children }: StudentLayoutProps) {
         profileName="Akram Hossain"
         profileRole="Roll: CST-24-001"
       />
-
-      {/* Main View Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header panelTitle="Student Portal Dashboard" />
-        
-        {/* Scrollable Viewport */}
-        <main className="flex-1 overflow-y-auto bg-muted/30">
+        <Header panelTitle="Student Portal" />
+        <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>

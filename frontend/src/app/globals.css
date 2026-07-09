@@ -1,113 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   DESIGN TOKEN REGISTRATION — Tailwind v4 @theme
+───────────────────────────────────────────────────────────────────────────── */
 @theme {
+  /* Semantic Color Mapping */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-  
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  
+  --color-primary-soft: var(--primary-soft);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  
+  --color-accent-emerald: var(--accent-emerald);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
-  
   --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-section-bg: var(--section-bg);
+
+  /* Radius */
+  --radius-xl: 0.75rem;
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+
+  /* Font Family */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   LIGHT THEME TOKEN VALUES — Premium White EduTech
+───────────────────────────────────────────────────────────────────────────── */
 :root {
-  --background: #f8fafc; /* slate-50 */
-  --foreground: #0f172a; /* slate-900 */
+  /* === BACKGROUND / SURFACE === */
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --surface-elevated: #FCFCFD;
+  --section-bg: #F1F5F9;
 
-  --card: #ffffff;
-  --card-foreground: #0f172a;
+  /* === CARD === */
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
 
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
+  /* === BRAND PRIMARY — Blue === */
+  --primary: #1D4ED8;
+  --primary-foreground: #FFFFFF;
+  --primary-soft: #DBEAFE;
 
-  --primary: #4f46e5; /* indigo-600 */
-  --primary-foreground: #ffffff;
+  /* === BRAND ACCENT — Emerald === */
+  --accent-emerald: #10B981;
+  --accent-emerald-hover: #059669;
+  --accent-emerald-soft: #D1FAE5;
 
-  --secondary: #e2e8f0; /* slate-200 */
-  --secondary-foreground: #0f172a;
+  /* === SECONDARY / MUTED === */
+  --secondary: #F1F5F9;
+  --secondary-foreground: #0F172A;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent: #F1F5F9;
+  --accent-foreground: #0F172A;
 
-  --muted: #f1f5f9; /* slate-100 */
-  --muted-foreground: #475569; /* slate-600 */
+  /* === STATUS === */
+  --success: #16A34A;
+  --warning: #F59E0B;
+  --danger: #DC2626;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --info: #0EA5E9;
 
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
+  /* === BORDERS === */
+  --border: #E2E8F0;
+  --border-soft: #EDF2F7;
+  --input: #CBD5E1;
+  --ring: #93C5FD;
 
-  --destructive: #ef4444; /* red-500 */
-  --destructive-foreground: #ffffff;
+  /* === TEXT === */
+  --text-heading: #0F172A;
+  --text-body: #334155;
+  --text-muted: #64748B;
+  --text-hint: #94A3B8;
 
-  --border: #cbd5e1; /* slate-300 */
-  --input: #e2e8f0;
-  --ring: #6366f1; /* indigo-500 */
+  /* === AURORA TINTS (public site only) === */
+  --aurora-indigo: #6366F1;
+  --aurora-cyan: #06B6D4;
 
+  /* === SIDEBAR — DEEP PREMIUM DARK === */
+  --sidebar: #0F172A;
+  --sidebar-foreground: #CBD5E1;
+  --sidebar-muted: #64748B;
+  --sidebar-active: rgba(255,255,255,0.10);
+  --sidebar-active-text: #FFFFFF;
+  --sidebar-hover: rgba(255,255,255,0.06);
+  --sidebar-border: rgba(255,255,255,0.08);
+
+  /* === RADIUS === */
   --radius: 0.5rem;
+
+  /* === SHADOWS (as CSS custom properties for utility use) === */
+  --shadow-card: 0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.04);
+  --shadow-elevated: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-dialog: 0 20px 25px -5px rgba(0,0,0,0.10), 0 8px 10px -6px rgba(0,0,0,0.08);
+  --shadow-dropdown: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   DARK THEME OVERRIDES
+───────────────────────────────────────────────────────────────────────────── */
 .dark {
-  --background: #0b0f19; /* dark blue slate */
-  --foreground: #f8fafc;
+  --background: #0B0F19;
+  --foreground: #F8FAFC;
+  --surface-elevated: #141926;
+  --section-bg: #0F172A;
 
-  --card: #111827; /* gray-900 */
-  --card-foreground: #f8fafc;
-
+  --card: #111827;
+  --card-foreground: #F8FAFC;
   --popover: #111827;
-  --popover-foreground: #f8fafc;
+  --popover-foreground: #F8FAFC;
 
-  --primary: #6366f1; /* indigo-500 */
-  --primary-foreground: #ffffff;
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --primary-soft: #1E3A5F;
 
-  --secondary: #1f2937; /* gray-800 */
-  --secondary-foreground: #f8fafc;
+  --secondary: #1F2937;
+  --secondary-foreground: #F8FAFC;
+  --muted: #1F2937;
+  --muted-foreground: #9CA3AF;
+  --accent: #1F2937;
+  --accent-foreground: #F8FAFC;
 
-  --muted: #1f2937;
-  --muted-foreground: #9ca3af; /* gray-400 */
+  --success: #22C55E;
+  --warning: #FBBF24;
+  --danger: #F87171;
+  --destructive: #F87171;
+  --destructive-foreground: #FFFFFF;
+  --info: #38BDF8;
 
-  --accent: #1f2937;
-  --accent-foreground: #f8fafc;
+  --border: #1E2D40;
+  --border-soft: #1A2535;
+  --input: #374151;
+  --ring: #3B82F6;
 
-  --destructive: #f87171; /* red-400 */
-  --destructive-foreground: #ffffff;
+  --sidebar: #070C14;
+  --sidebar-foreground: #CBD5E1;
+  --sidebar-muted: #4B5563;
+  --sidebar-active: rgba(255,255,255,0.08);
+  --sidebar-active-text: #FFFFFF;
+  --sidebar-hover: rgba(255,255,255,0.05);
+  --sidebar-border: rgba(255,255,255,0.06);
 
-  --border: #374151; /* gray-700 */
-  --input: #1f2937;
-  --ring: #818cf8;
-
-  --radius: 0.5rem;
+  --shadow-card: 0 1px 3px 0 rgba(0,0,0,0.3), 0 1px 2px -1px rgba(0,0,0,0.2);
+  --shadow-elevated: 0 4px 6px -1px rgba(0,0,0,0.35), 0 2px 4px -2px rgba(0,0,0,0.25);
+  --shadow-dialog: 0 20px 25px -5px rgba(0,0,0,0.5), 0 8px 10px -6px rgba(0,0,0,0.3);
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE STYLES
+───────────────────────────────────────────────────────────────────────────── */
 * {
   border-color: var(--border);
   outline-color: var(--ring);
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
+  font-family: var(--font-sans);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  font-variant-numeric: tabular-nums;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SCROLLBAR REFINEMENT
+───────────────────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   AURORA GRADIENT UTILITIES (Public website marketing areas ONLY)
+───────────────────────────────────────────────────────────────────────────── */
+.aurora-hero {
+  position: relative;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+.aurora-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(99,102,241,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 110%, rgba(6,182,212,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(29,78,216,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.aurora-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Subtle section gradient for marketing highlights */
+.aurora-section {
+  background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 50%, #F0FDFB 100%);
+}
+
+/* Glass card — limited use on public site hero only */
+.glass-card {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 4px 24px rgba(29,78,216,0.08), 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PREMIUM SHADOW UTILITIES
+───────────────────────────────────────────────────────────────────────────── */
+.shadow-card {
+  box-shadow: var(--shadow-card);
+}
+.shadow-elevated {
+  box-shadow: var(--shadow-elevated);
+}
+.shadow-dialog {
+  box-shadow: var(--shadow-dialog);
+}
+.shadow-dropdown {
+  box-shadow: var(--shadow-dropdown);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PREMIUM ANIMATION UTILITIES
+───────────────────────────────────────────────────────────────────────────── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+
+@keyframes aurora-float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.02); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+.animate-aurora-float {
+  animation: aurora-float 6s ease-in-out infinite;
+}
+
+/* Stagger helpers */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.10s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.20s; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SIDEBAR DARK UTILITY CLASSES
+───────────────────────────────────────────────────────────────────────────── */
+.sidebar-dark {
+  background-color: var(--sidebar);
+  color: var(--sidebar-foreground);
+}
+.sidebar-item-active {
+  background-color: var(--sidebar-active);
+  color: var(--sidebar-active-text);
+  border-left: 2px solid var(--primary);
+}
+.sidebar-item-hover:hover {
+  background-color: var(--sidebar-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FOCUS VISIBLE REFINEMENT
+───────────────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }

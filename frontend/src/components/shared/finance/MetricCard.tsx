@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 export function TrendBadge({
@@ -12,14 +11,10 @@ export function TrendBadge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-bold',
-        {
-          'bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400':
-            type === 'positive',
-          'bg-rose-500/10 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400':
-            type === 'negative',
-          'bg-muted text-muted-foreground': type === 'neutral',
-        }
+        'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold',
+        type === 'positive' && 'bg-[#F0FDF4] text-[#16A34A]',
+        type === 'negative' && 'bg-[#FEF2F2] text-[#DC2626]',
+        type === 'neutral' && 'bg-muted text-muted-foreground',
       )}
     >
       {type === 'positive' && '↑'}
@@ -38,8 +33,17 @@ interface MetricCardProps {
     value: string | number;
     type: 'positive' | 'negative' | 'neutral';
   };
+  accentColor?: 'primary' | 'emerald' | 'amber' | 'rose' | 'sky';
   className?: string;
 }
+
+const accentMap: Record<string, { stripe: string; icon: string; iconBg: string }> = {
+  primary: { stripe: 'bg-[#1D4ED8]', icon: 'text-[#1D4ED8]', iconBg: 'bg-[#DBEAFE]' },
+  emerald: { stripe: 'bg-[#10B981]', icon: 'text-[#059669]', iconBg: 'bg-[#D1FAE5]' },
+  amber:   { stripe: 'bg-[#F59E0B]', icon: 'text-[#D97706]', iconBg: 'bg-[#FEF3C7]' },
+  rose:    { stripe: 'bg-[#DC2626]', icon: 'text-[#B91C1C]', iconBg: 'bg-[#FEE2E2]' },
+  sky:     { stripe: 'bg-[#0EA5E9]', icon: 'text-[#0284C7]', iconBg: 'bg-[#E0F2FE]' },
+};
 
 export function MetricCard({
   title,
@@ -47,26 +51,48 @@ export function MetricCard({
   description,
   icon,
   trend,
+  accentColor = 'primary',
   className,
 }: MetricCardProps) {
+  const accent = accentMap[accentColor] || accentMap.primary;
+
   return (
-    <Card className={cn('overflow-hidden hover:shadow-md transition-all border shadow-xs bg-card', className)}>
-      <CardContent className="p-6">
-        <div className="flex justify-between items-start">
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{title}</span>
-            <div className="text-2xl font-extrabold text-foreground">{value}</div>
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-xl border border-border bg-card',
+        'shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.04)]',
+        'hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)]',
+        'transition-shadow duration-200',
+        className
+      )}
+    >
+      {/* Left accent stripe */}
+      <div className={cn('absolute inset-y-0 left-0 w-1 rounded-l-xl', accent.stripe)} />
+
+      <div className="pl-5 pr-5 py-5">
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-1.5 min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground truncate">
+              {title}
+            </p>
+            <div className="text-[26px] font-bold text-foreground leading-tight">{value}</div>
           </div>
-          {icon && <div className="p-2 rounded-lg bg-primary/10 text-primary">{icon}</div>}
+          {icon && (
+            <div className={cn('shrink-0 rounded-xl p-2.5', accent.iconBg, accent.icon)}>
+              {icon}
+            </div>
+          )}
         </div>
         {(description || trend) && (
-          <div className="mt-4 flex items-center gap-2">
+          <div className="mt-3 flex items-center gap-2">
             {trend && <TrendBadge value={trend.value} type={trend.type} />}
-            {description && <span className="text-xs text-muted-foreground font-semibold">{description}</span>}
+            {description && (
+              <span className="text-[12px] text-muted-foreground">{description}</span>
+            )}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

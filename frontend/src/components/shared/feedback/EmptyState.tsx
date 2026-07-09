@@ -22,32 +22,23 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'flex min-h-[400px] flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center animate-in fade-in-50 duration-300',
+        'flex min-h-[360px] flex-col items-center justify-center rounded-xl border border-border bg-card p-10 text-center',
+        'animate-fade-in',
         className
       )}
     >
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground mb-4">
+      {/* Icon Container */}
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#DBEAFE] text-[#1D4ED8]">
         {icon || (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-7 w-7">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
           </svg>
         )}
       </div>
-      <h3 className="text-lg font-semibold mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground max-w-sm mb-6">{description}</p>
+      <h3 className="text-base font-semibold text-foreground mb-1.5">{title}</h3>
+      <p className="text-sm text-muted-foreground max-w-xs leading-relaxed mb-6">{description}</p>
       {actionLabel && onAction && (
-        <Button onClick={onAction} variant="outline" size="sm">
+        <Button onClick={onAction} size="sm">
           {actionLabel}
         </Button>
       )}

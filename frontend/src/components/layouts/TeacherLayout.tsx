@@ -11,8 +11,7 @@ interface TeacherLayoutProps {
 
 export function TeacherLayout({ children }: TeacherLayoutProps) {
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
-      {/* Entity Sidebar */}
+    <div className="flex h-screen w-full overflow-hidden bg-[#F8FAFC]">
       <Sidebar
         title="Teacher Portal"
         items={teacherNavigation}
@@ -20,13 +19,9 @@ export function TeacherLayout({ children }: TeacherLayoutProps) {
         profileName="Dr. Rahman"
         profileRole="Head of CST"
       />
-
-      {/* Main View Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header panelTitle="Faculty Panel Dashboard" />
-        
-        {/* Scrollable Viewport */}
-        <main className="flex-1 overflow-y-auto bg-muted/30">
+        <Header panelTitle="Faculty Panel" />
+        <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>

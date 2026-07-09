@@ -11,8 +11,7 @@ interface AccountantLayoutProps {
 
 export function AccountantLayout({ children }: AccountantLayoutProps) {
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
-      {/* Entity Sidebar */}
+    <div className="flex h-screen w-full overflow-hidden bg-[#F8FAFC]">
       <Sidebar
         title="Accounts Portal"
         items={accountantNavigation}
@@ -20,13 +19,9 @@ export function AccountantLayout({ children }: AccountantLayoutProps) {
         profileName="Mr. Karim"
         profileRole="Senior Accountant"
       />
-
-      {/* Main View Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header panelTitle="Financial Management Console" />
-        
-        {/* Scrollable Viewport */}
-        <main className="flex-1 overflow-y-auto bg-muted/30">
+        <Header panelTitle="Financial Management" />
+        <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>

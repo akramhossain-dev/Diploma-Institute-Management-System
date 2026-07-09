@@ -32,6 +32,12 @@ router.post(
   noticeController.create
 );
 
+// GET /api/notices/public — no auth required, published notices for public website
+router.get(
+  "/public",
+  noticeController.getPublic
+);
+
 // GET list — admin sees all; others use /feed
 router.get(
   "/",

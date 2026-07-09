@@ -53,7 +53,7 @@ export function ConfirmDialog({
             {description}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="mt-6 flex justify-end gap-2">
+        <DialogFooter>
           <Button
             variant="outline"
             size="sm"

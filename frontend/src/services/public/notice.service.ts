@@ -44,7 +44,7 @@ export const noticeService = {
       if (params?.search) queryParams.append('search', params.search);
       if (params?.category) queryParams.append('category', params.category);
 
-      const response = await publicAxios.get<PaginatedResponse<NoticeInfo>>(`/notices?${queryParams.toString()}`);
+      const response = await publicAxios.get<PaginatedResponse<NoticeInfo>>(`/notices/public?${queryParams.toString()}`);
       return response.data;
     } catch (e) {
       console.warn('[Public Service] /notices failed. Falling back to mock data.');

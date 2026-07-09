@@ -11,8 +11,7 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
-      {/* Entity Sidebar */}
+    <div className="flex h-screen w-full overflow-hidden bg-[#F8FAFC]">
       <Sidebar
         title="Admin Portal"
         items={adminNavigation}
@@ -20,13 +19,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         profileName="Super Admin"
         profileRole="Administrator"
       />
-
-      {/* Main View Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header panelTitle="DIMS Administration Panel" />
-        
-        {/* Scrollable Viewport */}
-        <main className="flex-1 overflow-y-auto bg-muted/30">
+        <Header panelTitle="Administration Panel" />
+        <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>

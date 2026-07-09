@@ -16,6 +16,12 @@ const noticeController = {
     return successResponse(res, { statusCode: 200, message: "Notices retrieved", data: notices, pagination });
   }),
 
+  // GET /api/notices/public — no auth required, published notices for public website
+  getPublic: asyncHandler(async (req, res) => {
+    const { notices, pagination } = await noticeService.getPublicNotices(req.query);
+    return successResponse(res, { statusCode: 200, message: "Public notices retrieved", data: notices, pagination });
+  }),
+
   // GET /api/notices/feed  — entity-specific published notice feed
   getFeed: asyncHandler(async (req, res) => {
     const context = {
