@@ -20,7 +20,7 @@ export const teacherMeController = {
   getProfile:           asyncHandler(async (req, res) => { const d = await teacherMeService.getProfile(req.entityId);                    return successResponse(res, { statusCode: 200, message: "Profile retrieved", data: d }); }),
   getCourses:           asyncHandler(async (req, res) => { const d = await teacherMeService.getCourses(req.entityId, req.query);          return successResponse(res, { statusCode: 200, message: "Courses retrieved", data: d }); }),
   getRoutine:           asyncHandler(async (req, res) => { const d = await teacherMeService.getRoutine(req.entityId, req.query);          return successResponse(res, { statusCode: 200, message: "Routine retrieved", data: d }); }),
-  getNotices:           asyncHandler(async (req, res) => { const d = await teacherMeService.getNotices(req.query);                       return successResponse(res, { statusCode: 200, message: "Notices retrieved", data: d }); }),
+  getNotices:           asyncHandler(async (req, res) => { const d = await teacherMeService.getNotices(req.entityId, req.query);          return successResponse(res, { statusCode: 200, message: "Notices retrieved", data: d }); }),
   getAttendanceSessions: asyncHandler(async (req, res) => { const d = await teacherMeService.getAttendanceSessions(req.entityId, req.query); return successResponse(res, { statusCode: 200, message: "Sessions retrieved", data: d }); }),
   getExamResponsibilities: asyncHandler(async (req, res) => { const d = await teacherMeService.getExamResponsibilities(req.entityId, req.query); return successResponse(res, { statusCode: 200, message: "Exam responsibilities retrieved", data: d }); }),
 };
@@ -30,12 +30,12 @@ export const accountantMeController = {
   getProfile:  asyncHandler(async (req, res) => { const d = await accountantMeService.getProfile(req.entityId);           return successResponse(res, { statusCode: 200, message: "Profile retrieved", data: d }); }),
   getPayments: asyncHandler(async (req, res) => { const d = await accountantMeService.getPayments(req.entityId, req.query); return successResponse(res, { statusCode: 200, message: "Payments retrieved", data: d }); }),
   getSummary:  asyncHandler(async (req, res) => { const d = await accountantMeService.getSummary(req.entityId);            return successResponse(res, { statusCode: 200, message: "Summary retrieved", data: d }); }),
-  getNotices:  asyncHandler(async (req, res) => { const d = await accountantMeService.getNotices(req.query);               return successResponse(res, { statusCode: 200, message: "Notices retrieved", data: d }); }),
+  getNotices:  asyncHandler(async (req, res) => { const d = await accountantMeService.getNotices(req.entityId, req.query);  return successResponse(res, { statusCode: 200, message: "Notices retrieved", data: d }); }),
 };
 
 // ── Admin ──────────────────────────────────────────────────────────────────
 export const adminMeController = {
   getProfile:   asyncHandler(async (req, res) => { const d = await adminMeService.getProfile(req.entityId);  return successResponse(res, { statusCode: 200, message: "Profile retrieved", data: d }); }),
-  getNotices:   asyncHandler(async (req, res) => { const d = await adminMeService.getNotices(req.query);      return successResponse(res, { statusCode: 200, message: "Notices retrieved", data: d }); }),
+  getNotices:   asyncHandler(async (req, res) => { const d = await adminMeService.getNotices(req.entityId, req.query);      return successResponse(res, { statusCode: 200, message: "Notices retrieved", data: d }); }),
   getDashboard: asyncHandler(async (req, res) => { const d = await adminMeService.getDashboard();             return successResponse(res, { statusCode: 200, message: "Dashboard retrieved", data: d }); }),
 };

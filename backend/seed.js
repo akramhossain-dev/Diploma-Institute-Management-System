@@ -18,9 +18,9 @@ import Admin from "./src/modules/admins/admin.model.js";
 import AdminAuth from "./src/modules/auth/admin/adminAuth.model.js";
 import { hashPassword } from "./src/utils/hashHelper.js";
 
-const SEED_EMAIL    = process.env.SEED_ADMIN_EMAIL    || "admin@dims.edu.bd";
-const SEED_PASSWORD = process.env.SEED_ADMIN_PASSWORD || "Admin@12345";
-const SEED_NAME     = process.env.SEED_ADMIN_NAME     || "Super Admin";
+const SEED_EMAIL    = process.env.SEED_ADMIN_EMAIL || "admin@gmail.com";
+const SEED_PASSWORD = process.env.SEED_ADMIN_PASSWORD || "admin@gmail.com";
+const SEED_NAME = process.env.SEED_ADMIN_NAME || "Super Admin";
 
 const seed = async () => {
   await mongoose.connect(env.MONGO_URI);

@@ -21,6 +21,13 @@ const resultController = {
 
   getById: asyncHandler(async (req, res) => {
     const result = await resultService.getResultById(req.params.id);
+    if (result && req.entityType === "student") {
+      const resultStudentId = result.studentId?._id || result.studentId;
+      if (String(resultStudentId) !== String(req.entityId)) {
+        const { default: ApiError } = await import("../../utils/ApiError.js");
+        throw new ApiError(403, "Access denied. You can only view your own result card.", "FORBIDDEN");
+      }
+    }
     return successResponse(res, { statusCode: 200, message: "Result retrieved", data: result });
   }),
 

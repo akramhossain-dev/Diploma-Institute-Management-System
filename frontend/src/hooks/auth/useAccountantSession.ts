@@ -23,7 +23,8 @@ export function useAccountantSession() {
           { withCredentials: true }
         );
         const { accessToken: newAccessToken, profile: accountantProfile } = response.data.data;
-        setSession(newAccessToken, accountantProfile);
+        const existingProfile = useAccountantAuthStore.getState().profile;
+        setSession(newAccessToken, accountantProfile || existingProfile);
       } catch (err) {
         clearSession();
       } finally {

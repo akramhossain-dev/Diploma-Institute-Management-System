@@ -3,6 +3,7 @@ import { param } from "express-validator";
 import studentFeeAssignmentController from "./studentFeeAssignment.controller.js";
 import authenticate from "../../middlewares/authenticate.js";
 import authorizeEntity from "../../middlewares/authorizeEntity.js";
+import validateStudentOwnership from "../../middlewares/validateStudentOwnership.js";
 import handleValidationErrors from "../../utils/handleValidationErrors.js";
 import {
   createAssignmentValidation,
@@ -24,6 +25,7 @@ router.get(
   authenticate,
   authorizeEntity("admin", "accountant", "student"),
   validateStudentId,
+  validateStudentOwnership("studentId"),
   studentFeeAssignmentController.getLedger
 );
 

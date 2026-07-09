@@ -4,6 +4,7 @@ import { param } from "express-validator";
 import attendanceController from "./attendance.controller.js";
 import authenticate from "../../middlewares/authenticate.js";
 import authorizeEntity from "../../middlewares/authorizeEntity.js";
+import validateStudentOwnership from "../../middlewares/validateStudentOwnership.js";
 import handleValidationErrors from "../../utils/handleValidationErrors.js";
 import {
   createSessionValidation,
@@ -80,6 +81,7 @@ router.get(
   authenticate,
   authorizeEntity("admin", "teacher", "student"),
   validateStudentId,
+  validateStudentOwnership("studentId"),
   attendanceQueryValidation,
   handleValidationErrors,
   attendanceController.getStudentAttendance
@@ -91,6 +93,7 @@ router.get(
   authenticate,
   authorizeEntity("admin", "teacher", "student"),
   validateStudentId,
+  validateStudentOwnership("studentId"),
   attendanceController.getStudentSummary
 );
 

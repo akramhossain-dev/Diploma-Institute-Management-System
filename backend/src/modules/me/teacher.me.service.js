@@ -1,5 +1,5 @@
 import Teacher from "../teachers/teacher.model.js";
-import Notice from "../notices/notice.model.js";
+import noticeService from "../notices/notice.service.js";
 import TeacherAssignment from "../teacherAssignments/teacherAssignment.model.js";
 import ClassRoutine from "../classRoutines/classRoutine.model.js";
 import AttendanceSession from "../attendance/attendanceSession.model.js";
@@ -45,18 +45,15 @@ const teacherMeService = {
       .lean();
   },
 
-  async getNotices(query) {
-    const { page, limit, skip } = getPaginationParams(query);
-    const filter = {
-      publishStatus: "published",
-      audienceType:  { $in: ["all", "teachers"] },
-      $or: [{ expiresAt: null }, { expiresAt: { $gte: new Date() } }],
-    };
-    const [notices, total] = await Promise.all([
-      Notice.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
-      Notice.countDocuments(filter),
-    ]);
-    return { notices, pagination: buildPaginationMeta(total, page, limit) };
+  async getNotices(teacherId, query) {
+    const teacher = await Teacher.findById(teacherId).select("departmentId").lean();
+    const departmentId = teacher?.departmentId || null;
+
+    return noticeService.getNoticesForEntity(
+      "teachers",
+      { departmentId },
+      query
+    );
   },
 
   async getAttendanceSessions(teacherId, query) {

@@ -23,7 +23,8 @@ export function useStudentSession() {
           { withCredentials: true }
         );
         const { accessToken: newAccessToken, profile: studentProfile } = response.data.data;
-        setSession(newAccessToken, studentProfile);
+        const existingProfile = useStudentAuthStore.getState().profile;
+        setSession(newAccessToken, studentProfile || existingProfile);
       } catch (err) {
         clearSession();
       } finally {

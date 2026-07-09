@@ -30,13 +30,13 @@ const attendanceController = {
 
   // PATCH /api/attendance/sessions/:id
   updateSession: asyncHandler(async (req, res) => {
-    const session = await attendanceService.updateSessionRecords(req.params.id, req.body.records, req.entityId);
+    const session = await attendanceService.updateSessionRecords(req.params.id, req.body.records, req.entityId, req.entityType);
     return successResponse(res, { statusCode: 200, message: "Attendance records updated", data: session });
   }),
 
   // PATCH /api/attendance/sessions/:id/finalize
   finalizeSession: asyncHandler(async (req, res) => {
-    const session = await attendanceService.finalizeSession(req.params.id);
+    const session = await attendanceService.finalizeSession(req.params.id, req.entityId, req.entityType);
     return successResponse(res, { statusCode: 200, message: "Attendance session finalized and locked", data: session });
   }),
 

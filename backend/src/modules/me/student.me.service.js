@@ -1,5 +1,5 @@
 import Student from "../students/student.model.js";
-import Notice from "../notices/notice.model.js";
+import noticeService from "../notices/notice.service.js";
 import ClassRoutine from "../classRoutines/classRoutine.model.js";
 import AttendanceRecord from "../attendance/attendanceRecord.model.js";
 import Result from "../results/result.model.js";
@@ -20,21 +20,18 @@ const studentMeService = {
   },
 
   async getNotices(studentId, query) {
-    const { page, limit, skip } = getPaginationParams(query);
-    const student = await Student.findById(studentId).select("departmentId semesterId").lean();
+    const student = await Student.findById(studentId).select("departmentId semesterId academicSessionId").lean();
     if (!student) throw new ApiError(404, "Student not found", "NOT_FOUND");
 
-    const filter = {
-      publishStatus: "published",
-      audienceType:  { $in: ["all", "students"] },
-      $or: [{ expiresAt: null }, { expiresAt: { $gte: new Date() } }],
-    };
-
-    const [notices, total] = await Promise.all([
-      Notice.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
-      Notice.countDocuments(filter),
-    ]);
-    return { notices, pagination: buildPaginationMeta(total, page, limit) };
+    return noticeService.getNoticesForEntity(
+      "students",
+      {
+        departmentId:      student.departmentId,
+        semesterId:        student.semesterId,
+        academicSessionId: student.academicSessionId,
+      },
+      query
+    );
   },
 
   async getRoutine(studentId, query) {

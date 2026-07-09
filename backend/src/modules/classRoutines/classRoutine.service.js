@@ -170,9 +170,10 @@ const classRoutineService = {
     const endTime   = data.endTime    || existing.endTime;
     const room      = data.room       !== undefined ? data.room       : existing.room;
     const section   = data.section    !== undefined ? data.section    : existing.section;
-    const teacherId = existing.teacherId;
-    const departmentId = existing.departmentId;
-    const semesterId   = existing.semesterId;
+    const teacherId = data.teacherId || existing.teacherId;
+    const departmentId = data.departmentId || existing.departmentId;
+    const semesterId   = data.semesterId || existing.semesterId;
+
 
     if (endTime <= startTime) {
       throw new ApiError(400, "endTime must be after startTime", "VALIDATION_ERROR");

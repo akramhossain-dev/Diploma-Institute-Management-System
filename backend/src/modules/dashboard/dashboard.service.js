@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Student from "../students/student.model.js";
 import Teacher from "../teachers/teacher.model.js";
 import Accountant from "../accountants/accountant.model.js";
@@ -83,7 +84,10 @@ const dashboardService = {
   },
 
   async getFinanceDashboard(query = {}) {
-    const match = query.academicSessionId ? { academicSessionId: query.academicSessionId } : {};
+    const match = {};
+    if (query.academicSessionId) {
+      match.academicSessionId = new mongoose.Types.ObjectId(query.academicSessionId);
+    }
     const { start: monthStart, end: monthEnd } = monthBounds();
 
     const [overview, byType, recentPayments] = await Promise.all([
@@ -102,7 +106,10 @@ const dashboardService = {
   },
 
   async getAcademicDashboard(query = {}) {
-    const match = { status: "active", ...(query.academicSessionId ? { academicSessionId: query.academicSessionId } : {}) };
+    const match = { status: "active" };
+    if (query.academicSessionId) {
+      match.academicSessionId = new mongoose.Types.ObjectId(query.academicSessionId);
+    }
 
     const [bySemester, recentExams, attSummary] = await Promise.all([
       Student.aggregate([

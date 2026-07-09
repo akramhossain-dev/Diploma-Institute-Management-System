@@ -27,7 +27,8 @@ export function useAdminSession() {
           { withCredentials: true }
         );
         const { accessToken: newAccessToken, profile: adminProfile } = response.data.data;
-        setSession(newAccessToken, adminProfile);
+        const existingProfile = useAdminAuthStore.getState().profile;
+        setSession(newAccessToken, adminProfile || existingProfile);
       } catch (err) {
         // Failed silent refresh -> clear state
         clearSession();

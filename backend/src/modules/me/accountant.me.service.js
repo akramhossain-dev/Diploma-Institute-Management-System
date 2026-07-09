@@ -1,6 +1,7 @@
+import mongoose from "mongoose";
 import Accountant from "../accountants/accountant.model.js";
 import Payment from "../payments/payment.model.js";
-import Notice from "../notices/notice.model.js";
+import noticeService from "../notices/notice.service.js";
 import ApiError from "../../utils/ApiError.js";
 import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination.js";
 
@@ -32,13 +33,14 @@ const accountantMeService = {
   },
 
   async getSummary(accountantId) {
+    const accountantObjId = new mongoose.Types.ObjectId(accountantId);
     const [totals, byMethod] = await Promise.all([
       Payment.aggregate([
-        { $match: { collectedByAccountantId: accountantId, paymentStatus: "completed" } },
+        { $match: { collectedByAccountantId: accountantObjId, paymentStatus: "completed" } },
         { $group: { _id: null, totalCollected: { $sum: "$totalAmount" }, count: { $sum: 1 } } },
       ]),
       Payment.aggregate([
-        { $match: { collectedByAccountantId: accountantId, paymentStatus: "completed" } },
+        { $match: { collectedByAccountantId: accountantObjId, paymentStatus: "completed" } },
         { $group: { _id: "$paymentMethod", total: { $sum: "$totalAmount" }, count: { $sum: 1 } } },
         { $sort: { total: -1 } },
       ]),
@@ -46,18 +48,12 @@ const accountantMeService = {
     return { totals: totals[0] || { totalCollected: 0, count: 0 }, byPaymentMethod: byMethod };
   },
 
-  async getNotices(query) {
-    const { page, limit, skip } = getPaginationParams(query);
-    const filter = {
-      publishStatus: "published",
-      audienceType:  { $in: ["all", "accountants"] },
-      $or: [{ expiresAt: null }, { expiresAt: { $gte: new Date() } }],
-    };
-    const [notices, total] = await Promise.all([
-      Notice.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
-      Notice.countDocuments(filter),
-    ]);
-    return { notices, pagination: buildPaginationMeta(total, page, limit) };
+  async getNotices(accountantId, query) {
+    return noticeService.getNoticesForEntity(
+      "accountants",
+      {},
+      query
+    );
   },
 };
 

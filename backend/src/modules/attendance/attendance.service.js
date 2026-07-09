@@ -164,9 +164,13 @@ const attendanceService = {
   // ──────────────────────────────────────────────────────────────────────────
   // UPDATE RECORDS (correction flow — only allowed on open sessions)
   // ──────────────────────────────────────────────────────────────────────────
-  async updateSessionRecords(sessionId, records, markerId) {
+  async updateSessionRecords(sessionId, records, markerId, markerType) {
     const session = await AttendanceSession.findById(sessionId);
     if (!session) throw new ApiError(404, "Attendance session not found", "NOT_FOUND");
+
+    if (markerType === "teacher" && String(session.teacherId) !== String(markerId)) {
+      throw new ApiError(403, "Access denied. You cannot modify another teacher's session.", "FORBIDDEN");
+    }
 
     if (session.sessionStatus === "finalized") {
       throw new ApiError(400, "Finalized sessions cannot be modified", "BUSINESS_RULE_VIOLATION");
@@ -201,9 +205,13 @@ const attendanceService = {
   // ──────────────────────────────────────────────────────────────────────────
   // FINALIZE SESSION — lock it permanently
   // ──────────────────────────────────────────────────────────────────────────
-  async finalizeSession(sessionId) {
+  async finalizeSession(sessionId, markerId, markerType) {
     const session = await AttendanceSession.findById(sessionId);
     if (!session) throw new ApiError(404, "Attendance session not found", "NOT_FOUND");
+
+    if (markerType === "teacher" && String(session.teacherId) !== String(markerId)) {
+      throw new ApiError(403, "Access denied. You cannot finalize another teacher's session.", "FORBIDDEN");
+    }
 
     if (session.sessionStatus === "finalized") {
       throw new ApiError(400, "Session is already finalized", "ALREADY_DONE");

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Student from "../students/student.model.js";
 import Admission from "../admissions/admission.model.js";
 import AttendanceRecord from "../attendance/attendanceRecord.model.js";
@@ -70,8 +71,17 @@ const reportService = {
     ]);
 
     // Aggregate summary for the filtered context
+    const matchFilter = {};
+    if (studentId)         matchFilter.studentId         = new mongoose.Types.ObjectId(studentId);
+    if (teacherId)         matchFilter.teacherId         = new mongoose.Types.ObjectId(teacherId);
+    if (courseId)          matchFilter.courseId          = new mongoose.Types.ObjectId(courseId);
+    if (departmentId)      matchFilter.departmentId      = new mongoose.Types.ObjectId(departmentId);
+    if (semesterId)        matchFilter.semesterId        = new mongoose.Types.ObjectId(semesterId);
+    if (academicSessionId) matchFilter.academicSessionId = new mongoose.Types.ObjectId(academicSessionId);
+    Object.assign(matchFilter, dateFilter(fromDate, toDate, "attendanceDate"));
+
     const summary = await AttendanceRecord.aggregate([
-      { $match: { ...filter, studentId: filter.studentId ? { $exists: true } : { $exists: true } } },
+      { $match: matchFilter },
       { $group: { _id: null, total: { $sum: 1 }, present: { $sum: { $cond: [{ $eq: ["$status", "present"] }, 1, 0] } }, absent: { $sum: { $cond: [{ $eq: ["$status", "absent"] }, 1, 0] } }, late: { $sum: { $cond: [{ $eq: ["$status", "late"] }, 1, 0] } }, excused: { $sum: { $cond: [{ $eq: ["$status", "excused"] }, 1, 0] } } } },
     ]);
 
@@ -91,6 +101,14 @@ const reportService = {
     if (academicSessionId) filter.academicSessionId = academicSessionId;
     if (resultStatus)      filter.resultStatus      = resultStatus;
 
+    const matchFilter = {};
+    if (examId)            matchFilter.examId            = new mongoose.Types.ObjectId(examId);
+    if (studentId)         matchFilter.studentId         = new mongoose.Types.ObjectId(studentId);
+    if (departmentId)      matchFilter.departmentId      = new mongoose.Types.ObjectId(departmentId);
+    if (semesterId)        matchFilter.semesterId        = new mongoose.Types.ObjectId(semesterId);
+    if (academicSessionId) matchFilter.academicSessionId = new mongoose.Types.ObjectId(academicSessionId);
+    if (resultStatus)      matchFilter.resultStatus      = resultStatus;
+
     const [results, total, summary] = await Promise.all([
       Result.find(filter)
         .populate("studentId", "fullName studentId rollNumber")
@@ -99,7 +117,7 @@ const reportService = {
         .skip(skip).limit(limit).lean(),
       Result.countDocuments(filter),
       Result.aggregate([
-        { $match: filter },
+        { $match: matchFilter },
         { $group: { _id: null, totalResults: { $sum: 1 }, passCount: { $sum: { $cond: [{ $eq: ["$overallPassFailStatus", "pass"] }, 1, 0] } }, failCount: { $sum: { $cond: [{ $eq: ["$overallPassFailStatus", "fail"] }, 1, 0] } }, avgGpa: { $avg: "$gpa" } } },
       ]),
     ]);
@@ -124,12 +142,19 @@ const reportService = {
     if (paymentMethod) payFilter.paymentMethod = paymentMethod;
     Object.assign(payFilter, dateFilter(fromDate, toDate, "paymentDate"));
 
+    const assignMatch = {};
+    if (studentId)         assignMatch.studentId         = new mongoose.Types.ObjectId(studentId);
+    if (departmentId)      assignMatch.departmentId      = new mongoose.Types.ObjectId(departmentId);
+    if (semesterId)        assignMatch.semesterId        = new mongoose.Types.ObjectId(semesterId);
+    if (academicSessionId) assignMatch.academicSessionId = new mongoose.Types.ObjectId(academicSessionId);
+    if (billingStatus)     assignMatch.billingStatus     = billingStatus;
+
     const [assignments, assignTotal, payments, payTotal, totals] = await Promise.all([
       StudentFeeAssignment.find(assignFilter).populate("studentId", "fullName studentId").sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
       StudentFeeAssignment.countDocuments(assignFilter),
       Payment.find(payFilter).populate("studentId", "fullName studentId").populate("collectedByAccountantId", "fullName staffId").sort({ paymentDate: -1 }).limit(50).lean(),
       Payment.countDocuments(payFilter),
-      StudentFeeAssignment.aggregate([{ $match: assignFilter }, { $group: { _id: null, totalBilled: { $sum: "$finalAmount" }, totalPaid: { $sum: "$amountPaid" }, totalDue: { $sum: "$amountRemaining" } } }]),
+      StudentFeeAssignment.aggregate([{ $match: assignMatch }, { $group: { _id: null, totalBilled: { $sum: "$finalAmount" }, totalPaid: { $sum: "$amountPaid" }, totalDue: { $sum: "$amountRemaining" } } }]),
     ]);
 
     return { assignments, payments, summary: totals[0] || {}, assignPagination: buildPaginationMeta(assignTotal, page, limit) };
@@ -141,16 +166,23 @@ const reportService = {
     const { departmentId, semesterId, academicSessionId, admissionStatus, fromDate, toDate } = query;
 
     const filter = {};
-    if (departmentId)      filter.departmentId      = departmentId;
-    if (semesterId)        filter.semesterId        = semesterId;
-    if (academicSessionId) filter.academicSessionId = academicSessionId;
-    if (admissionStatus)   filter.admissionStatus   = admissionStatus;
+    if (departmentId)      filter.desiredDepartmentId = departmentId;
+    if (semesterId)        filter.targetSemesterId    = semesterId;
+    if (academicSessionId) filter.academicSessionId   = academicSessionId;
+    if (admissionStatus)   filter.admissionStatus     = admissionStatus;
     Object.assign(filter, dateFilter(fromDate, toDate, "createdAt"));
+
+    const admissionMatch = {};
+    if (departmentId)      admissionMatch.desiredDepartmentId = new mongoose.Types.ObjectId(departmentId);
+    if (semesterId)        admissionMatch.targetSemesterId    = new mongoose.Types.ObjectId(semesterId);
+    if (academicSessionId) admissionMatch.academicSessionId   = new mongoose.Types.ObjectId(academicSessionId);
+    if (admissionStatus)   admissionMatch.admissionStatus     = admissionStatus;
+    Object.assign(admissionMatch, dateFilter(fromDate, toDate, "createdAt"));
 
     const [admissions, total, funnel] = await Promise.all([
       Admission.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
       Admission.countDocuments(filter),
-      Admission.aggregate([{ $match: filter }, { $group: { _id: "$admissionStatus", count: { $sum: 1 } } }]),
+      Admission.aggregate([{ $match: admissionMatch }, { $group: { _id: "$admissionStatus", count: { $sum: 1 } } }]),
     ]);
 
     return { admissions, funnel, pagination: buildPaginationMeta(total, page, limit) };

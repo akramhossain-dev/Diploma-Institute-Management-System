@@ -213,9 +213,31 @@ const noticeService = {
       ],
     };
 
-    if (departmentId)      filter.targetDepartmentIds      = { $in: [departmentId,      null] };
-    if (semesterId)        filter.targetSemesterIds        = { $in: [semesterId,        null] };
-    if (academicSessionId) filter.targetAcademicSessionIds = { $in: [academicSessionId, null] };
+    if (departmentId) {
+      filter.$and.push({
+        $or: [
+          { targetDepartmentIds: { $size: 0 } },
+          { targetDepartmentIds: departmentId },
+        ],
+      });
+    }
+    if (semesterId) {
+      filter.$and.push({
+        $or: [
+          { targetSemesterIds: { $size: 0 } },
+          { targetSemesterIds: semesterId },
+        ],
+      });
+    }
+    if (academicSessionId) {
+      filter.$and.push({
+        $or: [
+          { targetAcademicSessionIds: { $size: 0 } },
+          { targetAcademicSessionIds: academicSessionId },
+        ],
+      });
+    }
+
 
     const [notices, total] = await Promise.all([
       Notice.find(filter)

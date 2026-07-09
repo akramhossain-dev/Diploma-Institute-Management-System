@@ -58,6 +58,22 @@ const clearSessionForEntity = (entityType: string): void => {
   }
 };
 
+// Helper to get cached profile from Zustand stores
+const getProfileFromStore = (entityType: string): any => {
+  switch (entityType) {
+    case 'admin':
+      return useAdminAuthStore.getState().profile;
+    case 'student':
+      return useStudentAuthStore.getState().profile;
+    case 'teacher':
+      return useTeacherAuthStore.getState().profile;
+    case 'accountant':
+      return useAccountantAuthStore.getState().profile;
+    default:
+      return null;
+  }
+};
+
 // Tracks refreshing status per entity to prevent concurrent duplicate refresh requests
 const refreshRequests: Record<string, Promise<any> | null> = {
   admin: null,
@@ -116,9 +132,10 @@ export const createApiClient = (
           refreshRequests[entityType] = null; // Reset refresh promise
 
           const { accessToken, profile } = refreshResponse.data.data;
+          const currentProfile = profile || getProfileFromStore(entityType);
 
           // Update Zustand store and sessionStorage
-          updateSessionForEntity(entityType, accessToken, profile);
+          updateSessionForEntity(entityType, accessToken, currentProfile);
 
           // Update headers on original request and retry
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
