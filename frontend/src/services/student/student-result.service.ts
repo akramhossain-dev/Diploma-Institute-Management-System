@@ -2,7 +2,7 @@ import { studentAxios } from '@/lib/studentAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { StudentExamResultSummary } from '@/types/student/result.types';
 
-let mockResults: StudentExamResultSummary[] = [
+const mockResults: StudentExamResultSummary[] = [
   {
     _id: 'res-summary-1',
     examName: 'Mid Term 2026',

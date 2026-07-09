@@ -2,7 +2,7 @@ import { studentAxios } from '@/lib/studentAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { StudentFeeItem, StudentPaymentItem, StudentFeeSummary } from '@/types/student/student-fee.types';
 
-let mockStudentFees: StudentFeeItem[] = [
+const mockStudentFees: StudentFeeItem[] = [
   {
     _id: 'fee-1',
     name: 'Admission Fee 2026',
@@ -23,7 +23,7 @@ let mockStudentFees: StudentFeeItem[] = [
   },
 ];
 
-let mockStudentPayments: StudentPaymentItem[] = [
+const mockStudentPayments: StudentPaymentItem[] = [
   {
     _id: 'pay-rec-1',
     amount: 15000,

@@ -2,7 +2,7 @@ import { studentAxios } from '@/lib/studentAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { StudentDashboardData } from '@/types/student/dashboard.types';
 
-let mockStudentDashboard: StudentDashboardData = {
+const mockStudentDashboard: StudentDashboardData = {
   attendanceRate: 92.4,
   totalDue: 3000,
   latestGpa: 3.84,

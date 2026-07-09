@@ -2,7 +2,7 @@ import { accountantAxios } from '@/lib/accountantAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { StudentBillingOverview } from '@/types/accountant/payment.types';
 
-let mockAccountantFees: StudentBillingOverview[] = [
+const mockAccountantFees: StudentBillingOverview[] = [
   {
     studentId: 'stud-1',
     studentName: 'Ahsan Habib',

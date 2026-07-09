@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto rounded-xl border border-border shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+    <div className="relative w-full overflow-auto rounded-2xl border border-[#E2E8F0] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
       <table ref={ref} className={cn('w-full caption-bottom text-sm', className)} {...props} />
     </div>
   )
@@ -14,7 +14,7 @@ const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttribut
   ({ className, ...props }, ref) => (
     <thead
       ref={ref}
-      className={cn('border-b border-border bg-[#F8FAFC] [&_tr]:border-b-0', className)}
+      className={cn('border-b border-[#E2E8F0] bg-[#F8FAFC] [&_tr]:border-b-0', className)}
       {...props}
     />
   )
@@ -23,7 +23,7 @@ TableHeader.displayName = 'TableHeader';
 
 const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <tbody ref={ref} className={cn('bg-card [&_tr:last-child]:border-0 divide-y divide-border/60', className)} {...props} />
+    <tbody ref={ref} className={cn('bg-white [&_tr:last-child]:border-0 divide-y divide-[#E2E8F0]/60', className)} {...props} />
   )
 );
 TableBody.displayName = 'TableBody';
@@ -32,7 +32,7 @@ const TableFooter = React.forwardRef<HTMLTableSectionElement, React.HTMLAttribut
   ({ className, ...props }, ref) => (
     <tfoot
       ref={ref}
-      className={cn('border-t border-border bg-[#F8FAFC] font-medium [&_tr]:last-child:border-b-0', className)}
+      className={cn('border-t border-[#E2E8F0] bg-[#F8FAFC] font-medium [&_tr]:last-child:border-b-0', className)}
       {...props}
     />
   )

@@ -20,7 +20,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           // Variants
           variant === 'default' && 'bg-primary text-primary-foreground shadow-[0_1px_2px_rgba(29,78,216,0.25)] hover:bg-[#1E40AF] active:scale-[0.99]',
           variant === 'destructive' && 'bg-destructive text-destructive-foreground shadow-sm hover:bg-[#B91C1C] active:scale-[0.99]',
-          variant === 'outline' && 'border border-border bg-card text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:bg-muted hover:border-[#CBD5E1] active:scale-[0.99]',
+          variant === 'outline' && 'border border-[#E2E8F0] bg-white text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:bg-muted hover:border-[#CBD5E1] active:scale-[0.99]',
           variant === 'secondary' && 'bg-secondary text-secondary-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:bg-[#E2E8F0] active:scale-[0.99]',
           variant === 'ghost' && 'text-muted-foreground hover:bg-muted hover:text-foreground',
           variant === 'link' && 'text-primary underline-offset-4 hover:underline p-0 h-auto',

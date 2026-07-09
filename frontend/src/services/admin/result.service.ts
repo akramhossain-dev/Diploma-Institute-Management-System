@@ -2,7 +2,7 @@ import { adminAxios } from '@/lib/adminAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { ProcessedResultOverview } from '@/types/admin/result-admin.types';
 
-let mockResults: ProcessedResultOverview[] = [
+const mockResults: ProcessedResultOverview[] = [
   {
     _id: 'res-1',
     examId: 'exam-1',

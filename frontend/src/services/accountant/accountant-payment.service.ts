@@ -2,7 +2,7 @@ import { accountantAxios } from '@/lib/accountantAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { PaymentHistoryItem, PaymentCollectionFormInput } from '@/types/accountant/payment.types';
 
-let mockPaymentHistory: PaymentHistoryItem[] = [
+const mockPaymentHistory: PaymentHistoryItem[] = [
   {
     _id: 'pay-rec-1',
     studentId: 'stud-1',

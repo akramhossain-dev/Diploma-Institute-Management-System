@@ -60,7 +60,7 @@ export function MetricCard({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-xl border border-border bg-card',
+        'relative overflow-hidden rounded-2xl border border-[#E2E8F0] bg-white',
         'shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.04)]',
         'hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05)]',
         'transition-shadow duration-200',
@@ -68,7 +68,7 @@ export function MetricCard({
       )}
     >
       {/* Left accent stripe */}
-      <div className={cn('absolute inset-y-0 left-0 w-1 rounded-l-xl', accent.stripe)} />
+      <div className={cn('absolute inset-y-0 left-0 w-1 rounded-l-2xl', accent.stripe)} />
 
       <div className="pl-5 pr-5 py-5">
         <div className="flex items-start justify-between gap-4">

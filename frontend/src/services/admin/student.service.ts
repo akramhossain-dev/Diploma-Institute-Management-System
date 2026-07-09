@@ -5,7 +5,7 @@ import { adminDepartmentService } from './department.service';
 import { adminSemesterService } from './semester.service';
 import { adminSessionService } from './session.service';
 
-let mockStudents: Student[] = [
+const mockStudents: Student[] = [
   {
     _id: 's-1',
     studentId: 'CST-2026-001',

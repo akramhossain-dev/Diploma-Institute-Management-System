@@ -18,7 +18,7 @@ export function ErrorState({
   return (
     <div
       className={cn(
-        'flex min-h-[300px] flex-col items-center justify-center rounded-xl border border-[#FCA5A5]/40 bg-[#FEF2F2] p-10 text-center',
+        'flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-[#FCA5A5]/40 bg-[#FEF2F2] p-10 text-center',
         'animate-fade-in',
         className
       )}

@@ -2,7 +2,7 @@ import { accountantAxios } from '@/lib/accountantAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { LedgerEntry } from '@/types/accountant/payment.types';
 
-let mockLedgers: Record<string, LedgerEntry[]> = {
+const mockLedgers: Record<string, LedgerEntry[]> = {
   'stud-1': [
     {
       _id: 'l-1',

@@ -13,7 +13,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   React.useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
-    root.classList.add(theme);
+    root.classList.add('light');
   }, [theme]);
 
   return <>{children}</>;

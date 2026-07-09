@@ -49,7 +49,7 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
     <div
       ref={ref}
       className={cn(
-        'relative w-full max-w-lg rounded-2xl border border-border bg-card p-6 text-card-foreground',
+        'relative w-full max-w-lg rounded-2xl border border-[#E2E8F0] bg-white p-6 text-foreground',
         'shadow-[0_20px_25px_-5px_rgba(0,0,0,0.10),0_8px_10px_-6px_rgba(0,0,0,0.08)]',
         className
       )}
@@ -83,7 +83,7 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 DialogHeader.displayName = 'DialogHeader';
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col-reverse gap-2 sm:flex-row sm:justify-end pt-4 mt-2 border-t border-border', className)} {...props} />
+  <div className={cn('flex flex-col-reverse gap-2 sm:flex-row sm:justify-end pt-4 mt-2 border-t border-[#E2E8F0]', className)} {...props} />
 );
 DialogFooter.displayName = 'DialogFooter';
 

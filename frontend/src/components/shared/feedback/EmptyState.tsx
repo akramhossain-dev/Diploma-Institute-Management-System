@@ -21,8 +21,9 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div
+      ref={null}
       className={cn(
-        'flex min-h-[360px] flex-col items-center justify-center rounded-xl border border-border bg-card p-10 text-center',
+        'flex min-h-[360px] flex-col items-center justify-center rounded-2xl border border-[#E2E8F0] bg-white p-10 text-center',
         'animate-fade-in',
         className
       )}

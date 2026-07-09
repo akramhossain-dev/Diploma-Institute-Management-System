@@ -38,7 +38,7 @@ export function DashboardCard({
   return (
     <div
       className={cn(
-        'rounded-xl border border-border bg-card p-5',
+        'rounded-2xl border border-[#E2E8F0] bg-white p-5',
         'shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07)]',
         'transition-shadow duration-200',
         className

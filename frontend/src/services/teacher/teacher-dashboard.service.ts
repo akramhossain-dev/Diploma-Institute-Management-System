@@ -2,7 +2,7 @@ import { teacherAxios } from '@/lib/teacherAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { TeacherDashboardData } from '@/types/teacher/dashboard.types';
 
-let mockTeacherDashboard: TeacherDashboardData = {
+const mockTeacherDashboard: TeacherDashboardData = {
   assignedCoursesCount: 4,
   pendingAttendanceCount: 2,
   pendingMarksCount: 2,

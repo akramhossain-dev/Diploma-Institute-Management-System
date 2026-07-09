@@ -2,7 +2,7 @@ import { teacherAxios } from '@/lib/teacherAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { TeacherExamDuty } from '@/types/teacher/marks.types';
 
-let mockDuties: TeacherExamDuty[] = [
+const mockDuties: TeacherExamDuty[] = [
   {
     _id: 'duty-1',
     examId: 'exam-1',

@@ -2,7 +2,7 @@ import { adminAxios } from '@/lib/adminAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { AdminDashboardSummary, StudentReportRow, AttendanceReportRow, FinanceReportRow, AdminAnalyticsData } from '@/types/admin/dashboard.types';
 
-let mockSummary: AdminDashboardSummary = {
+const mockSummary: AdminDashboardSummary = {
   totalStudents: 1520,
   totalTeachers: 45,
   totalDepartments: 6,
@@ -28,25 +28,25 @@ let mockSummary: AdminDashboardSummary = {
   ],
 };
 
-let mockStudentReports: StudentReportRow[] = [
+const mockStudentReports: StudentReportRow[] = [
   { studentRoll: '102938', fullName: 'Ahsan Habib', departmentName: 'Computer Technology', semesterName: '3rd Semester', admissionDate: '2025-01-10', status: 'active' },
   { studentRoll: '102939', fullName: 'Nusrat Jahan', departmentName: 'Electronics Technology', semesterName: '3rd Semester', admissionDate: '2025-01-12', status: 'active' },
   { studentRoll: '102940', fullName: 'Rifat Al-Mumin', departmentName: 'Computer Technology', semesterName: '1st Semester', admissionDate: '2026-01-05', status: 'active' },
 ];
 
-let mockAttendanceReports: AttendanceReportRow[] = [
+const mockAttendanceReports: AttendanceReportRow[] = [
   { date: '2026-07-05', departmentName: 'Computer Technology', semesterName: '3rd Semester', totalPresent: 42, totalAbsent: 3, percentage: 93.3 },
   { date: '2026-07-05', departmentName: 'Electronics Technology', semesterName: '3rd Semester', totalPresent: 28, totalAbsent: 4, percentage: 87.5 },
   { date: '2026-07-06', departmentName: 'Computer Technology', semesterName: '3rd Semester', totalPresent: 44, totalAbsent: 1, percentage: 97.8 },
 ];
 
-let mockFinanceReports: FinanceReportRow[] = [
+const mockFinanceReports: FinanceReportRow[] = [
   { date: '2026-07-05', studentName: 'Ahsan Habib', feeTitle: 'Admission Fee 2026', amount: 15000, paymentMethod: 'cash', reference: 'Direct Counter Cash' },
   { date: '2026-07-06', studentName: 'Nusrat Jahan', feeTitle: 'Admission Fee 2026', amount: 15000, paymentMethod: 'bank', reference: 'DBBL Transaction Ref: 829302' },
   { date: '2026-07-06', studentName: 'Nusrat Jahan', feeTitle: 'Semester Exam Fee 2026', amount: 3000, paymentMethod: 'mobile_banking', reference: 'bKash TrxID: 9X82KD8' },
 ];
 
-let mockAnalytics: AdminAnalyticsData = {
+const mockAnalytics: AdminAnalyticsData = {
   studentGrowth: [
     { label: 'Jan 2026', value: 1200 },
     { label: 'Feb 2026', value: 1280 },

@@ -2,7 +2,7 @@ import { adminAxios } from '@/lib/adminAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { StudentBillingOverview } from '@/types/accountant/payment.types';
 
-let mockAdminPaymentsOverview: StudentBillingOverview[] = [
+const mockAdminPaymentsOverview: StudentBillingOverview[] = [
   {
     studentId: 'stud-1',
     studentName: 'Ahsan Habib',

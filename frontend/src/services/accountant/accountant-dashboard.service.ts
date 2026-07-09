@@ -2,7 +2,7 @@ import { accountantAxios } from '@/lib/accountantAxios';
 import { ApiResponse } from '@/types/shared/api.types';
 import { AccountantDashboardData } from '@/types/accountant/dashboard.types';
 
-let mockAccountantDashboard: AccountantDashboardData = {
+const mockAccountantDashboard: AccountantDashboardData = {
   todayCollection: 12500,
   totalPendingDues: 450000,
   paymentCountThisMonth: 124,
