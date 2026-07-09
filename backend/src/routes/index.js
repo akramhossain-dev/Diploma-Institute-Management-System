@@ -45,6 +45,10 @@ import reportRoutes     from "../modules/reports/report.routes.js";
 import analyticsRoutes  from "../modules/analytics/analytics.routes.js";
 import meRoutes         from "../modules/me/me.routes.js";
 
+// ── Phase 10: Notifications & Audit Logs ──────────────────────────────────────────
+import notificationRoutes from "../modules/notifications/notification.routes.js";
+import auditLogRoutes     from "../modules/auditLogs/auditLog.routes.js";
+
 /**
  * Root API Router — mounts all module routers under /api
  *
@@ -128,5 +132,9 @@ router.use("/dashboard",  dashboardRoutes);
 router.use("/reports",    reportRoutes);
 router.use("/analytics",  analyticsRoutes);
 router.use("/me",         meRoutes);
+
+// ── Phase 10: Notifications & Audit Logs ──────────────────────────────────
+router.use("/notifications", notificationRoutes);
+router.use("/audit-logs",    auditLogRoutes);
 
 export default router;

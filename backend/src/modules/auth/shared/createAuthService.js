@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import ApiError from "../../../utils/ApiError.js";
 import { comparePassword, hashPassword } from "../../../utils/hashHelper.js";
 import {
@@ -5,6 +6,13 @@ import {
   generateRefreshToken,
   verifyRefreshToken,
 } from "../../../utils/generateToken.js";
+
+/**
+ * Hash a refresh token using SHA-256 before storing in the database.
+ * The raw token is sent to the client; the hash is stored in MongoDB.
+ * This prevents token hijacking if the database is compromised.
+ */
+const hashToken = (token) => crypto.createHash("sha256").update(token).digest("hex");
 
 /**
  * createAuthService — factory that builds a complete auth service
@@ -68,8 +76,8 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
       // 5. Generate tokens
       const { accessToken, refreshToken } = issueTokens(authRecord._id, entityId);
 
-      // 6. Persist hashed refresh token + update lastLoginAt
-      authRecord.refreshToken = refreshToken; // stored raw — hashing optional at scale
+      // 6. Persist HASHED refresh token + update lastLoginAt
+      authRecord.refreshToken = hashToken(refreshToken);
       authRecord.lastLoginAt = new Date();
       await authRecord.save();
 
@@ -108,12 +116,12 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
         throw new ApiError(401, "Token entity mismatch", "INVALID_TOKEN");
       }
 
-      // 3. Load auth record and confirm stored token matches
+      // 3. Load auth record and confirm stored token hash matches
       const authRecord = await AuthModel
         .findById(decoded.sub)
         .select("+refreshToken +isActive");
 
-      if (!authRecord || authRecord.refreshToken !== refreshToken) {
+      if (!authRecord || authRecord.refreshToken !== hashToken(refreshToken)) {
         throw new ApiError(401, "Refresh token is invalid or already used", "INVALID_TOKEN");
       }
 
@@ -121,11 +129,11 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
         throw new ApiError(403, "Account is deactivated", "ACCOUNT_INACTIVE");
       }
 
-      // 4. Rotate — issue new token pair
+      // 4. Rotate — issue new token pair, store new hash
       const entityId = authRecord[entityIdField];
       const tokens = issueTokens(authRecord._id, entityId);
 
-      authRecord.refreshToken = tokens.refreshToken;
+      authRecord.refreshToken = hashToken(tokens.refreshToken);
       await authRecord.save();
 
       // Fetch and sanitize profile for frontend context preservation

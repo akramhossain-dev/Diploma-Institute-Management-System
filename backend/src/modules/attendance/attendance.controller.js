@@ -51,6 +51,18 @@ const attendanceController = {
     const summary = await attendanceService.getStudentAttendanceSummary(req.params.studentId, req.query);
     return successResponse(res, { statusCode: 200, message: "Student attendance summary retrieved", data: summary });
   }),
+
+  // GET /api/attendance/summary — admin-level aggregate across all departments
+  getAdminSummary: asyncHandler(async (req, res) => {
+    const summary = await attendanceService.getAdminAttendanceSummary(req.query);
+    return successResponse(res, { statusCode: 200, message: "Attendance summary retrieved", data: summary });
+  }),
+
+  // GET /api/attendance/reports — admin-level paginated session reports
+  getAdminReports: asyncHandler(async (req, res) => {
+    const { reports, pagination } = await attendanceService.getAdminAttendanceReports(req.query);
+    return successResponse(res, { statusCode: 200, message: "Attendance reports retrieved", data: reports, pagination });
+  }),
 };
 
 export default attendanceController;

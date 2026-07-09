@@ -35,6 +35,22 @@ router.post(
   attendanceController.createSession
 );
 
+// GET /api/attendance/summary — admin-level aggregate overview
+router.get(
+  "/summary",
+  authenticate,
+  authorizeEntity("admin"),
+  attendanceController.getAdminSummary
+);
+
+// GET /api/attendance/reports — admin-level paginated session reports
+router.get(
+  "/reports",
+  authenticate,
+  authorizeEntity("admin"),
+  attendanceController.getAdminReports
+);
+
 // GET /api/attendance/sessions — admin and teacher list sessions
 router.get(
   "/sessions",

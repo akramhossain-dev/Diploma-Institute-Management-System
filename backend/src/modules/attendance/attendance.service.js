@@ -340,6 +340,121 @@ const attendanceService = {
       });
     }
   },
+
+  // ── ADMIN ATTENDANCE SUMMARY ── GET /api/attendance/summary ──────────────
+  async getAdminAttendanceSummary(query = {}) {
+    const { academicSessionId, fromDate, toDate } = query;
+    const matchFilter = {};
+    if (academicSessionId) matchFilter.academicSessionId = new mongoose.Types.ObjectId(academicSessionId);
+    if (fromDate || toDate) {
+      matchFilter.attendanceDate = {};
+      if (fromDate) matchFilter.attendanceDate.$gte = new Date(fromDate);
+      if (toDate)   matchFilter.attendanceDate.$lte = new Date(toDate);
+    }
+
+    const [overall] = await AttendanceRecord.aggregate([
+      { $match: matchFilter },
+      {
+        $group: {
+          _id:          null,
+          totalClasses:  { $sum: 1 },
+          presentCount:  { $sum: { $cond: [{ $eq: ["$status", "present"] }, 1, 0] } },
+          absentCount:   { $sum: { $cond: [{ $eq: ["$status", "absent"]  }, 1, 0] } },
+          lateCount:     { $sum: { $cond: [{ $eq: ["$status", "late"]    }, 1, 0] } },
+          excusedCount:  { $sum: { $cond: [{ $eq: ["$status", "excused"] }, 1, 0] } },
+        },
+      },
+      {
+        $addFields: {
+          attendancePercentage: {
+            $cond: [
+              { $gt: ["$totalClasses", 0] },
+              { $round: [{ $multiply: [{ $divide: [{ $add: ["$presentCount", "$lateCount"] }, "$totalClasses"] }, 100] }, 1] },
+              0,
+            ],
+          },
+        },
+      },
+    ]);
+
+    const departmentAverages = await AttendanceRecord.aggregate([
+      { $match: matchFilter },
+      {
+        $group: {
+          _id:          "$departmentId",
+          totalRecords:  { $sum: 1 },
+          presentCount:  { $sum: { $cond: [{ $eq: ["$status", "present"] }, 1, 0] } },
+          lateCount:     { $sum: { $cond: [{ $eq: ["$status", "late"]    }, 1, 0] } },
+        },
+      },
+      {
+        $addFields: {
+          percentage: {
+            $cond: [
+              { $gt: ["$totalRecords", 0] },
+              { $round: [{ $multiply: [{ $divide: [{ $add: ["$presentCount", "$lateCount"] }, "$totalRecords"] }, 100] }, 1] },
+              0,
+            ],
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "departments", localField: "_id", foreignField: "_id", as: "department",
+          pipeline: [{ $project: { name: 1, code: 1 } }],
+        },
+      },
+      { $unwind: { path: "$department", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: 0,
+          departmentName: { $ifNull: ["$department.name", "Unknown"] },
+          departmentCode: { $ifNull: ["$department.code", "UNK"] },
+          percentage: 1, totalRecords: 1,
+        },
+      },
+      { $sort: { departmentName: 1 } },
+    ]);
+
+    return {
+      totalClasses:         overall ? overall.totalClasses         : 0,
+      attendancePercentage: overall ? overall.attendancePercentage : 0,
+      presentCount:         overall ? overall.presentCount         : 0,
+      absentCount:          overall ? overall.absentCount          : 0,
+      lateCount:            overall ? overall.lateCount            : 0,
+      excusedCount:         overall ? overall.excusedCount         : 0,
+      departmentAverages,
+    };
+  },
+
+  // ── ADMIN ATTENDANCE REPORTS ── GET /api/attendance/reports ──────────────
+  async getAdminAttendanceReports(query = {}) {
+    const { page, limit, skip } = getPaginationParams(query);
+    const { departmentId, semesterId, academicSessionId, sessionStatus, fromDate, toDate, courseId } = query;
+    const filter = {};
+    if (departmentId)       filter.departmentId      = departmentId;
+    if (semesterId)         filter.semesterId        = semesterId;
+    if (academicSessionId)  filter.academicSessionId = academicSessionId;
+    if (sessionStatus)      filter.sessionStatus     = sessionStatus;
+    if (courseId)           filter.courseId          = courseId;
+    if (fromDate || toDate) {
+      filter.attendanceDate = {};
+      if (fromDate) filter.attendanceDate.$gte = new Date(fromDate);
+      if (toDate)   filter.attendanceDate.$lte = new Date(toDate);
+    }
+    const [sessions, total] = await Promise.all([
+      AttendanceSession.find(filter)
+        .populate("teacherId",    "fullName employeeId")
+        .populate("courseId",     "title code")
+        .populate("departmentId", "name code")
+        .populate("semesterId",   "name number")
+        .sort({ attendanceDate: -1 })
+        .skip(skip).limit(limit).lean(),
+      AttendanceSession.countDocuments(filter),
+    ]);
+    return { reports: sessions, pagination: buildPaginationMeta(total, page, limit) };
+  },
 };
 
 export default attendanceService;
+
