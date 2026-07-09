@@ -42,8 +42,20 @@ const academicSessionSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
 );
+
+academicSessionSchema.virtual("startYear").get(function() {
+  return this.startDate ? this.startDate.getUTCFullYear() : null;
+});
+
+academicSessionSchema.virtual("endYear").get(function() {
+  return this.endDate ? this.endDate.getUTCFullYear() : null;
+});
 
 academicSessionSchema.index({ status:    1 });
 

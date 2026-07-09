@@ -8,15 +8,22 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 const feeStructureService = {
 
   async createFeeStructure(data, adminId) {
-    const { departmentId, semesterId, academicSessionId } = data;
+    const { departmentId, semesterId, sessionId, name, feeType, amount } = data;
 
     const checks = [];
     if (departmentId)      checks.push(Department.findById(departmentId).lean().then((d) => { if (!d) throw new ApiError(404, "Department not found", "NOT_FOUND"); }));
     if (semesterId)        checks.push(Semester.findById(semesterId).lean().then((s) => { if (!s) throw new ApiError(404, "Semester not found", "NOT_FOUND"); }));
-    if (academicSessionId) checks.push(AcademicSession.findById(academicSessionId).lean().then((s) => { if (!s) throw new ApiError(404, "Academic session not found", "NOT_FOUND"); }));
+    if (sessionId)         checks.push(AcademicSession.findById(sessionId).lean().then((s) => { if (!s) throw new ApiError(404, "Academic session not found", "NOT_FOUND"); }));
     await Promise.all(checks);
 
-    const feeStructure = await FeeStructure.create({ ...data, createdByAdminId: adminId });
+    const feeStructure = await FeeStructure.create({
+      ...data,
+      title: name,
+      academicSessionId: sessionId,
+      feeType: feeType || "custom",
+      amount: parseFloat(amount),
+      createdByAdminId: adminId
+    });
     return feeStructure;
   },
 
@@ -62,7 +69,20 @@ const feeStructureService = {
     if (!fs) throw new ApiError(404, "Fee structure not found", "NOT_FOUND");
     if (fs.status === "archived") throw new ApiError(400, "Archived fee structures cannot be edited", "BUSINESS_RULE_VIOLATION");
 
-    const { status, createdByAdminId, ...allowedUpdates } = data;
+    const updatePayload = { ...data };
+    if (data.name !== undefined) {
+      updatePayload.title = data.name;
+      delete updatePayload.name;
+    }
+    if (data.sessionId !== undefined) {
+      updatePayload.academicSessionId = data.sessionId;
+      delete updatePayload.sessionId;
+    }
+    if (data.amount !== undefined) {
+      updatePayload.amount = parseFloat(data.amount);
+    }
+
+    const { status, createdByAdminId, ...allowedUpdates } = updatePayload;
     return FeeStructure.findByIdAndUpdate(id, { $set: allowedUpdates }, { new: true, runValidators: true }).lean();
   },
 

@@ -1,15 +1,15 @@
 import { body } from "express-validator";
 
 export const createFeeStructureValidation = [
-  body("title").trim().notEmpty().withMessage("Fee title is required").isLength({ max: 200 }),
+  body("name").trim().notEmpty().withMessage("Fee title is required").isLength({ max: 200 }),
   body("feeCode").optional({ checkFalsy: true }).trim().isAlphanumeric().isLength({ max: 20 }),
   body("feeType")
-    .notEmpty().withMessage("Fee type is required")
+    .optional()
     .isIn(["admission", "semester", "exam", "lab", "library", "transport", "hostel", "misc", "custom"]),
   body("description").optional({ checkFalsy: true }).trim().isLength({ max: 500 }),
   body("departmentId").optional({ checkFalsy: true }).isMongoId(),
   body("semesterId").optional({ checkFalsy: true }).isMongoId(),
-  body("academicSessionId").optional({ checkFalsy: true }).isMongoId(),
+  body("sessionId").notEmpty().withMessage("Academic session is required").isMongoId(),
   body("amount").notEmpty().withMessage("Amount is required").isFloat({ min: 0 }).toFloat(),
   body("currency").optional({ checkFalsy: true }).trim().isLength({ max: 10 }),
   body("frequency").optional().isIn(["one_time", "monthly", "semesterly", "yearly", "custom"]),
@@ -25,7 +25,7 @@ export const createFeeStructureValidation = [
 ];
 
 export const updateFeeStructureValidation = [
-  body("title").optional().trim().notEmpty().isLength({ max: 200 }),
+  body("name").optional().trim().notEmpty().isLength({ max: 200 }),
   body("description").optional({ checkFalsy: true }).trim().isLength({ max: 500 }),
   body("amount").optional().isFloat({ min: 0 }).toFloat(),
   body("currency").optional({ checkFalsy: true }).trim(),

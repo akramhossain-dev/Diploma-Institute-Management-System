@@ -31,7 +31,7 @@ const courseSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["theory", "practical", "lab", "project", "viva"],
+      enum: ["theory", "practical", "lab", "project", "viva", "both"],
       default: "theory",
     },
     departmentId: {
@@ -60,8 +60,24 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
 );
+
+courseSchema.virtual("name").get(function() {
+  return this.title;
+}).set(function(val) {
+  this.title = val;
+});
+
+courseSchema.virtual("credits").get(function() {
+  return this.credit;
+}).set(function(val) {
+  this.credit = val;
+});
 
 courseSchema.index({ departmentId: 1 });
 courseSchema.index({ semesterId:   1 });

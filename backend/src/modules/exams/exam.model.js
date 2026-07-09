@@ -42,8 +42,30 @@ const examSchema = new mongoose.Schema(
     createdByAdminId: { type: ObjectId, ref: "Admin", default: null },
     notes:            { type: String, trim: true, default: null },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
 );
+
+examSchema.virtual("type").get(function() {
+  return this.examType;
+}).set(function(val) {
+  this.examType = val;
+});
+
+examSchema.virtual("sessionId").get(function() {
+  return this.academicSessionId;
+}).set(function(val) {
+  this.academicSessionId = val;
+});
+
+examSchema.virtual("status").get(function() {
+  return this.examStatus;
+}).set(function(val) {
+  this.examStatus = val;
+});
 
 examSchema.index({ departmentId:      1, semesterId: 1, academicSessionId: 1 });
 examSchema.index({ examType:          1 });

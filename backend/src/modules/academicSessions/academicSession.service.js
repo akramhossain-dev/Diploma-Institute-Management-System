@@ -5,14 +5,18 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 const academicSessionService = {
 
   async createSession(data, adminId) {
-    const { name, startDate, endDate, notes } = data;
+    const { name, startYear, endYear, notes } = data;
 
     // Name uniqueness
     const exists = await AcademicSession.findOne({ name: { $regex: `^${name}$`, $options: "i" } });
     if (exists) throw new ApiError(409, `Academic session '${name}' already exists`, "DUPLICATE_ENTRY");
 
-    // Date logic
-    if (new Date(endDate) <= new Date(startDate)) {
+    // Construct Dates from start/end years
+    const startDate = new Date(Date.UTC(parseInt(startYear, 10), 0, 1));
+    const endDate = new Date(Date.UTC(parseInt(endYear, 10), 11, 31, 23, 59, 59));
+
+    // Date logic validation
+    if (endDate <= startDate) {
       throw new ApiError(400, "End date must be after start date", "VALIDATION_ERROR");
     }
 
@@ -72,17 +76,32 @@ const academicSessionService = {
       throw new ApiError(400, "Completed sessions cannot be edited", "BUSINESS_RULE_VIOLATION");
     }
 
-    // Validate dates if both provided
-    const startDate = data.startDate ? new Date(data.startDate) : existing.startDate;
-    const endDate   = data.endDate   ? new Date(data.endDate)   : existing.endDate;
+    let startDate = existing.startDate;
+    let endDate = existing.endDate;
+
+    if (data.startYear !== undefined || data.endYear !== undefined) {
+      const startYear = data.startYear !== undefined ? parseInt(data.startYear, 10) : existing.startDate.getFullYear();
+      const endYear   = data.endYear !== undefined   ? parseInt(data.endYear, 10)   : existing.endDate.getFullYear();
+
+      startDate = new Date(Date.UTC(startYear, 0, 1));
+      endDate = new Date(Date.UTC(endYear, 11, 31, 23, 59, 59));
+    }
 
     if (endDate <= startDate) {
       throw new ApiError(400, "End date must be after start date", "VALIDATION_ERROR");
     }
 
+    const updatePayload = { ...data };
+    if (data.startYear !== undefined || data.endYear !== undefined) {
+      updatePayload.startDate = startDate;
+      updatePayload.endDate = endDate;
+      delete updatePayload.startYear;
+      delete updatePayload.endYear;
+    }
+
     const session = await AcademicSession.findByIdAndUpdate(
       id,
-      { $set: data },
+      { $set: updatePayload },
       { new: true, runValidators: true }
     ).lean();
 

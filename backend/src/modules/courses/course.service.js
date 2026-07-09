@@ -7,29 +7,51 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 const courseService = {
 
   async createCourse(data, adminId) {
-    const { departmentId, semesterId, code } = data;
+    const { departmentId, semesterId, code, name, credits, type, description, status } = data;
 
-    // Validate department and semester exist and are active
-    const [dept, semester, codeExists] = await Promise.all([
-      Department.findById(departmentId).lean(),
-      Semester.findById(semesterId).lean(),
-      Course.findOne({ code: code.toUpperCase() }),
-    ]);
-
-    if (!dept)      throw new ApiError(404, "Department not found", "NOT_FOUND");
-    if (!semester)  throw new ApiError(404, "Semester not found", "NOT_FOUND");
-    if (codeExists) throw new ApiError(409, `Course code '${code.toUpperCase()}' already exists`, "DUPLICATE_ENTRY");
-
+    // Validate department exists
+    const dept = await Department.findById(departmentId).lean();
+    if (!dept) throw new ApiError(404, "Department not found", "NOT_FOUND");
     if (dept.status === "inactive") {
       throw new ApiError(400, "Cannot create a course for an inactive department", "BUSINESS_RULE_VIOLATION");
     }
+
+    // Resolve activeSemesterId if missing
+    let activeSemesterId = semesterId;
+    if (!activeSemesterId) {
+      const firstSem = await Semester.findOne({ status: "active" }).sort({ number: 1 }).lean();
+      if (firstSem) {
+        activeSemesterId = firstSem._id;
+      } else {
+        const anySem = await Semester.findOne().lean();
+        if (anySem) {
+          activeSemesterId = anySem._id;
+        } else {
+          throw new ApiError(400, "At least one semester must exist in the database before registering a course.", "BUSINESS_RULE_VIOLATION");
+        }
+      }
+    }
+
+    // Verify semester exists and is active
+    const semester = await Semester.findById(activeSemesterId).lean();
+    if (!semester) throw new ApiError(404, "Semester not found", "NOT_FOUND");
     if (semester.status === "inactive") {
       throw new ApiError(400, "Cannot create a course for an inactive semester", "BUSINESS_RULE_VIOLATION");
     }
 
+    // Code uniqueness
+    const codeExists = await Course.findOne({ code: code.trim().toUpperCase() });
+    if (codeExists) throw new ApiError(409, `Course code '${code.trim().toUpperCase()}' already exists`, "DUPLICATE_ENTRY");
+
     const course = await Course.create({
-      ...data,
-      code: code.toUpperCase(),
+      title: name,
+      code: code.trim().toUpperCase(),
+      credit: parseFloat(credits),
+      type: type || "theory",
+      departmentId,
+      semesterId: activeSemesterId,
+      description: description || "",
+      status: status || "active",
       createdByAdminId: adminId,
     });
 
@@ -77,7 +99,7 @@ const courseService = {
   },
 
   async updateCourse(id, data) {
-    const { departmentId, semesterId, code } = data;
+    const { departmentId, semesterId, code, name, credits } = data;
 
     // Validate referenced IDs if changing
     if (departmentId) {
@@ -91,14 +113,27 @@ const courseService = {
 
     // Code uniqueness if changing
     if (code) {
-      const conflict = await Course.findOne({ code: code.toUpperCase(), _id: { $ne: id } });
-      if (conflict) throw new ApiError(409, `Course code '${code.toUpperCase()}' already exists`, "DUPLICATE_ENTRY");
-      data.code = code.toUpperCase();
+      const conflict = await Course.findOne({ code: code.trim().toUpperCase(), _id: { $ne: id } });
+      if (conflict) throw new ApiError(409, `Course code '${code.trim().toUpperCase()}' already exists`, "DUPLICATE_ENTRY");
+    }
+
+    // Prepare update payload
+    const updatePayload = { ...data };
+    if (name !== undefined) {
+      updatePayload.title = name;
+      delete updatePayload.name;
+    }
+    if (credits !== undefined) {
+      updatePayload.credit = parseFloat(credits);
+      delete updatePayload.credits;
+    }
+    if (code !== undefined) {
+      updatePayload.code = code.trim().toUpperCase();
     }
 
     const course = await Course.findByIdAndUpdate(
       id,
-      { $set: data },
+      { $set: updatePayload },
       { new: true, runValidators: true }
     )
       .populate("departmentId", "name code")

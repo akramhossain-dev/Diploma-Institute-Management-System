@@ -18,19 +18,47 @@ const EXAM_TRANSITIONS = {
 const examService = {
 
   async createExam(data, adminId) {
-    const { departmentId, semesterId, academicSessionId } = data;
+    const { departmentId, semesterId, sessionId, name, type, description, startDate, endDate, notes, status } = data;
+
+    // Resolve activeDeptId if missing from frontend form
+    let activeDeptId = departmentId;
+    if (!activeDeptId) {
+      const firstDept = await Department.findOne({ status: "active" }).lean();
+      if (firstDept) {
+        activeDeptId = firstDept._id;
+      } else {
+        const anyDept = await Department.findOne().lean();
+        if (anyDept) {
+          activeDeptId = anyDept._id;
+        } else {
+          throw new ApiError(400, "At least one department must exist before registering an exam.", "BUSINESS_RULE_VIOLATION");
+        }
+      }
+    }
 
     const [dept, semester, session] = await Promise.all([
-      Department.findById(departmentId).lean(),
+      Department.findById(activeDeptId).lean(),
       Semester.findById(semesterId).lean(),
-      AcademicSession.findById(academicSessionId).lean(),
+      AcademicSession.findById(sessionId).lean(),
     ]);
 
     if (!dept)     throw new ApiError(404, "Department not found",       "NOT_FOUND");
     if (!semester) throw new ApiError(404, "Semester not found",         "NOT_FOUND");
     if (!session)  throw new ApiError(404, "Academic session not found", "NOT_FOUND");
 
-    const exam = await Exam.create({ ...data, createdByAdminId: adminId, examStatus: "draft" });
+    const exam = await Exam.create({
+      name,
+      examType: type || "midterm",
+      description: description || "",
+      departmentId: activeDeptId,
+      semesterId,
+      academicSessionId: sessionId,
+      startDate: startDate ? new Date(startDate) : null,
+      endDate: endDate ? new Date(endDate) : null,
+      examStatus: status || "draft",
+      notes: notes || "",
+      createdByAdminId: adminId,
+    });
     return exam;
   },
 
@@ -80,8 +108,23 @@ const examService = {
       throw new ApiError(400, `Cannot edit a ${exam.examStatus} exam`, "BUSINESS_RULE_VIOLATION");
     }
 
-    // Strip status + auth fields
-    const { examStatus, createdByAdminId, ...allowedUpdates } = data;
+    // Map properties from incoming client data to db model properties
+    const updatePayload = { ...data };
+    if (data.type !== undefined) {
+      updatePayload.examType = data.type;
+      delete updatePayload.type;
+    }
+    if (data.sessionId !== undefined) {
+      updatePayload.academicSessionId = data.sessionId;
+      delete updatePayload.sessionId;
+    }
+    if (data.status !== undefined) {
+      updatePayload.examStatus = data.status;
+      delete updatePayload.status;
+    }
+
+    // Strip status + auth fields from standard update payload (handled separately)
+    const { examStatus, createdByAdminId, ...allowedUpdates } = updatePayload;
 
     const updated = await Exam.findByIdAndUpdate(
       id,

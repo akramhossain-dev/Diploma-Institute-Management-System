@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTeacherAuthStore } from '@/store/auth/teacherAuthStore';
 import { API_CONFIG } from '@/services/api/api-config';
 import axios from 'axios';
@@ -6,15 +6,17 @@ import axios from 'axios';
 export function useTeacherSession() {
   const { accessToken, profile, isAuthenticated, isLoading, setSession, clearSession, setLoading, hydrateSession } =
     useTeacherAuthStore();
+  const refreshAttempted = useRef(false);
 
   useEffect(() => {
     hydrateSession();
   }, [hydrateSession]);
 
   useEffect(() => {
-    if (isAuthenticated || isLoading) return;
+    if (isAuthenticated || isLoading || refreshAttempted.current) return;
 
     const bootstrap = async () => {
+      refreshAttempted.current = true;
       setLoading(true);
       try {
         const response = await axios.post(

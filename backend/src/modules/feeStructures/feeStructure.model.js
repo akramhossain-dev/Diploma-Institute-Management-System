@@ -52,8 +52,24 @@ const feeStructureSchema = new mongoose.Schema(
     },
     createdByAdminId: { type: ObjectId, ref: "Admin", default: null },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
 );
+
+feeStructureSchema.virtual("name").get(function() {
+  return this.title;
+}).set(function(val) {
+  this.title = val;
+});
+
+feeStructureSchema.virtual("sessionId").get(function() {
+  return this.academicSessionId;
+}).set(function(val) {
+  this.academicSessionId = val;
+});
 
 feeStructureSchema.index({ feeType:          1 });
 feeStructureSchema.index({ departmentId:     1, semesterId: 1, academicSessionId: 1 });

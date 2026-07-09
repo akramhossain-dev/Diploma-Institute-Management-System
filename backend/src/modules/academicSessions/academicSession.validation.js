@@ -5,18 +5,16 @@ export const createSessionValidation = [
     .trim().notEmpty().withMessage("Session name is required")
     .isLength({ max: 30 }).withMessage("Name must be ≤ 30 characters"),
 
-  body("startDate")
-    .notEmpty().withMessage("Start date is required")
-    .isISO8601().withMessage("Start date must be a valid date (YYYY-MM-DD)")
-    .toDate(),
+  body("startYear")
+    .notEmpty().withMessage("Start year is required")
+    .isInt({ min: 2000, max: 2100 }).withMessage("Start year must be between 2000 and 2100"),
 
-  body("endDate")
-    .notEmpty().withMessage("End date is required")
-    .isISO8601().withMessage("End date must be a valid date (YYYY-MM-DD)")
-    .toDate()
-    .custom((endDate, { req }) => {
-      if (req.body.startDate && endDate <= new Date(req.body.startDate)) {
-        throw new Error("End date must be after start date");
+  body("endYear")
+    .notEmpty().withMessage("End year is required")
+    .isInt({ min: 2000, max: 2100 }).withMessage("End year must be between 2000 and 2100")
+    .custom((endYear, { req }) => {
+      if (req.body.startYear && parseInt(endYear, 10) < parseInt(req.body.startYear, 10)) {
+        throw new Error("End year must be equal to or greater than start year");
       }
       return true;
     }),
@@ -29,15 +27,13 @@ export const updateSessionValidation = [
   body("name")
     .optional().trim().notEmpty().withMessage("Name cannot be empty"),
 
-  body("startDate")
+  body("startYear")
     .optional()
-    .isISO8601().withMessage("Start date must be a valid date")
-    .toDate(),
+    .isInt({ min: 2000, max: 2100 }).withMessage("Start year must be between 2000 and 2100"),
 
-  body("endDate")
+  body("endYear")
     .optional()
-    .isISO8601().withMessage("End date must be a valid date")
-    .toDate(),
+    .isInt({ min: 2000, max: 2100 }).withMessage("End year must be between 2000 and 2100"),
 
   body("status")
     .optional()

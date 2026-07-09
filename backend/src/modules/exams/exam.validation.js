@@ -3,7 +3,7 @@ import { body } from "express-validator";
 export const createExamValidation = [
   body("name").trim().notEmpty().withMessage("Exam name is required").isLength({ max: 200 }),
 
-  body("examType")
+  body("type")
     .notEmpty().withMessage("Exam type is required")
     .isIn(["midterm", "final", "class_test", "practical", "viva", "quiz", "custom"])
     .withMessage("Invalid exam type"),
@@ -11,14 +11,14 @@ export const createExamValidation = [
   body("description").optional({ checkFalsy: true }).trim().isLength({ max: 500 }),
 
   body("departmentId")
-    .notEmpty().withMessage("Department is required")
+    .optional()
     .isMongoId().withMessage("departmentId must be a valid ID"),
 
   body("semesterId")
     .notEmpty().withMessage("Semester is required")
     .isMongoId().withMessage("semesterId must be a valid ID"),
 
-  body("academicSessionId")
+  body("sessionId")
     .notEmpty().withMessage("Academic session is required")
     .isMongoId().withMessage("academicSessionId must be a valid ID"),
 
@@ -42,7 +42,10 @@ export const createExamValidation = [
 export const updateExamValidation = [
   body("name").optional().trim().notEmpty().isLength({ max: 200 }),
   body("description").optional({ checkFalsy: true }).trim().isLength({ max: 500 }),
-  body("examType").optional().isIn(["midterm", "final", "class_test", "practical", "viva", "quiz", "custom"]),
+  body("type").optional().isIn(["midterm", "final", "class_test", "practical", "viva", "quiz", "custom"]),
+  body("sessionId").optional().isMongoId(),
+  body("semesterId").optional().isMongoId(),
+  body("departmentId").optional().isMongoId(),
   body("startDate").optional({ checkFalsy: true }).isISO8601().toDate(),
   body("endDate").optional({ checkFalsy: true }).isISO8601().toDate(),
   body("notes").optional({ checkFalsy: true }).trim(),
