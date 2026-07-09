@@ -12,6 +12,7 @@ import { StudentBillingOverview } from '@/types/accountant/payment.types';
 import { AmountDisplay } from '@/components/shared/finance/AmountDisplay';
 import { PaymentStatusBadge } from '@/components/shared/finance/PaymentStatusBadge';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function AdminPaymentsPage() {
   const { data: billingData = [], isLoading } = useAdminPaymentsOverview();

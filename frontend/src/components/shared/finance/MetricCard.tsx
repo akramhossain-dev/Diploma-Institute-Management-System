@@ -31,7 +31,7 @@ export function TrendBadge({
 
 interface MetricCardProps {
   title: string;
-  value: string | number;
+  value: React.ReactNode;
   description?: string;
   icon?: React.ReactNode;
   trend?: {

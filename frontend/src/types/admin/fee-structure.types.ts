@@ -21,7 +21,7 @@ export const feeStructureSchema = z.object({
   departmentId: z.string().optional(),
   semesterId: z.string().optional(),
   sessionId: z.string().min(1, 'Please select an academic session'),
-  amount: z.coerce.number().positive('Amount must be a positive number'),
+  amount: z.number().positive('Amount must be a positive number'),
   dueDate: z.string().optional(),
   description: z.string().optional(),
   status: z.enum(['active', 'inactive']),

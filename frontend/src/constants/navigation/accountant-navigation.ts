@@ -22,6 +22,11 @@ export const accountantNavigation: NavItem[] = [
     icon: 'AlertTriangle',
   },
   {
+    label: 'Notifications',
+    route: '/accountant/notifications',
+    icon: 'BellRing',
+  },
+  {
     label: 'Notices',
     route: '/accountant/notices',
     icon: 'Bell',

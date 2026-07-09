@@ -40,6 +40,17 @@ export const adminNavigation: NavItem[] = [
     ],
   },
   {
+    label: 'System Control',
+    route: '#',
+    icon: 'Database',
+    children: [
+      { label: 'Notifications', route: '/admin/notifications' },
+      { label: 'File Manager', route: '/admin/files' },
+      { label: 'Audit Logs', route: '/admin/audit-logs' },
+      { label: 'Import & Export', route: '/admin/import-export' },
+    ],
+  },
+  {
     label: 'Settings',
     route: '/admin/settings',
     icon: 'Building',

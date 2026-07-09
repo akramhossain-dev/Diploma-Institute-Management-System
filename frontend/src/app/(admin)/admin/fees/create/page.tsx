@@ -124,7 +124,7 @@ export default function CreateFeeStructurePage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-sm font-semibold">Amount (BDT)</label>
-                <Input type="number" step="0.01" error={errors.amount?.message} {...register('amount')} />
+                <Input type="number" step="0.01" error={errors.amount?.message} {...register('amount', { valueAsNumber: true })} />
               </div>
               <div className="space-y-1">
                 <label className="text-sm font-semibold">Due Date (Optional)</label>

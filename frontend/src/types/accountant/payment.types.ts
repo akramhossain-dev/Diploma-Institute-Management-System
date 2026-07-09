@@ -37,10 +37,10 @@ export interface PaymentHistoryItem {
 export const paymentCollectionSchema = z.object({
   studentId: z.string().min(1, 'Please select a student'),
   feeStructureId: z.string().min(1, 'Please select an assigned fee or billing item'),
-  amount: z.coerce.number().positive('Payment amount must be positive'),
+  amount: z.number().positive('Payment amount must be positive'),
   paymentDate: z.string().min(1, 'Payment date is required'),
   paymentMethod: z.enum(['cash', 'bank', 'mobile_banking'], {
-    errorMap: () => ({ message: 'Please select a valid payment method' }),
+    message: 'Please select a valid payment method',
   }),
   reference: z.string().optional(),
 });

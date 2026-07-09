@@ -27,6 +27,11 @@ export const teacherNavigation: NavItem[] = [
     icon: 'Users',
   },
   {
+    label: 'Notifications',
+    route: '/teacher/notifications',
+    icon: 'BellRing',
+  },
+  {
     label: 'Department Notices',
     route: '/teacher/notices',
     icon: 'Bell',

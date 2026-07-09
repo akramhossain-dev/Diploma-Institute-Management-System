@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Department } from '@/types/admin/department.types';
 import { Semester } from '@/types/admin/semester.types';
-import { Session } from '@/types/admin/session.types';
+import Session from '@/types/admin/session.types';
 
 interface ReportFilterBarProps {
   // Types

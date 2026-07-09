@@ -230,7 +230,7 @@ export default function AccountantPaymentsPage() {
 
                       <div className="space-y-1">
                         <label className="text-xs font-bold">Payment Amount (BDT)</label>
-                        <Input type="number" step="0.01" error={errors.amount?.message} {...register('amount')} />
+                        <Input type="number" step="0.01" error={errors.amount?.message} {...register('amount', { valueAsNumber: true })} />
                       </div>
                     </div>
 

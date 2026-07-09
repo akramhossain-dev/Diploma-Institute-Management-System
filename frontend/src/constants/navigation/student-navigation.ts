@@ -27,6 +27,11 @@ export const studentNavigation: NavItem[] = [
     icon: 'Receipt',
   },
   {
+    label: 'Notifications',
+    route: '/student/notifications',
+    icon: 'BellRing',
+  },
+  {
     label: 'Notice Board',
     route: '/student/notices',
     icon: 'Bell',
