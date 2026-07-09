@@ -33,8 +33,5 @@ const adminAuthSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-adminAuthSchema.index({ email: 1 }, { unique: true });
-adminAuthSchema.index({ adminId: 1 }, { unique: true });
-
 const AdminAuth = mongoose.model("AdminAuth", adminAuthSchema);
 export default AdminAuth;

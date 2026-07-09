@@ -29,7 +29,7 @@ const accountantSchema = new mongoose.Schema(
   {
     // ── Identity ──────────────────────────────────────────────────────────
     staffId: {
-      type: String, unique: true, trim: true,    // e.g. ACC-2024-001
+      type: String, trim: true,    // e.g. ACC-2024-001
     },
     fullName: {
       type: String, required: [true, "Full name is required"], trim: true,

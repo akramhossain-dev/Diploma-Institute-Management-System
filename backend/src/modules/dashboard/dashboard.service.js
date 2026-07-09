@@ -100,8 +100,8 @@ const dashboardService = {
       totalDues:         finance.totalDue || 0,
       totalCollections:  finance.totalPaid || 0,
       attendanceOverview: {
-        presentRate: todayAtt.total > 0 ? parseFloat(((todayAtt.present / todayAtt.total) * 100).toFixed(1)) : 92.5,
-        absentRate:  todayAtt.total > 0 ? parseFloat(((todayAtt.absent / todayAtt.total) * 100).toFixed(1)) : 7.5,
+        presentRate: todayAtt.total > 0 ? parseFloat(((todayAtt.present / todayAtt.total) * 100).toFixed(1)) : 0.0,
+        absentRate:  todayAtt.total > 0 ? parseFloat(((todayAtt.absent / todayAtt.total) * 100).toFixed(1)) : 0.0,
       },
       examOverview: {
         publishedExams: activeExams,

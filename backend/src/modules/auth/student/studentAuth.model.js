@@ -52,8 +52,5 @@ const studentAuthSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-studentAuthSchema.index({ email: 1 }, { unique: true });
-studentAuthSchema.index({ studentId: 1 }, { unique: true });
-
 const StudentAuth = mongoose.model("StudentAuth", studentAuthSchema);
 export default StudentAuth;

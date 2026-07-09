@@ -48,8 +48,6 @@ const departmentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-departmentSchema.index({ code: 1 }, { unique: true });
-departmentSchema.index({ name: 1 }, { unique: true });
 departmentSchema.index({ status: 1 });
 
 const Department = mongoose.model("Department", departmentSchema);

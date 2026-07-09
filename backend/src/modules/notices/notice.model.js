@@ -115,7 +115,6 @@ noticeSchema.pre("save", function (next) {
   next();
 });
 
-noticeSchema.index({ slug:           1 }, { unique: true });
 noticeSchema.index({ publishStatus:  1 });
 noticeSchema.index({ noticeType:     1 });
 noticeSchema.index({ targetAudience: 1 });

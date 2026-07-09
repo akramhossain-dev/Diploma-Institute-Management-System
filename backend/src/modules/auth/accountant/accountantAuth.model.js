@@ -33,8 +33,5 @@ const accountantAuthSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-accountantAuthSchema.index({ email: 1 }, { unique: true });
-accountantAuthSchema.index({ accountantId: 1 }, { unique: true });
-
 const AccountantAuth = mongoose.model("AccountantAuth", accountantAuthSchema);
 export default AccountantAuth;

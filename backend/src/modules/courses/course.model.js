@@ -63,7 +63,6 @@ const courseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-courseSchema.index({ code:         1 }, { unique: true });
 courseSchema.index({ departmentId: 1 });
 courseSchema.index({ semesterId:   1 });
 courseSchema.index({ status:       1 });

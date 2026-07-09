@@ -33,8 +33,5 @@ const teacherAuthSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-teacherAuthSchema.index({ email: 1 }, { unique: true });
-teacherAuthSchema.index({ teacherId: 1 }, { unique: true });
-
 const TeacherAuth = mongoose.model("TeacherAuth", teacherAuthSchema);
 export default TeacherAuth;

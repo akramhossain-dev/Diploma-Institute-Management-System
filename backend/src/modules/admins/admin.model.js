@@ -5,7 +5,7 @@ import mongoose from "mongoose";
  */
 const adminSchema = new mongoose.Schema(
   {
-    adminId:       { type: String, unique: true, trim: true },         // e.g. ADM-001
+    adminId:       { type: String, trim: true },         // e.g. ADM-001
     fullName:      { type: String, required: true, trim: true },
     email:         { type: String, required: true, lowercase: true, trim: true },
     phone:         { type: String, trim: true },

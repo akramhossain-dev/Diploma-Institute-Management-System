@@ -22,7 +22,7 @@ const studentSchema = new mongoose.Schema(
   {
     // ── Identity ──────────────────────────────────────────────────────────
     studentId: {
-      type: String, unique: true, trim: true,    // e.g. CST-2024-001 (auto-generated)
+      type: String, trim: true,    // e.g. CST-2024-001 (auto-generated)
     },
     rollNumber: {
       type: String, trim: true, default: null,

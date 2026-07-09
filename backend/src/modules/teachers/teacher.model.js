@@ -29,7 +29,7 @@ const teacherSchema = new mongoose.Schema(
   {
     // ── Identity ──────────────────────────────────────────────────────────
     employeeId: {
-      type: String, unique: true, trim: true,    // e.g. TCH-2024-001
+      type: String, trim: true,    // e.g. TCH-2024-001
     },
     fullName: {
       type: String, required: [true, "Full name is required"], trim: true,

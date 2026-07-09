@@ -24,10 +24,10 @@ app.use(
   })
 );
 
-// ── Global Rate Limiting ──────────────────────────────────────────────────
+// ── Scoped Rate Limiting ──────────────────────────────────────────────────
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
+  max: 1000,                // Increased from 100 to prevent false-positives for active users
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -37,7 +37,21 @@ const globalLimiter = rateLimit({
   },
 });
 
-app.use(globalLimiter);
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 50,                  // Stricter limit to prevent brute force attacks on auth endpoints
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many authentication attempts. Please try again later.",
+    errorCode: "AUTH_RATE_LIMIT_EXCEEDED",
+  },
+});
+
+// Apply stricter limit to auth endpoints and global limit to all other api endpoints
+app.use("/api/auth", authLimiter);
+app.use("/api", globalLimiter);
 
 // ── Body Parsing ──────────────────────────────────────────────────────────
 app.use(express.json({ limit: "10mb" }));

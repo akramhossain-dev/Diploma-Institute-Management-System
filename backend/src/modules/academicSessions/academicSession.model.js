@@ -45,8 +45,6 @@ const academicSessionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-academicSessionSchema.index({ name:      1 }, { unique: true });
-academicSessionSchema.index({ isCurrent: 1 });
 academicSessionSchema.index({ status:    1 });
 
 // Enforce at DB level: at most one document where isCurrent = true

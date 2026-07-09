@@ -35,8 +35,5 @@ const semesterSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-semesterSchema.index({ number: 1 }, { unique: true });
-semesterSchema.index({ name:   1 }, { unique: true });
-
 const Semester = mongoose.model("Semester", semesterSchema);
 export default Semester;
