@@ -10,6 +10,7 @@ import { useDepartments } from '@/hooks/public/useDepartments';
 import { useNotices } from '@/hooks/public/useNotices';
 import { LucideIcon } from '@/components/shared/navigation/LucideIcon';
 import { Skeleton } from '@/components/ui/skeleton';
+import MRIST from '@/config/mrist.config';
 
 export default function HomePage() {
   const { data: departments = [], isLoading: deptsLoading } = useDepartments();
@@ -24,19 +25,19 @@ export default function HomePage() {
         <PublicContainer className="flex flex-col items-center text-center gap-8">
           {/* Eyebrow badge */}
           <Badge variant="soft-primary" className="px-4 py-1.5 text-[12px] font-semibold rounded-full shadow-sm animate-fade-in">
-            🎓 &nbsp;Now Accepting Applications — 2024/2025 Session
+            🎓 &nbsp;Now Accepting Applications — Session 2025–26
           </Badge>
 
           {/* Hero title */}
           <h1 className="text-4xl sm:text-5xl lg:text-[62px] font-extrabold tracking-tight text-[#0F172A] max-w-4xl leading-[1.1] animate-fade-in-up stagger-1">
-            National Engineering{' '}
+            Welcome to{' '}
             <span className="bg-gradient-to-r from-[#1D4ED8] via-[#6366F1] to-[#06B6D4] bg-clip-text text-transparent">
-              Diploma Institute
+              MRIST
             </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-[#64748B] max-w-2xl leading-relaxed animate-fade-in-up stagger-2">
-            Elevating professional vocational capabilities with structured semesters, advanced laboratory practice, and industry-aligned technical skillsets.
+            {MRIST.about.intro}
           </p>
 
           {/* CTA buttons */}
@@ -57,9 +58,9 @@ export default function HomePage() {
           {/* Hero stat cards — subtle glass treatment */}
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl animate-fade-in-up stagger-4">
             {[
-              { label: 'Active Students', value: '2,400+', icon: 'Users', color: 'text-[#1D4ED8]', bg: 'bg-[#DBEAFE]' },
-              { label: 'Faculty Members', value: '120+', icon: 'GraduationCap', color: 'text-[#059669]', bg: 'bg-[#D1FAE5]' },
-              { label: 'Programs Offered', value: '8', icon: 'BookOpen', color: 'text-[#7C3AED]', bg: 'bg-[#EDE9FE]' },
+              { label: 'Students Enrolled', value: MRIST.atAGlance.totalStudents, icon: 'Users', color: 'text-[#1D4ED8]', bg: 'bg-[#DBEAFE]' },
+              { label: 'Faculty Members', value: MRIST.atAGlance.totalFaculty, icon: 'GraduationCap', color: 'text-[#059669]', bg: 'bg-[#D1FAE5]' },
+              { label: 'Technologies', value: `${MRIST.atAGlance.departments}`, icon: 'BookOpen', color: 'text-[#7C3AED]', bg: 'bg-[#EDE9FE]' },
             ].map((stat) => (
               <div key={stat.label} className="glass-card rounded-2xl p-5 flex items-center gap-4 text-left">
                 <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${stat.bg} ${stat.color}`}>
@@ -79,12 +80,12 @@ export default function HomePage() {
       <PublicSection bg="default">
         <PublicContainer>
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <Badge variant="soft-primary" className="mb-3">Our Programs</Badge>
+            <Badge variant="soft-primary" className="mb-3">Our Technologies</Badge>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0F172A]">
-              Diploma Engineering Programs
+              Diploma Engineering Technologies
             </h2>
             <p className="text-[#64748B] text-base mt-3 leading-relaxed">
-              4-year Diploma in Engineering qualifications accredited by the Technical Education Board.
+              MRIST offers 5 specialized 4-Year Diploma in Engineering technologies, fully affiliated with BTEB.
             </p>
           </div>
 
@@ -196,27 +197,20 @@ export default function HomePage() {
       <PublicSection bg="default">
         <PublicContainer>
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <Badge variant="soft-primary" className="mb-3">Why Choose DIMS</Badge>
+            <Badge variant="soft-primary" className="mb-3">Why Choose MRIST</Badge>
             <h2 className="text-3xl font-extrabold tracking-tight text-[#0F172A]">
-              Built for Academic Excellence
+              Why Choose MRIST?
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: 'BarChart3', title: 'Digital Academic Records', desc: 'Access grades, attendance, and results instantly from anywhere on any device.' },
-              { icon: 'CreditCard', title: 'Transparent Fee Management', desc: 'View invoices, payment history, and outstanding dues with full clarity.' },
-              { icon: 'Calendar', title: 'Smart Class Routine', desc: 'Dynamic schedule management synced for both students and faculty.' },
-              { icon: 'Bell', title: 'Real-time Notices', desc: 'Receive circulars, exam schedules, and academic updates without delay.' },
-              { icon: 'Shield', title: 'Secure Role-based Access', desc: 'Separate authenticated portals for Admin, Teacher, Student, and Accountant.' },
-              { icon: 'Globe', title: 'Online Admission Portal', desc: 'Apply from anywhere with document upload and status tracking.' },
-            ].map(({ icon, title, desc }, i) => (
+            {MRIST.whyChoose.map(({ title, desc }, i) => (
               <div
                 key={title}
                 className="rounded-2xl border border-border bg-card p-6 hover:shadow-[0_8px_24px_rgba(29,78,216,0.06)] hover:border-[#BFDBFE] transition-all duration-200 animate-fade-in-up"
                 style={{ animationDelay: `${i * 0.05}s` }}
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#DBEAFE] text-[#1D4ED8] mb-4">
-                  <LucideIcon name={icon} size={20} />
+                  <LucideIcon name="CheckCircle" size={20} />
                 </div>
                 <h3 className="text-[15px] font-bold text-[#0F172A] mb-1.5">{title}</h3>
                 <p className="text-sm text-[#64748B] leading-relaxed">{desc}</p>
@@ -231,10 +225,10 @@ export default function HomePage() {
         <PublicContainer className="flex flex-col items-center text-center gap-6">
           <Badge variant="soft-primary">Open Enrollment</Badge>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0F172A] max-w-2xl leading-snug">
-            Ready to Start Your Engineering Journey?
+            Ready to Start Your Engineering Journey at MRIST?
           </h2>
           <p className="text-[#64748B] text-base max-w-xl leading-relaxed">
-            Join thousands of students who chose DIMS for a structured, industry-aligned diploma education in engineering technology.
+            Join hundreds of students who chose MRIST for a structured, industry-aligned diploma engineering education affiliated with BTEB.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/admission">
@@ -266,9 +260,9 @@ export default function HomePage() {
               </p>
               <div className="space-y-3">
                 {[
-                  { icon: 'Phone', text: '+8802-99887766 (Help Desk: 9 AM – 5 PM)' },
-                  { icon: 'Mail', text: 'admission@ndi.edu.bd' },
-                  { icon: 'MapPin', text: '12/A Academic Avenue, Dhaka, Bangladesh' },
+                  { icon: 'Phone', text: `${MRIST.contact.phone} (9 AM – 5 PM)` },
+                  { icon: 'Mail', text: MRIST.contact.admissionEmail },
+                  { icon: 'MapPin', text: MRIST.contact.addressShort },
                 ].map(({ icon, text }) => (
                   <div key={icon} className="flex items-center gap-3 text-sm text-[#64748B]">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#DBEAFE] text-[#1D4ED8] shrink-0">
@@ -289,8 +283,9 @@ export default function HomePage() {
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#DBEAFE] text-[#1D4ED8]">
                 <LucideIcon name="Map" size={28} />
               </div>
-              <span className="font-semibold text-foreground text-sm">Campus Location Map</span>
-              <span className="text-xs text-muted-foreground">12/A Academic Avenue, Dhaka</span>
+              <span className="font-semibold text-foreground text-sm">Campus Location</span>
+              <span className="text-xs text-muted-foreground">Matuail, Jatrabari, Dhaka-1362</span>
+              <a href="/contact" className="text-xs text-[#1D4ED8] underline">View Full Contact Info →</a>
             </div>
           </div>
         </PublicContainer>

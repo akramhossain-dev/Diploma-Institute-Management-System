@@ -8,21 +8,26 @@ export const publicNavigation: NavItem[] = [
   {
     label: 'About',
     route: '/about',
+    children: [
+      { label: 'About MRIST', route: '/about' },
+      { label: 'At a Glance', route: '/at-a-glance' },
+      { label: 'Mission & Vision', route: '/about#mission-vision' },
+    ],
   },
   {
     label: 'Departments',
     route: '/departments',
   },
   {
-    label: 'Courses',
-    route: '/courses',
-  },
-  {
     label: 'Notices',
     route: '/notices',
   },
   {
-    label: 'Online Admission',
+    label: 'Admission',
     route: '/admission',
+  },
+  {
+    label: 'Contact',
+    route: '/contact',
   },
 ];

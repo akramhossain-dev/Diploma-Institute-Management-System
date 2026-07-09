@@ -16,6 +16,22 @@ const departmentController = {
     return successResponse(res, { statusCode: 200, message: "Departments retrieved successfully", data: departments, pagination });
   }),
 
+  // GET /api/departments/public — no auth required, active departments only
+  getPublic: asyncHandler(async (req, res) => {
+    const { departments } = await departmentService.getAllDepartments({ status: 'active', limit: 20 });
+    // Return public-safe shape: id, name, code, shortName, description
+    const publicDepts = departments.map((d) => ({
+      _id:             d._id,
+      code:            d.code,
+      name:            d.name,
+      shortName:       d.shortName || d.code,
+      description:     d.description,
+      headTeacherName: d.headTeacherId?.fullName || null,
+      status:          d.status,
+    }));
+    return successResponse(res, { statusCode: 200, message: "Departments retrieved", data: publicDepts });
+  }),
+
   // GET /api/departments/:id
   getById: asyncHandler(async (req, res) => {
     const dept = await departmentService.getDepartmentById(req.params.id);

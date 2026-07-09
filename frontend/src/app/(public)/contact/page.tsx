@@ -1,138 +1,175 @@
-'use client';
+import type { Metadata } from 'next';
+import React from 'react';
+import MRIST from '@/config/mrist.config';
 
-import React, { useState } from 'react';
-import { PageContainer } from '@/components/shared/layout/PageContainer';
-import { SectionHeader } from '@/components/shared/layout/SectionHeader';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { LucideIcon } from '@/components/shared/navigation/LucideIcon';
-import { useUiStore } from '@/store/ui/uiStore';
+export const metadata: Metadata = {
+  title: 'Contact MRIST',
+  description: `Contact ${MRIST.shortName} — Address: ${MRIST.contact.addressShort}. Phone: ${MRIST.contact.phone}. Email: ${MRIST.contact.email}.`,
+};
 
 export default function ContactPage() {
-  const addToast = useUiStore((state) => state.addToast);
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-    addToast('Message Sent Successfully. Our help desk team will review your query and reply back within 24 hours.', 'success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
-  };
-
   return (
-    <PageContainer>
-      <SectionHeader
-        title="Contact Our Help Desk"
-        description="Have any inquiries? Send us a direct message or visit our campus offices."
-      />
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Contact Info Column */}
-        <div className="space-y-4 md:col-span-1">
-          <Card className="border shadow-xs">
-            <CardContent className="pt-6 space-y-4">
-              <div className="flex items-start space-x-3 text-sm">
-                <LucideIcon name="MapPin" className="text-primary mt-0.5 shrink-0" size={18} />
-                <div>
-                  <span className="font-bold block text-foreground">Campus Address</span>
-                  <span className="text-muted-foreground block mt-1">12/A Academic Avenue, Dhaka, Bangladesh</span>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-3 text-sm border-t pt-4">
-                <LucideIcon name="Phone" className="text-primary mt-0.5 shrink-0" size={18} />
-                <div>
-                  <span className="font-bold block text-foreground">Telephone Helpline</span>
-                  <span className="text-muted-foreground block mt-1">+8802-99887766</span>
-                  <span className="text-xs text-muted-foreground block">Ext: Admissions (101), Accounts (102)</span>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-3 text-sm border-t pt-4">
-                <LucideIcon name="Mail" className="text-primary mt-0.5 shrink-0" size={18} />
-                <div>
-                  <span className="font-bold block text-foreground">Electronic Mail</span>
-                  <span className="text-muted-foreground block mt-1">info@ndi.edu.bd</span>
-                  <span className="text-xs text-muted-foreground block">For status checks: admission@ndi.edu.bd</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+    <main className="min-h-screen">
+      {/* Hero Banner */}
+      <section className="bg-[#0F172A] py-14 px-4">
+        <div className="mx-auto max-w-4xl text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Contact MRIST</h1>
+          <p className="text-[#94A3B8] text-base max-w-xl mx-auto">
+            We&apos;re here to help. Reach out to us for admissions, academic queries, or general information.
+          </p>
         </div>
+      </section>
 
-        {/* Message Form Column */}
-        <div className="md:col-span-2">
-          <Card className="border shadow-md">
-            <CardContent className="pt-6">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-sm font-semibold">Your Name</label>
-                    <Input
-                      placeholder="Enter name"
-                      value={formData.name}
-                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      required
-                      disabled={loading}
-                    />
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Contact Info */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground mb-6">Get in Touch</h2>
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: '📍',
+                    label: 'Campus Address',
+                    value: MRIST.contact.address,
+                  },
+                  {
+                    icon: '📞',
+                    label: 'Phone',
+                    value: `${MRIST.contact.phone}\n${MRIST.contact.phone2}`,
+                  },
+                  {
+                    icon: '✉️',
+                    label: 'Email',
+                    value: MRIST.contact.email,
+                  },
+                  {
+                    icon: '🌐',
+                    label: 'Website',
+                    value: 'mrist.edu.bd',
+                  },
+                  {
+                    icon: '🕐',
+                    label: 'Office Hours',
+                    value: 'Sunday – Thursday: 8:00 AM – 5:00 PM',
+                  },
+                ].map(({ icon, label, value }) => (
+                  <div key={label} className="flex items-start gap-4 bg-card border rounded-xl p-5">
+                    <div className="text-2xl w-10 text-center shrink-0">{icon}</div>
+                    <div>
+                      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">{label}</div>
+                      <div className="text-sm font-medium text-foreground whitespace-pre-line">{value}</div>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-sm font-semibold">Email Address</label>
-                    <Input
-                      type="email"
-                      placeholder="name@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      required
-                      disabled={loading}
-                    />
-                  </div>
-                </div>
+                ))}
+              </div>
+            </div>
 
-                <div className="space-y-1">
-                  <label className="text-sm font-semibold">Subject</label>
-                  <Input
-                    placeholder="e.g. Admission inquiry"
-                    value={formData.subject}
-                    onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
-                    required
-                    disabled={loading}
+            {/* Admission Helpline */}
+            <div className="bg-[#DBEAFE]/40 border border-[#1D4ED8]/20 rounded-xl p-6">
+              <h3 className="text-base font-bold text-[#1D4ED8] mb-2">📣 Admission Helpline</h3>
+              <p className="text-sm text-[#334155]">
+                For admission-related queries, call our helpline or email{' '}
+                <a href={`mailto:${MRIST.contact.admissionEmail}`} className="text-[#1D4ED8] font-medium underline">
+                  {MRIST.contact.admissionEmail}
+                </a>
+              </p>
+              <p className="text-sm font-semibold text-foreground mt-2">{MRIST.contact.phone}</p>
+              <p className="text-xs text-muted-foreground">Available: 9 AM – 5 PM, Sun–Thu</p>
+            </div>
+
+            {/* Social Links */}
+            <div className="bg-card border rounded-xl p-5 space-y-3">
+              <h3 className="text-base font-bold text-foreground">Follow Us</h3>
+              <div className="flex gap-3">
+                <a
+                  href={MRIST.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1877F2]/10 text-[#1877F2] text-sm font-medium hover:bg-[#1877F2]/20 transition-colors"
+                >
+                  <span>Facebook</span>
+                </a>
+                <a
+                  href={MRIST.social.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#FF0000]/10 text-[#FF0000] text-sm font-medium hover:bg-[#FF0000]/20 transition-colors"
+                >
+                  <span>YouTube</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Map + Contact Form */}
+          <div className="space-y-6">
+            {/* Map Embed Placeholder */}
+            <div className="rounded-xl overflow-hidden border h-[320px] bg-[#F1F5F9] flex items-center justify-center">
+              <div className="text-center text-muted-foreground p-6">
+                <div className="text-4xl mb-3">🗺️</div>
+                <p className="text-sm font-medium">Matuail, Demra Road, Jatrabari, Dhaka-1362</p>
+                <p className="text-xs mt-1">
+                  <a
+                    href="https://maps.google.com/?q=Jatrabari,Dhaka,Bangladesh"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#1D4ED8] underline"
+                  >
+                    Open in Google Maps
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            {/* Contact Form */}
+            <div className="bg-card border rounded-xl p-6 space-y-4">
+              <h3 className="text-base font-bold text-foreground">Send a Message</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Your Name</label>
+                  <input
+                    type="text"
+                    placeholder="Full name"
+                    className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-background focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20 focus:border-[#1D4ED8]"
                   />
                 </div>
-
-                <div className="space-y-1">
-                  <label className="text-sm font-semibold">Message Detail</label>
-                  <textarea
-                    placeholder="Enter your query details..."
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                    required
-                    disabled={loading}
-                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+                <div>
+                  <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Email Address</label>
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-background focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20 focus:border-[#1D4ED8]"
                   />
                 </div>
-
-                <div className="pt-2">
-                  <Button type="submit" className="w-full sm:w-auto font-semibold" isLoading={loading}>
-                    Send Message
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Subject</label>
+                <input
+                  type="text"
+                  placeholder="How can we help?"
+                  className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-background focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20 focus:border-[#1D4ED8]"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Message</label>
+                <textarea
+                  rows={4}
+                  placeholder="Write your message..."
+                  className="w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-background focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20 focus:border-[#1D4ED8] resize-none"
+                />
+              </div>
+              <button
+                type="button"
+                className="w-full py-2.5 px-4 rounded-lg bg-[#1D4ED8] text-white text-sm font-semibold hover:bg-[#1E40AF] transition-colors"
+              >
+                Send Message
+              </button>
+              <p className="text-xs text-muted-foreground text-center">We typically respond within 1–2 business days.</p>
+            </div>
+          </div>
         </div>
       </div>
-    </PageContainer>
+    </main>
   );
 }

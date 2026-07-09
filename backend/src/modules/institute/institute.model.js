@@ -69,6 +69,15 @@ const instituteSettingsSchema = new mongoose.Schema(
     // Enforce at application level; this field ensures a readable anchor
     isSingleton: { type: Boolean, default: true, immutable: true },
 
+    // ── MRIST / Public content fields ─────────────────────────────────────
+    // Used by /api/institute/public to serve public-facing institute info
+    established:   { type: String, trim: true, default: null },
+    affiliation:   { type: String, trim: true, default: "BTEB" },
+    history:       { type: String, trim: true, default: null },
+    mission:       { type: String, trim: true, default: null },
+    vision:        { type: String, trim: true, default: null },
+    admissionOpen: { type: Boolean, default: true },
+
     // ── Audit ─────────────────────────────────────────────────────────────
     updatedByAdminId: {
       type: ObjectId, ref: "Admin", default: null,

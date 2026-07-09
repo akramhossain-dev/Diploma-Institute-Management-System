@@ -17,6 +17,9 @@ const validateMongoId = [
 // POST   /api/departments           — Admin only
 router.post(  "/",            authenticate, authorizeEntity("admin"), createDepartmentValidation, handleValidationErrors, departmentController.create);
 
+// GET    /api/departments/public      — no auth, active departments only
+router.get(   "/public",      departmentController.getPublic);
+
 // GET    /api/departments           — Admin, teacher, student (public-facing structure)
 router.get(   "/",            authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), departmentController.getAll);
 
