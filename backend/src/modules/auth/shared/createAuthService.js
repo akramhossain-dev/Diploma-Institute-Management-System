@@ -128,7 +128,15 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
       authRecord.refreshToken = tokens.refreshToken;
       await authRecord.save();
 
-      return tokens;
+      // Fetch and sanitize profile for frontend context preservation
+      const profile = await EntityModel.findById(entityId).lean();
+      const sanitizedProfile = profile ? sanitizeProfile(profile) : null;
+
+      return {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+        profile: sanitizedProfile,
+      };
     },
 
     // ────────────────────────────────────────────────────────────────────────

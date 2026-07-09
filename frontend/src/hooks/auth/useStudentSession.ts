@@ -27,6 +27,9 @@ export function useStudentSession() {
         setSession(newAccessToken, studentProfile || existingProfile);
       } catch (err) {
         clearSession();
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login/student';
+        }
       } finally {
         setLoading(false);
       }

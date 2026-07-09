@@ -32,7 +32,7 @@ const fallbackInfo: InstituteInfo = {
 export const instituteService = {
   getInfo: async (): Promise<InstituteInfo> => {
     try {
-      const response = await publicAxios.get<ApiResponse<InstituteInfo>>('/institute/public');
+      const response = await publicAxios.get<ApiResponse<InstituteInfo>>('/institute-settings/public');
       return response.data.data ?? fallbackInfo;
     } catch {
       return fallbackInfo;

@@ -27,6 +27,9 @@ export function useAccountantSession() {
         setSession(newAccessToken, accountantProfile || existingProfile);
       } catch (err) {
         clearSession();
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login/accountant';
+        }
       } finally {
         setLoading(false);
       }

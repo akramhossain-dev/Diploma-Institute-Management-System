@@ -30,8 +30,11 @@ export function useAdminSession() {
         const existingProfile = useAdminAuthStore.getState().profile;
         setSession(newAccessToken, adminProfile || existingProfile);
       } catch (err) {
-        // Failed silent refresh -> clear state
+        // Failed silent refresh -> clear state and redirect to login
         clearSession();
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login/admin';
+        }
       } finally {
         setLoading(false);
       }

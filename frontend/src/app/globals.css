@@ -106,14 +106,14 @@
   --aurora-indigo: #6366F1;
   --aurora-cyan: #06B6D4;
 
-  /* === SIDEBAR — DEEP PREMIUM DARK === */
-  --sidebar: #0F172A;
-  --sidebar-foreground: #CBD5E1;
+  /* === SIDEBAR — PREMIUM WHITE === */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #334155;
   --sidebar-muted: #64748B;
-  --sidebar-active: rgba(255,255,255,0.10);
-  --sidebar-active-text: #FFFFFF;
-  --sidebar-hover: rgba(255,255,255,0.06);
-  --sidebar-border: rgba(255,255,255,0.08);
+  --sidebar-active: #DBEAFE;
+  --sidebar-active-text: #1D4ED8;
+  --sidebar-hover: #F1F5F9;
+  --sidebar-border: #E2E8F0;
 
   /* === RADIUS === */
   --radius: 0.5rem;

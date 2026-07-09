@@ -76,7 +76,10 @@ export const createAuthController = (service) => ({
     return successResponse(res, {
       statusCode: 200,
       message: "Token refreshed successfully",
-      data: { accessToken: tokens.accessToken },
+      data: {
+        accessToken: tokens.accessToken,
+        profile: tokens.profile,
+      },
     });
   }),
 

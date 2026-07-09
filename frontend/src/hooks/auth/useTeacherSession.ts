@@ -27,6 +27,9 @@ export function useTeacherSession() {
         setSession(newAccessToken, teacherProfile || existingProfile);
       } catch (err) {
         clearSession();
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login/teacher';
+        }
       } finally {
         setLoading(false);
       }
