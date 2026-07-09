@@ -39,8 +39,7 @@ export const studentFeeService = {
       const response = await studentAxios.get<ApiResponse<StudentFeeItem[]>>('/fees');
       return response.data.data;
     } catch (e) {
-      console.warn('[Student Service] GET /fees failed. Falling back to mock data.');
-      return [...mockStudentFees];
+      throw e;
     }
   },
 
@@ -49,8 +48,7 @@ export const studentFeeService = {
       const response = await studentAxios.get<ApiResponse<StudentPaymentItem[]>>('/fees/payments/history');
       return response.data.data;
     } catch (e) {
-      console.warn('[Student Service] GET /fees/payments/history failed. Falling back to mock data.');
-      return [...mockStudentPayments];
+      throw e;
     }
   },
 
@@ -59,12 +57,7 @@ export const studentFeeService = {
       const response = await studentAxios.get<ApiResponse<StudentFeeSummary>>('/fees/summary');
       return response.data.data;
     } catch (e) {
-      console.warn('[Student Service] GET /fees/summary failed. Re-calculating from mock fees.');
-      const fees = await studentFeeService.getStudentFees();
-      const totalAssigned = fees.reduce((acc, curr) => acc + curr.amount, 0);
-      const totalPaid = fees.reduce((acc, curr) => acc + curr.paidAmount, 0);
-      const totalDue = fees.reduce((acc, curr) => acc + curr.dueAmount, 0);
-      return { totalAssigned, totalPaid, totalDue };
+      throw e;
     }
   },
 };

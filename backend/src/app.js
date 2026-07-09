@@ -20,14 +20,14 @@ app.use(
     origin: env.CLIENT_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-xsrf-token", "x-csrf-token"],
   })
 );
 
 // ── Scoped Rate Limiting ──────────────────────────────────────────────────
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 1000,                // Increased from 100 to prevent false-positives for active users
+  max: 1000,                // Global rate limit of 1000 requests per 15 minutes
   standardHeaders: true,
   legacyHeaders: false,
   message: {

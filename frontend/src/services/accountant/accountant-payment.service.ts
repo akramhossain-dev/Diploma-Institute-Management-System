@@ -41,8 +41,7 @@ export const accountantPaymentService = {
       const response = await accountantAxios.get<ApiResponse<PaymentHistoryItem[]>>('/payments/history');
       return response.data.data;
     } catch (e) {
-      console.warn('[Accountant Service] GET /payments/history failed. Falling back to mock data.');
-      return [...mockPaymentHistory];
+      throw e;
     }
   },
 
@@ -51,19 +50,7 @@ export const accountantPaymentService = {
       const response = await accountantAxios.post<ApiResponse<PaymentHistoryItem>>('/payments/collect', data);
       return response.data.data;
     } catch (e) {
-      console.warn('[Accountant Service] POST /payments/collect failed. Simulating database entry.');
-      const newPayment: PaymentHistoryItem = {
-        _id: 'pay-rec-gen-' + Math.random().toString(36).substring(2, 9),
-        studentId: data.studentId,
-        studentName: data.studentId === 'stud-1' ? 'Ahsan Habib' : data.studentId === 'stud-2' ? 'Nusrat Jahan' : 'Walk-in Student',
-        feeStructureName: data.feeStructureId === 'fee-1' ? 'Admission Fee 2026' : 'Semester Exam Fee 2026',
-        amount: data.amount,
-        paymentDate: data.paymentDate,
-        paymentMethod: data.paymentMethod,
-        reference: data.reference || 'N/A',
-      };
-      mockPaymentHistory.unshift(newPayment);
-      return newPayment;
+      throw e;
     }
   },
 };

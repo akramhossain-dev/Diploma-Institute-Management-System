@@ -51,6 +51,7 @@ import notificationRoutes from "../modules/notifications/notification.routes.js"
 import auditLogRoutes     from "../modules/auditLogs/auditLog.routes.js";
 import fileRoutes         from "../modules/files/file.routes.js";
 import importExportRoutes from "../modules/importExport/importExport.routes.js";
+import feeRoutes          from "../modules/fees/fee.routes.js";
 
 /**
  * Root API Router — mounts all module routers under /api
@@ -142,5 +143,6 @@ router.use("/notifications", notificationRoutes);
 router.use("/audit-logs",    auditLogRoutes);
 router.use("/files",         fileRoutes);
 router.use("/import-export", importExportRoutes);
+router.use("/fees",          feeRoutes);
 
 export default router;

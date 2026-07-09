@@ -128,7 +128,7 @@ export function PublicNavbar() {
           </Link>
           <Link href="/login">
             <Button size="sm" className="font-semibold">
-              Student Portal
+              Portal Login
             </Button>
           </Link>
         </div>

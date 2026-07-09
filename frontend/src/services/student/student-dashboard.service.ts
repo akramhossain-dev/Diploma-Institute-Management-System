@@ -23,8 +23,7 @@ export const studentDashboardService = {
       const response = await studentAxios.get<ApiResponse<StudentDashboardData>>('/dashboard');
       return response.data.data;
     } catch (e) {
-      console.warn('[Student Service] GET /dashboard failed. Falling back to mock data.');
-      return { ...mockStudentDashboard };
+      throw e;
     }
   },
 };

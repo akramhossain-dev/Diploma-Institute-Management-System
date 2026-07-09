@@ -50,8 +50,7 @@ export const accountantFeeService = {
       const response = await accountantAxios.get<ApiResponse<StudentBillingOverview[]>>('/fees/overview');
       return response.data.data;
     } catch (e) {
-      console.warn('[Accountant Service] GET /fees/overview failed. Falling back to mock data.');
-      return [...mockAccountantFees];
+      throw e;
     }
   },
 };

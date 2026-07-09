@@ -23,8 +23,7 @@ export const accountantDashboardService = {
       const response = await accountantAxios.get<ApiResponse<AccountantDashboardData>>('/dashboard');
       return response.data.data;
     } catch (e) {
-      console.warn('[Accountant Service] GET /dashboard failed. Falling back to mock data.');
-      return { ...mockAccountantDashboard };
+      throw e;
     }
   },
 };

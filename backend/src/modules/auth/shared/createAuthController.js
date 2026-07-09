@@ -1,9 +1,10 @@
 import asyncHandler from "../../../utils/asyncHandler.js";
 import { successResponse } from "../../../utils/response.js";
+import env from "../../../config/env.js";
 
 const REFRESH_TOKEN_COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
+  secure: env.isProd,
   sameSite: "strict",
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
 };
@@ -47,7 +48,7 @@ export const createAuthController = (service) => ({
     // Clear the refresh token cookie
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: env.isProd,
       sameSite: "strict",
     });
 
@@ -104,7 +105,7 @@ export const createAuthController = (service) => ({
     // Clear refresh token cookie to force re-login
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: env.isProd,
       sameSite: "strict",
     });
 

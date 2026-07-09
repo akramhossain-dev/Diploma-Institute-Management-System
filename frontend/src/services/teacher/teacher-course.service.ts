@@ -69,8 +69,7 @@ export const teacherCourseService = {
       const response = await teacherAxios.get<ApiResponse<Course[]>>('/courses/assigned');
       return response.data.data;
     } catch (e) {
-      console.warn('[Teacher Service] GET /courses/assigned failed. Falling back to mock data.');
-      return [...mockAssignedCourses];
+      throw e;
     }
   },
 
@@ -79,8 +78,7 @@ export const teacherCourseService = {
       const response = await teacherAxios.get<ApiResponse<Student[]>>(`/courses/${courseId}/students`);
       return response.data.data;
     } catch (e) {
-      console.warn(`[Teacher Service] GET /courses/${courseId}/students failed. Resolving mock roster.`);
-      return mockCourseStudents[courseId] || [];
+      throw e;
     }
   },
 };

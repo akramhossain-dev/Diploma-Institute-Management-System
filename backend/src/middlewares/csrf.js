@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import env from "../config/env.js";
 
 const SAFE_METHODS = ["GET", "HEAD", "OPTIONS"];
 
@@ -24,13 +25,13 @@ export const csrfProtection = (req, res, next) => {
     res.cookie("XSRF-TOKEN", csrfToken, {
       path: "/",
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: env.isProd,
       httpOnly: false, // Must be readable by Axios
     });
   }
 
-  // 2. Bypass safe methods
-  if (SAFE_METHODS.includes(req.method)) {
+  // 2. Bypass safe methods or development environment
+  if (SAFE_METHODS.includes(req.method) || env.isDev) {
     return next();
   }
 
