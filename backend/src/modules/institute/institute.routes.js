@@ -8,13 +8,11 @@ import { createSettingsValidation, updateSettingsValidation } from "./institute.
 
 const router = Router();
 
-// ── GET public — no auth required, safe subset of institute info ──────────
 router.get(
   "/public",
   instituteSettingsController.getPublic
 );
 
-// ── GET — accessible to all authenticated entities for reading config ──────
 router.get(
   "/",
   authenticate,
@@ -22,7 +20,6 @@ router.get(
   instituteSettingsController.get
 );
 
-// ── POST — initial setup, admin only ──────────────────────────────────────
 router.post(
   "/",
   authenticate, authorizeEntity("admin"),
@@ -30,7 +27,6 @@ router.post(
   instituteSettingsController.create
 );
 
-// ── PATCH — update, admin only ────────────────────────────────────────────
 router.patch(
   "/",
   authenticate, authorizeEntity("admin"),

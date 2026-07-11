@@ -44,7 +44,6 @@ const fileSchema = new mongoose.Schema(
   }
 );
 
-// Indexes for sorting/filtering files
 fileSchema.index({ createdAt: -1 });
 fileSchema.index({ name: "text" });
 

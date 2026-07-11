@@ -30,12 +30,12 @@ export default function NoticesPage() {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    setPage(1); // Reset page to 1 on new search query
+    setPage(1); 
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-    setPage(1); // Reset page to 1 on filter
+    setPage(1); 
   };
 
   return (
@@ -45,7 +45,7 @@ export default function NoticesPage() {
         description="Verify official notices, schedules, holidays, and circulars from the academic committee."
       />
 
-      {/* Filters & Search */}
+      {}
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <div className="flex-1">
           <div className="relative">
@@ -75,7 +75,7 @@ export default function NoticesPage() {
         </div>
       </div>
 
-      {/* Notice List */}
+      {}
       {isLoading ? (
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -125,7 +125,7 @@ export default function NoticesPage() {
             ))}
           </div>
 
-          {/* Pagination Controls */}
+          {}
           {pagination && pagination.totalPages > 1 && (
             <div className="flex justify-between items-center pt-6 border-t">
               <Button

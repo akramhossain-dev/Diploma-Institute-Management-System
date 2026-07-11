@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export interface Exam {
   _id: string;
-  name: string; // e.g. "Mid Term 2026"
+  name: string; 
   type: 'midterm' | 'final' | 'practical';
   sessionId: string;
   sessionName?: string;

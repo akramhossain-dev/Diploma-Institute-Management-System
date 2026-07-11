@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useUiStore } from '@/store/ui/uiStore';
 import { useAccountantFees } from '@/hooks/accountant/useAccountantFees';
-import { useCollectPayment, useAccountantPayments } from '@/hooks/accountant/useAccountantPayments';
+import { useCollectPayment } from '@/hooks/accountant/useAccountantPayments';
 import { useStudentLedger } from '@/hooks/accountant/useStudentLedger';
 import { paymentCollectionSchema, PaymentCollectionFormInput, StudentBillingOverview } from '@/types/accountant/payment.types';
 import { AmountDisplay } from '@/components/shared/finance/AmountDisplay';
@@ -20,11 +20,9 @@ import { LucideIcon } from '@/components/shared/navigation/LucideIcon';
 
 export default function AccountantPaymentsPage() {
   const addToast = useUiStore((state) => state.addToast);
-  const { data: studentsOverview = [], isLoading: isOverviewLoading } = useAccountantFees();
-  const { data: paymentHistory = [], isLoading: isHistoryLoading } = useAccountantPayments();
+  const { data: studentsOverview = [] } = useAccountantFees();
   const collectPaymentMutation = useCollectPayment();
 
-  // Selected Student
   const [selectedStudent, setSelectedStudent] = useState<StudentBillingOverview | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -33,7 +31,6 @@ export default function AccountantPaymentsPage() {
     selectedStudent?.studentId || ''
   );
 
-  // Filter students based on search
   const filteredStudents = useMemo(() => {
     if (!searchQuery.trim()) return [];
     return studentsOverview.filter(
@@ -63,7 +60,6 @@ export default function AccountantPaymentsPage() {
     },
   });
 
-  // Mock list of fee structures for dropdown selection
   const mockFeeItems = [
     { id: 'fee-1', name: 'Admission Fee 2026', amount: 15000 },
     { id: 'fee-2', name: 'Semester Exam Fee 2026', amount: 3000 },
@@ -72,7 +68,7 @@ export default function AccountantPaymentsPage() {
   const handleSelectStudent = (student: StudentBillingOverview) => {
     setSelectedStudent(student);
     setValue('studentId', student.studentId);
-    setSearchQuery(''); // clear search input
+    setSearchQuery(''); 
   };
 
   const handleCollectPayment = async (data: PaymentCollectionFormInput) => {
@@ -87,7 +83,7 @@ export default function AccountantPaymentsPage() {
         paymentMethod: 'cash',
         reference: '',
       });
-      // Update selected student outstanding info locally for visual sync
+      
       if (selectedStudent) {
         const nextPaid = selectedStudent.totalPaid + data.amount;
         const nextDue = Math.max(0, selectedStudent.totalDue - data.amount);
@@ -99,7 +95,7 @@ export default function AccountantPaymentsPage() {
           lastPaymentDate: data.paymentDate,
         });
       }
-    } catch (err) {
+    } catch {
       addToast('Failed to log payment transaction.', 'error');
     }
   };
@@ -112,7 +108,7 @@ export default function AccountantPaymentsPage() {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column: Student Search & Selection */}
+        {}
         <div className="space-y-6 lg:col-span-1">
           <Card className="border shadow-xs">
             <CardHeader>
@@ -131,7 +127,7 @@ export default function AccountantPaymentsPage() {
                 </div>
               </div>
 
-              {/* Suggestions dropdown */}
+              {}
               {searchQuery && (
                 <div className="border rounded-md divide-y max-h-60 overflow-y-auto bg-card shadow-lg">
                   {filteredStudents.length > 0 ? (
@@ -155,7 +151,7 @@ export default function AccountantPaymentsPage() {
                 </div>
               )}
 
-              {/* Selected Student profile overview */}
+              {}
               {selectedStudent ? (
                 <div className="pt-4 border-t space-y-4 animate-in fade-in-50 duration-200">
                   <div className="flex justify-between items-start">
@@ -199,7 +195,7 @@ export default function AccountantPaymentsPage() {
           </Card>
         </div>
 
-        {/* Right Columns: Collection Form & Financial profile details */}
+        {}
         <div className="space-y-6 lg:col-span-2">
           {selectedStudent ? (
             <div className="space-y-6 animate-in fade-in-50 duration-300">

@@ -5,7 +5,7 @@ export function useCourses(departmentId?: string) {
   return useQuery({
     queryKey: ['public', 'courses', { departmentId }],
     queryFn: () => courseService.getCourses(departmentId),
-    staleTime: 1000 * 60 * 10, // 10 minutes cache
+    staleTime: 1000 * 60 * 10, 
   });
 }
 export default useCourses;

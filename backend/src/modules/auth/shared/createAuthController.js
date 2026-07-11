@@ -6,7 +6,7 @@ const REFRESH_TOKEN_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: env.isProd,
   sameSite: "strict",
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
+  maxAge: 7 * 24 * 60 * 60 * 1000, 
 };
 
 /**
@@ -20,7 +20,7 @@ const REFRESH_TOKEN_COOKIE_OPTIONS = {
  * @param {object} service - Auth service instance (from createAuthService)
  */
 export const createAuthController = (service) => ({
-  // ── POST /login ───────────────────────────────────────────────────────────
+  
   login: asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
@@ -40,7 +40,6 @@ export const createAuthController = (service) => ({
     });
   }),
 
-  // ── POST /logout ──────────────────────────────────────────────────────────
   logout: asyncHandler(async (req, res) => {
     // req.authId is set by authenticate middleware
     await service.logout(req.authId);
@@ -59,7 +58,6 @@ export const createAuthController = (service) => ({
     });
   }),
 
-  // ── POST /refresh ─────────────────────────────────────────────────────────
   refresh: asyncHandler(async (req, res) => {
     // Accept refresh token from cookie (preferred) or body
     const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
@@ -84,7 +82,6 @@ export const createAuthController = (service) => ({
     });
   }),
 
-  // ── GET /me ───────────────────────────────────────────────────────────────
   getMe: asyncHandler(async (req, res) => {
     // req.entityId is set by authenticate middleware
     const result = await service.getMe(req.entityId);
@@ -96,7 +93,6 @@ export const createAuthController = (service) => ({
     });
   }),
 
-  // ── PUT /change-password ──────────────────────────────────────────────────
   changePassword: asyncHandler(async (req, res) => {
     const { currentPassword, newPassword } = req.body;
 

@@ -71,7 +71,7 @@ export default function TeacherCoursesPage() {
         </div>
       )}
 
-      {/* Student List Dialog */}
+      {}
       {selectedCourse && (
         <StudentListDialog
           course={selectedCourse}

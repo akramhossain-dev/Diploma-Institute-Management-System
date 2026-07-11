@@ -21,7 +21,6 @@ const examCourseMappingService = {
     const course = await Course.findById(courseId).lean();
     if (!course) throw new ApiError(404, "Course not found", "NOT_FOUND");
 
-    // 3. Course context must match exam context
     if (String(course.departmentId) !== String(exam.departmentId)) {
       throw new ApiError(400, "Course belongs to a different department than the exam", "CONTEXT_MISMATCH");
     }
@@ -35,12 +34,10 @@ const examCourseMappingService = {
       if (!teacher) throw new ApiError(404, "Teacher not found", "NOT_FOUND");
     }
 
-    // 5. Passmarks <= fullmarks
     if (parseFloat(passMarks) > parseFloat(fullMarks)) {
       throw new ApiError(400, "passMarks cannot exceed fullMarks", "VALIDATION_ERROR");
     }
 
-    // 6. Duplicate course check in same exam
     const duplicate = await ExamCourseMapping.findOne({ examId, courseId });
     if (duplicate) {
       throw new ApiError(
@@ -50,7 +47,6 @@ const examCourseMappingService = {
       );
     }
 
-    // Inherit exam context if not explicitly provided
     const mapping = await ExamCourseMapping.create({
       ...data,
       departmentId:      data.departmentId      || exam.departmentId,
@@ -115,7 +111,6 @@ const examCourseMappingService = {
       throw new ApiError(400, "passMarks cannot exceed fullMarks", "VALIDATION_ERROR");
     }
 
-    // Strip immutable fields
     const { examId, courseId, departmentId, semesterId, academicSessionId, ...allowedUpdates } = data;
 
     const updated = await ExamCourseMapping.findByIdAndUpdate(

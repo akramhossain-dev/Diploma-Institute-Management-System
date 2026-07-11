@@ -25,7 +25,7 @@ export function ProfileHeader({
   return (
     <Card className="border shadow-xs overflow-hidden bg-card text-card-foreground">
       <CardContent className="p-6 flex flex-col sm:flex-row items-center gap-6">
-        {/* Profile Avatar */}
+        {}
         <div className="h-24 w-24 rounded-full border bg-muted flex items-center justify-center overflow-hidden shrink-0">
           {photoUrl ? (
             <img src={photoUrl} alt={fullName} className="h-full w-full object-cover" />
@@ -36,7 +36,7 @@ export function ProfileHeader({
           )}
         </div>
 
-        {/* Profile Details */}
+        {}
         <div className="flex-1 text-center sm:text-left space-y-2">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2">
             <h2 className="text-2xl font-bold tracking-tight text-foreground">{fullName}</h2>

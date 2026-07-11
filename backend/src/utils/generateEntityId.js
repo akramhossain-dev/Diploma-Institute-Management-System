@@ -1,7 +1,4 @@
-/**
- * Entity ID generator — auto-generates sequential IDs for each entity type.
- * Format: PREFIX-YEAR-NNN (e.g. CST-2024-001, TCH-2024-007, ACC-2024-002)
- */
+
 
 /**
  * Generate a student ID using the department code.

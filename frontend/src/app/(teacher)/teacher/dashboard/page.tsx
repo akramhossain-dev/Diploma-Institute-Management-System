@@ -47,7 +47,7 @@ export default function TeacherDashboardPage() {
         description="Monitor active course assignments schedules, check pending grading updates, record attendances, and check recent notices."
       />
 
-      {/* Stats Summary cards */}
+      {}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8 animate-in fade-in-50 duration-300">
         <MetricCard
           title="Assigned Catalog Courses"
@@ -73,7 +73,7 @@ export default function TeacherDashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Lectures routines snapshot */}
+        {}
         <div className="lg:col-span-2 space-y-6">
           <Card className="border shadow-md">
             <CardHeader className="bg-muted/10 border-b pb-4 flex flex-row items-center justify-between">

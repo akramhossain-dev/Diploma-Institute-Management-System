@@ -23,18 +23,15 @@ import { Department, departmentFormSchema, DepartmentFormInput } from '@/types/a
 export default function DepartmentsCrudPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
-  const { data: departments = [], isLoading, isError } = useAdminDepartments();
+  const { data: departments = [], isLoading } = useAdminDepartments();
   const createMutation = useCreateDepartment();
   const updateMutation = useUpdateDepartment();
   const deleteMutation = useDeleteDepartment();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedDept, setSelectedDept] = useState<Department | null>(null);
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -81,7 +78,7 @@ export default function DepartmentsCrudPage() {
         addToast('Department registered successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please try again.', 'error');
     }
   };
@@ -92,7 +89,7 @@ export default function DepartmentsCrudPage() {
       await deleteMutation.mutateAsync(selectedDept._id);
       addToast('Department deleted successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed. Please try again.', 'error');
     }
   };
@@ -105,12 +102,11 @@ export default function DepartmentsCrudPage() {
         data: { status: nextStatus },
       });
       addToast(`Department status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch status.', 'error');
     }
   };
 
-  // Columns definition
   const columns = [
     { key: 'name', label: 'Name' },
     { key: 'code', label: 'Technology Code' },
@@ -160,7 +156,7 @@ export default function DepartmentsCrudPage() {
         searchPlaceholder="Search departments by name..."
       />
 
-      {/* CRUD dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -207,7 +203,7 @@ export default function DepartmentsCrudPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Confirmation Modal */}
+      {}
       <ConfirmDialog
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}

@@ -11,16 +11,15 @@ import { useAdminDepartments } from '@/hooks/admin/useAdminDepartments';
 import { AttendanceReport } from '@/types/admin/attendance.types';
 
 export default function AttendanceMonitoringPage() {
-  const { data: summary, isLoading: isSummaryLoading } = useAttendanceSummary();
+  const { data: summary } = useAttendanceSummary();
   const { data: reports = [], isLoading: isReportsLoading } = useAttendanceReports();
   const { data: departments = [] } = useAdminDepartments();
 
   const [deptFilter, setDeptFilter] = useState('');
 
-  // Filter logs by department selection
   const filteredReports = React.useMemo(() => {
-    return reports; // In simple mock reports, we return all or custom logic
-  }, [reports, deptFilter]);
+    return reports; 
+  }, [reports]);
 
   const columns = [
     { key: 'date', label: 'Date' },
@@ -45,7 +44,7 @@ export default function AttendanceMonitoringPage() {
         description="Monitor institute classes attendance percentages, review audit logs, and scan technology averages."
       />
 
-      {/* Summary Cards */}
+      {}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 mb-8">
         <DashboardCard
           title="Total Lecture Classes Held"
@@ -68,7 +67,7 @@ export default function AttendanceMonitoringPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Department Ratios cards */}
+        {}
         <div className="md:col-span-1 space-y-4">
           <Card className="border shadow-xs bg-card">
             <CardHeader className="border-b">
@@ -87,7 +86,7 @@ export default function AttendanceMonitoringPage() {
           </Card>
         </div>
 
-        {/* Audit Log history table */}
+        {}
         <div className="md:col-span-2">
           <Card className="border shadow-xs bg-card">
             <CardHeader className="border-b flex flex-row items-center justify-between">

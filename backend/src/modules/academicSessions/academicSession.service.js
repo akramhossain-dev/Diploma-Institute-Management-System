@@ -7,11 +7,9 @@ const academicSessionService = {
   async createSession(data, adminId) {
     const { name, startYear, endYear, notes } = data;
 
-    // Name uniqueness
     const exists = await AcademicSession.findOne({ name: { $regex: `^${name}$`, $options: "i" } });
     if (exists) throw new ApiError(409, `Academic session '${name}' already exists`, "DUPLICATE_ENTRY");
 
-    // Construct Dates from start/end years
     const startDate = new Date(Date.UTC(parseInt(startYear, 10), 0, 1));
     const endDate = new Date(Date.UTC(parseInt(endYear, 10), 11, 31, 23, 59, 59));
 

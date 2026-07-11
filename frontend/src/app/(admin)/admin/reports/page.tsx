@@ -15,15 +15,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 
 export default function AdminReportsPage() {
-  // Master lists
+  
   const { data: departments = [] } = useAdminDepartments();
   const { data: semesters = [] } = useAdminSemesters();
   const { data: sessions = [] } = useAdminSessions();
 
-  // Queries
   const { studentsQuery, attendanceQuery, financeQuery, isLoading } = useAdminReports();
 
-  // Filters State
   const [reportType, setReportType] = useState('student');
   const [selectedDept, setSelectedDept] = useState('');
   const [selectedSem, setSelectedSem] = useState('');
@@ -37,7 +35,6 @@ export default function AdminReportsPage() {
     { value: 'finance', label: 'Financial Transactions Report' },
   ];
 
-  // Reset Filters
   const handleClearFilters = () => {
     setSelectedDept('');
     setSelectedSem('');
@@ -46,7 +43,6 @@ export default function AdminReportsPage() {
     setEndDate('');
   };
 
-  // Student list filter logic
   const filteredStudents = useMemo(() => {
     if (reportType !== 'student' || !studentsQuery.data) return [];
     return studentsQuery.data.filter((item) => {
@@ -58,7 +54,6 @@ export default function AdminReportsPage() {
     });
   }, [studentsQuery.data, reportType, selectedDept, selectedSem, startDate, endDate]);
 
-  // Attendance list filter logic
   const filteredAttendance = useMemo(() => {
     if (reportType !== 'attendance' || !attendanceQuery.data) return [];
     return attendanceQuery.data.filter((item) => {
@@ -70,7 +65,6 @@ export default function AdminReportsPage() {
     });
   }, [attendanceQuery.data, reportType, selectedDept, selectedSem, startDate, endDate]);
 
-  // Finance list filter logic
   const filteredFinance = useMemo(() => {
     if (reportType !== 'finance' || !financeQuery.data) return [];
     return financeQuery.data.filter((item) => {
@@ -80,7 +74,6 @@ export default function AdminReportsPage() {
     });
   }, [financeQuery.data, reportType, startDate, endDate]);
 
-  // Print function
   const handlePrint = () => {
     if (typeof window !== 'undefined') {
       window.print();
@@ -99,7 +92,7 @@ export default function AdminReportsPage() {
         }
       />
 
-      {/* Filter panel */}
+      {}
       <div className="print:hidden">
         <ReportFilterBar
           reportTypes={reportTypes}
@@ -122,7 +115,7 @@ export default function AdminReportsPage() {
         />
       </div>
 
-      {/* Report Tables rendering area */}
+      {}
       <Card className="border shadow-md">
         <CardContent className="pt-6">
           <div className="text-center mb-6 hidden print:block">
@@ -142,7 +135,7 @@ export default function AdminReportsPage() {
             </div>
           ) : (
             <>
-              {/* Student report table */}
+              {}
               {reportType === 'student' && (
                 <div className="overflow-x-auto">
                   <Table>
@@ -180,7 +173,7 @@ export default function AdminReportsPage() {
                 </div>
               )}
 
-              {/* Attendance report table */}
+              {}
               {reportType === 'attendance' && (
                 <div className="overflow-x-auto">
                   <Table>
@@ -218,7 +211,7 @@ export default function AdminReportsPage() {
                 </div>
               )}
 
-              {/* Finance report table */}
+              {}
               {reportType === 'finance' && (
                 <div className="overflow-x-auto">
                   <Table>

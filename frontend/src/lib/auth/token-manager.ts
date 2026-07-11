@@ -1,4 +1,4 @@
-// Memory cache for tokens per entity
+
 const tokenCache: Record<string, string | null> = {
   admin: null,
   student: null,
@@ -34,7 +34,6 @@ export const cookieManager = {
       return;
     }
 
-    // Set cookie for 7 days
     const maxAge = 60 * 60 * 24 * 7;
     document.cookie = `dims_entity=${entityType}; path=/; max-age=${maxAge}; SameSite=Lax`;
   },

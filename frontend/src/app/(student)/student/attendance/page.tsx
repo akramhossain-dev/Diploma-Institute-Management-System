@@ -56,7 +56,7 @@ export default function StudentAttendancePage() {
         </div>
       )}
 
-      {/* History logs card */}
+      {}
       <Card className="border shadow-xs bg-card max-w-4xl">
         <CardHeader className="border-b">
           <CardTitle className="text-sm font-bold uppercase tracking-wider text-primary">

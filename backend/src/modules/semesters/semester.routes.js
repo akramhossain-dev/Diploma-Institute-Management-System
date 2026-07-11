@@ -18,7 +18,6 @@ const validateMongoId = [
 router.get(  "/",           authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), semesterController.getAll);
 router.get(  "/:id",        authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), validateMongoId, semesterController.getById);
 
-// Mutations — admin only
 router.post( "/",           authenticate, authorizeEntity("admin"), createSemesterValidation, handleValidationErrors, semesterController.create);
 router.patch("/:id",        authenticate, authorizeEntity("admin"), validateMongoId, updateSemesterValidation, handleValidationErrors, semesterController.update);
 router.patch("/:id/status", authenticate, authorizeEntity("admin"), validateMongoId, semesterController.toggleStatus);

@@ -67,7 +67,7 @@ export function MetricCard({
         className
       )}
     >
-      {/* Left accent stripe */}
+      {}
       <div className={cn('absolute inset-y-0 left-0 w-1 rounded-l-2xl', accent.stripe)} />
 
       <div className="pl-5 pr-5 py-5">

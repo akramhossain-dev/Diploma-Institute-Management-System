@@ -5,9 +5,6 @@ import ApiError from "../../utils/ApiError.js";
 
 const instituteSettingsService = {
 
-  // ────────────────────────────────────────────────────────────────────────
-  // GET — returns the singleton document
-  // ────────────────────────────────────────────────────────────────────────
   async getSettings() {
     const settings = await InstituteSettings.findOne()
       .populate("currentAcademicSessionId",   "name status")
@@ -26,9 +23,6 @@ const instituteSettingsService = {
     return settings;
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // CREATE (called once at system setup — enforced by unique index)
-  // ────────────────────────────────────────────────────────────────────────
   async createSettings(data, adminId) {
     const existing = await InstituteSettings.findOne().lean();
     if (existing) {
@@ -49,9 +43,6 @@ const instituteSettingsService = {
     return settings;
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // UPDATE (partial update — all fields optional)
-  // ────────────────────────────────────────────────────────────────────────
   async updateSettings(data, adminId) {
     await this._validateRefs(data);
 
@@ -78,7 +69,6 @@ const instituteSettingsService = {
     return settings;
   },
 
-  // ── Internal: validate referenced IDs if provided ──────────────────────
   async _validateRefs(data) {
     const { currentAcademicSessionId, defaultAdmissionSemesterId } = data;
 

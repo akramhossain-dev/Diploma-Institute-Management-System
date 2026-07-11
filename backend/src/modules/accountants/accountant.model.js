@@ -21,15 +21,11 @@ const emergencyContactSchema = new mongoose.Schema(
   { _id: false }
 );
 
-/**
- * Accountant — entity profile collection.
- * Auth credentials live in accountant_auth (Phase 2).
- */
 const accountantSchema = new mongoose.Schema(
   {
-    // ── Identity ──────────────────────────────────────────────────────────
+    
     staffId: {
-      type: String, trim: true,    // e.g. ACC-2024-001
+      type: String, trim: true,    
     },
     fullName: {
       type: String, required: [true, "Full name is required"], trim: true,
@@ -41,17 +37,14 @@ const accountantSchema = new mongoose.Schema(
     photo:  { type: String, default: null },
     gender: { type: String, enum: ["Male", "Female", "Other"] },
 
-    // ── Professional ──────────────────────────────────────────────────────
-    designation:    { type: String, trim: true },           // Head Accountant, Junior Accountant
+    designation:    { type: String, trim: true },           
     joiningDate:    { type: Date, default: null },
     qualification:  { type: String, trim: true, default: null },
 
-    // ── Address / Contact ─────────────────────────────────────────────────
     presentAddress:   { type: addressSchema, default: null },
     permanentAddress: { type: addressSchema, default: null },
     emergencyContact: { type: emergencyContactSchema, default: null },
 
-    // ── System ────────────────────────────────────────────────────────────
     linkedAuthId: {
       type: ObjectId, ref: "AccountantAuth", default: null,
     },

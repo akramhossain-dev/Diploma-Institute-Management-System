@@ -1,6 +1,5 @@
 import { body, param, query } from "express-validator";
 
-// ── Create session + bulk attendance ──────────────────────────────────────
 export const createSessionValidation = [
   body("courseId")
     .notEmpty().withMessage("Course is required")
@@ -33,7 +32,6 @@ export const createSessionValidation = [
   body("teacherAssignmentId").optional({ checkFalsy: true }).isMongoId(),
   body("classRoutineId").optional({ checkFalsy: true }).isMongoId(),
 
-  // Bulk attendance records — array of { studentId, status, remarks }
   body("records")
     .notEmpty().withMessage("Attendance records are required")
     .isArray({ min: 1 }).withMessage("records must be a non-empty array"),
@@ -51,7 +49,6 @@ export const createSessionValidation = [
     .optional({ checkFalsy: true }).trim(),
 ];
 
-// ── Update records (correction flow) ─────────────────────────────────────
 export const updateSessionRecordsValidation = [
   body("records")
     .notEmpty().withMessage("Records array is required")
@@ -68,7 +65,6 @@ export const updateSessionRecordsValidation = [
   body("records.*.remarks").optional({ checkFalsy: true }).trim(),
 ];
 
-// ── Query filters ─────────────────────────────────────────────────────────
 export const attendanceQueryValidation = [
   query("fromDate")
     .optional({ checkFalsy: true })

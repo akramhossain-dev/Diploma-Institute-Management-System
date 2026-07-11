@@ -13,7 +13,7 @@ import { useUiStore } from '@/store/ui/uiStore';
 import { useAdminSemesters } from '@/hooks/admin/useAdminSemesters';
 import { useAdminSessions } from '@/hooks/admin/useAdminSessions';
 import { useExam, useUpdateExam } from '@/hooks/admin/useExams';
-import { ExamFormInput, examSchema } from '@/types/admin/exam.types';
+import { examSchema } from '@/types/admin/exam.types';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function EditExamPage() {
@@ -54,7 +54,7 @@ export default function EditExamPage() {
       await updateMutation.mutateAsync({ id, data });
       addToast('Exam details updated successfully', 'success');
       router.push('/admin/exams');
-    } catch (err) {
+    } catch {
       addToast('Failed to update exam.', 'error');
     }
   };

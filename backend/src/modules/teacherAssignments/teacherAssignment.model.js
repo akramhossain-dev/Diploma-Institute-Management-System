@@ -22,7 +22,6 @@ const teacherAssignmentSchema = new mongoose.Schema(
     semesterId:        { type: ObjectId, ref: "Semester",        required: [true, "Semester is required"] },
     academicSessionId: { type: ObjectId, ref: "AcademicSession", required: [true, "Academic session is required"] },
 
-    // Optional contextual narrowing
     section: { type: String, trim: true, default: null },
     shift:   { type: String, enum: ["Morning", "Day", "Evening"], default: null },
     group:   { type: String, trim: true, default: null },

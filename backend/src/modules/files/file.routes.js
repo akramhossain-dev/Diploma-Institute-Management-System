@@ -6,7 +6,6 @@ import authorizeEntity from "../../middlewares/authorizeEntity.js";
 
 const router = Router();
 
-// Protect all files endpoints
 router.use(authenticate, authorizeEntity("admin"));
 
 router.get("/", fileController.getFiles);

@@ -8,13 +8,12 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const toasts = useUiStore((state) => state.toasts || []);
   const removeToast = useUiStore((state) => state.removeToast);
 
-  // Fallback if toasts array is undefined in early store init
   const activeToasts = Array.isArray(toasts) ? toasts : [];
 
   return (
     <>
       {children}
-      {/* Toast container */}
+      {}
       <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-full max-w-sm pointer-events-none">
         {activeToasts.map((toast: any) => (
           <div

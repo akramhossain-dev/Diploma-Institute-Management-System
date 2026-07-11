@@ -10,9 +10,8 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 
 const studentService = {
 
-  // ──────────────────────────────────────────────────────────────────────────
   // CREATE — profile + auth created atomically
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async createStudent(data, adminId) {
     const {
       email, password,
@@ -36,7 +35,6 @@ const studentService = {
     const emailTaken = await StudentAuth.findOne({ email: email.toLowerCase() });
     if (emailTaken) throw new ApiError(409, `Student with email '${email}' already exists`, "DUPLICATE_ENTRY");
 
-    // 3. Roll/registration uniqueness if provided
     if (rollNumber) {
       const rollTaken = await Student.findOne({ rollNumber });
       if (rollTaken) throw new ApiError(409, `Roll number '${rollNumber}' already exists`, "DUPLICATE_ENTRY");
@@ -46,10 +44,8 @@ const studentService = {
       if (regTaken) throw new ApiError(409, `Registration number '${registrationNumber}' already exists`, "DUPLICATE_ENTRY");
     }
 
-    // 4. Auto-generate studentId using department code
     const studentId = await generateStudentId(Student, dept.code);
 
-    // 5. Create student profile
     const student = await Student.create({
       ...profileData,
       email: email.toLowerCase(),
@@ -67,7 +63,7 @@ const studentService = {
     const studentAuth = await StudentAuth.create({
       email:              email.toLowerCase(),
       passwordHash,
-      studentId:          student._id,    // ref to students collection
+      studentId:          student._id,    
       isActive:           true,
       mustChangePassword: true,
     });
@@ -79,9 +75,6 @@ const studentService = {
     return student;
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // LIST with pagination + filters
-  // ──────────────────────────────────────────────────────────────────────────
   async getAllStudents(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { departmentId, semesterId, academicSessionId, status, search } = query;
@@ -115,9 +108,6 @@ const studentService = {
     return { students, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // GET BY ID (full profile)
-  // ──────────────────────────────────────────────────────────────────────────
   async getStudentById(id) {
     const student = await Student.findById(id)
       .populate("departmentId",     "name code")
@@ -130,18 +120,16 @@ const studentService = {
     return student;
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
   // GET OWN PROFILE (called by authenticated student)
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async getMyProfile(studentId) {
     return this.getStudentById(studentId);
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
   // UPDATE — only profile fields; academic fields (dept/sem/session) restricted
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async updateStudent(id, data) {
-    // Strip fields that shouldn't change via update
+    
     const {
       email, password, studentId,
       departmentId, semesterId, academicSessionId,
@@ -163,9 +151,6 @@ const studentService = {
     return student;
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // UPDATE STATUS
-  // ──────────────────────────────────────────────────────────────────────────
   async updateStatus(id, status) {
     const student = await Student.findByIdAndUpdate(
       id,

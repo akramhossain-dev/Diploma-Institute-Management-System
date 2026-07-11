@@ -12,8 +12,6 @@ const validateId        = [param("id").isMongoId().withMessage("Invalid result I
 const validateExamId    = [param("examId").isMongoId().withMessage("Invalid exam ID"), handleValidationErrors];
 const validateStudentId = [param("studentId").isMongoId().withMessage("Invalid student ID"), handleValidationErrors];
 
-// ── Generation (admin only) ───────────────────────────────────────────────
-// IMPORTANT: specific routes must come before generic /:id routes
 router.post(
   "/generate/exams/:examId/students/:studentId",
   authenticate, authorizeEntity("admin"),
@@ -28,7 +26,6 @@ router.post(
   resultController.bulkGenerateForExam
 );
 
-// ── Publish (admin only) ──────────────────────────────────────────────────
 router.patch(
   "/publish/exams/:examId",
   authenticate, authorizeEntity("admin"),
@@ -43,8 +40,6 @@ router.patch(
   resultController.publishResult
 );
 
-// ── Read endpoints ─────────────────────────────────────────────────────────
-// Student-exam lookup (before /:id to avoid conflicts)
 router.get(
   "/exams/:examId/students/:studentId",
   authenticate,

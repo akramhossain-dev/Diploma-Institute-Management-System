@@ -33,10 +33,8 @@ export const fileService = {
   async uploadFile(file, moduleRef, actorName) {
     if (!file) throw new ApiError(400, "No file provided for upload", "VALIDATION_ERROR");
 
-    // Upload to Cloudinary
     const { url, publicId } = await uploadBuffer(file.buffer, "dims_uploads");
 
-    // Create file record in db
     const fileRecord = await FileModel.create({
       name: file.originalname,
       type: file.mimetype,
@@ -54,10 +52,8 @@ export const fileService = {
     const fileRecord = await FileModel.findById(id);
     if (!fileRecord) throw new ApiError(404, "File not found", "NOT_FOUND");
 
-    // Delete from Cloudinary
     await deleteAsset(fileRecord.cloudinaryPublicId);
 
-    // Delete from database
     await fileRecord.deleteOne();
     return true;
   },

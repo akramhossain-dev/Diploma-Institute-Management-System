@@ -32,7 +32,6 @@ export function DataTable<T>({
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
 
-  // Filter data based on search key/query
   const filteredData = React.useMemo(() => {
     if (!searchQuery.trim() || !searchKey) return data;
     return data.filter((item) => {
@@ -44,7 +43,6 @@ export function DataTable<T>({
     });
   }, [data, searchQuery, searchKey]);
 
-  // Paginate filtered data
   const totalPages = Math.ceil(filteredData.length / itemsPerPage) || 1;
   const paginatedData = React.useMemo(() => {
     const start = (page - 1) * itemsPerPage;
@@ -53,7 +51,7 @@ export function DataTable<T>({
 
   return (
     <div className="space-y-4">
-      {/* Search Input bar */}
+      {}
       {searchKey && (
         <div className="relative max-w-sm">
           <Input
@@ -61,7 +59,7 @@ export function DataTable<T>({
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              setPage(1); // Reset page on filter
+              setPage(1); 
             }}
             className="pl-10"
           />
@@ -71,7 +69,7 @@ export function DataTable<T>({
         </div>
       )}
 
-      {/* Renders Table Container */}
+      {}
       <div className="border rounded-lg bg-card overflow-hidden">
         <Table>
           <TableHeader>
@@ -113,7 +111,7 @@ export function DataTable<T>({
         </Table>
       </div>
 
-      {/* Pagination Controls */}
+      {}
       {totalPages > 1 && (
         <div className="flex items-center justify-between pt-2">
           <span className="text-xs text-muted-foreground">

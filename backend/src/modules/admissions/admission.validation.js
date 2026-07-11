@@ -43,7 +43,6 @@ export const createAdmissionValidation = [
     .optional()
     .isIn(["online", "offline", "manual"]).withMessage("Invalid admission source"),
 
-  // Previous education sub-fields
   body("previousEducation.board").optional({ checkFalsy: true }).trim(),
   body("previousEducation.year")
     .optional({ checkFalsy: true })

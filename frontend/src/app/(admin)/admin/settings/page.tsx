@@ -13,18 +13,15 @@ import { useUiStore } from '@/store/ui/uiStore';
 import { useAdminSettings, useUpdateSettings } from '@/hooks/admin/useAdminSettings';
 import { SettingsFormInput, settingsFormSchema } from '@/types/admin/settings.types';
 import { Skeleton } from '@/components/ui/skeleton';
-import { LucideIcon } from '@/components/shared/navigation/LucideIcon';
 
 export default function AdminSettingsPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
   const { data: settings, isLoading } = useAdminSettings();
   const updateMutation = useUpdateSettings();
 
   const [logoUrl, setLogoUrl] = useState<string | undefined>(undefined);
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -34,7 +31,6 @@ export default function AdminSettingsPage() {
     resolver: zodResolver(settingsFormSchema),
   });
 
-  // Load values dynamically on query success
   useEffect(() => {
     if (settings) {
       setValue('name', settings.name);
@@ -63,7 +59,7 @@ export default function AdminSettingsPage() {
       };
       await updateMutation.mutateAsync(payload);
       addToast('Institute configurations updated successfully', 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to update configurations.', 'error');
     }
   };

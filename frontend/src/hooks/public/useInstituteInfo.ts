@@ -5,6 +5,6 @@ export function useInstituteInfo() {
   return useQuery({
     queryKey: ['public', 'institute'],
     queryFn: () => instituteService.getInfo(),
-    staleTime: 1000 * 60 * 15, // 15 minutes cache
+    staleTime: 1000 * 60 * 15, 
   });
 }

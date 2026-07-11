@@ -4,7 +4,6 @@ import studentService from "./student.service.js";
 
 const studentController = {
 
-  // POST /api/students
   create: asyncHandler(async (req, res) => {
     const student = await studentService.createStudent(req.body, req.entityId);
     return successResponse(res, {
@@ -14,7 +13,6 @@ const studentController = {
     });
   }),
 
-  // GET /api/students
   getAll: asyncHandler(async (req, res) => {
     const { students, pagination } = await studentService.getAllStudents(req.query);
     return successResponse(res, {
@@ -31,7 +29,6 @@ const studentController = {
     });
   }),
 
-  // GET /api/students/:id
   getById: asyncHandler(async (req, res) => {
     const student = await studentService.getStudentById(req.params.id);
     return successResponse(res, {
@@ -39,7 +36,6 @@ const studentController = {
     });
   }),
 
-  // PATCH /api/students/:id
   update: asyncHandler(async (req, res) => {
     const student = await studentService.updateStudent(req.params.id, req.body);
     return successResponse(res, {
@@ -47,7 +43,6 @@ const studentController = {
     });
   }),
 
-  // PATCH /api/students/:id/status
   updateStatus: asyncHandler(async (req, res) => {
     const student = await studentService.updateStatus(req.params.id, req.body.status);
     return successResponse(res, {

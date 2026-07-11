@@ -22,7 +22,7 @@ export const teacherExamService = {
     try {
       const response = await teacherAxios.get<ApiResponse<TeacherExamDuty[]>>('/exams/duties');
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Teacher Service] GET /exams/duties failed. Resolving mock duty assignments.');
       return [...mockDuties];
     }

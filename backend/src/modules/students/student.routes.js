@@ -18,7 +18,6 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
-// ── Self-access: student views own profile ────────────────────────────────
 // IMPORTANT: /me must be defined before /:id to prevent route shadowing
 router.get(
   "/me",
@@ -27,7 +26,6 @@ router.get(
   studentController.getMe
 );
 
-// ── Admin/Teacher: list all students (with filters) ───────────────────────
 router.get(
   "/",
   authenticate,
@@ -35,7 +33,6 @@ router.get(
   studentController.getAll
 );
 
-// ── Admin/Teacher: get single student ─────────────────────────────────────
 router.get(
   "/:id",
   authenticate,
@@ -44,7 +41,6 @@ router.get(
   studentController.getById
 );
 
-// ── Admin: create student (also creates student_auth) ────────────────────
 router.post(
   "/",
   authenticate,
@@ -54,7 +50,6 @@ router.post(
   studentController.create
 );
 
-// ── Admin: update student profile fields ─────────────────────────────────
 router.patch(
   "/:id",
   authenticate,
@@ -65,7 +60,6 @@ router.patch(
   studentController.update
 );
 
-// ── Admin: update student status ──────────────────────────────────────────
 router.patch(
   "/:id/status",
   authenticate,

@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 export default function AdmissionApplyPage() {
   return (
     <main className="min-h-screen bg-[#F8FAFC]">
-      {/* Page Header */}
+      {}
       <section className="bg-[#0F172A] py-10 px-4">
         <div className="mx-auto max-w-4xl">
-          {/* Breadcrumb */}
+          {}
           <nav className="flex items-center gap-2 text-xs text-[#94A3B8] mb-4">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
@@ -46,7 +46,7 @@ export default function AdmissionApplyPage() {
         </div>
       </section>
 
-      {/* Guidelines Banner */}
+      {}
       <div className="bg-[#DBEAFE] border-b border-[#BFDBFE]">
         <div className="mx-auto max-w-4xl px-4 py-3">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-[#1E40AF] font-medium">
@@ -57,12 +57,12 @@ export default function AdmissionApplyPage() {
         </div>
       </div>
 
-      {/* Form */}
+      {}
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10">
         <AdmissionForm />
       </div>
 
-      {/* Help Footer */}
+      {}
       <div className="border-t bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">

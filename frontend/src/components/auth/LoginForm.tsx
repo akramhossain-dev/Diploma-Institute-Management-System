@@ -36,10 +36,10 @@ export function LoginForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* Global API error display */}
+      {}
       <AuthErrorMessage message={errorMessage} />
 
-      {/* Email / Identifier Input */}
+      {}
       <div className="space-y-1">
         <label className="text-sm font-semibold text-foreground">{identifierLabel}</label>
         <Input
@@ -51,7 +51,7 @@ export function LoginForm({
         />
       </div>
 
-      {/* Password Input */}
+      {}
       <div className="space-y-1">
         <label className="text-sm font-semibold text-foreground">Password</label>
         <PasswordInput
@@ -62,7 +62,7 @@ export function LoginForm({
         />
       </div>
 
-      {/* Submit Action */}
+      {}
       <AuthLoadingButton isLoading={isLoading} label="Sign In" disabled={isLoading} />
     </form>
   );

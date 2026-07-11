@@ -7,11 +7,11 @@ export interface Teacher {
   email: string;
   phone: string;
   address: string;
-  designation: string; // e.g. "Lecturer", "Assistant Professor"
+  designation: string; 
   departmentId: string;
   departmentCode: string;
   departmentName?: string;
-  qualification: string; // e.g. "B.Sc. in CSE"
+  qualification: string; 
   joiningDate: string;
   photoUrl?: string;
   status: 'active' | 'inactive';

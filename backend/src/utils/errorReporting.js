@@ -27,8 +27,7 @@ if (process.env.SENTRY_DSN) {
  */
 export function captureException(error, context = {}) {
   const { req, ...extra } = context;
-  
-  // Base details
+
   const details = {
     message: error.message,
     stack: error.stack,
@@ -36,7 +35,6 @@ export function captureException(error, context = {}) {
     ...extra,
   };
 
-  // Add request details if available
   if (req) {
     details.request = {
       method: req.method,
@@ -52,7 +50,6 @@ export function captureException(error, context = {}) {
     // Sentry.captureException(error, { extra: details });
   }
 
-  // Local log
   logger.error(`[Error Tracking] Captured Exception: ${error.stack || error.message} | Context: ${JSON.stringify(details)}`);
 }
 

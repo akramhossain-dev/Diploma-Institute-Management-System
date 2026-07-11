@@ -14,14 +14,11 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
-// GET /current — MUST be defined before /:id to avoid route shadowing
 router.get("/current",          authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), academicSessionController.getCurrent);
 
-// GET — all entities
 router.get("/",                 authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), academicSessionController.getAll);
 router.get("/:id",              authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), validateMongoId, academicSessionController.getById);
 
-// Mutations — admin only
 router.post("/",                authenticate, authorizeEntity("admin"), createSessionValidation, handleValidationErrors, academicSessionController.create);
 router.patch("/:id",            authenticate, authorizeEntity("admin"), validateMongoId, updateSessionValidation, handleValidationErrors, academicSessionController.update);
 router.patch("/:id/set-current",authenticate, authorizeEntity("admin"), validateMongoId, academicSessionController.setCurrent);

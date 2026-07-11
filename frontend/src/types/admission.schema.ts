@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Step 1: Personal Information Schema
 export const personalInfoSchema = z.object({
   fullName: z.string().min(3, 'Full name must be at least 3 characters long'),
   dateOfBirth: z.string().min(1, 'Date of birth is required'),
@@ -12,7 +11,6 @@ export const personalInfoSchema = z.object({
   address: z.string().min(5, 'Address must be at least 5 characters long'),
 });
 
-// Step 2: Academic & Department Selection Schema
 export const academicInfoSchema = z.object({
   sscRoll: z.string().min(5, 'SSC Roll must be at least 5 characters long'),
   sscBoard: z.string().min(1, 'SSC Board is required'),
@@ -22,13 +20,11 @@ export const academicInfoSchema = z.object({
   departmentCode: z.string().min(1, 'Please select a desired department program'),
 });
 
-// Step 3: Document Upload Schema
 export const documentUploadSchema = z.object({
   photoUrl: z.string().url('Please upload a profile photo'),
   documentsUrls: z.array(z.string().url()).min(1, 'Please upload at least one academic certificate/transcript copy'),
 });
 
-// Combined schema for final submit
 export const admissionFormSchema = personalInfoSchema
   .merge(academicInfoSchema)
   .merge(documentUploadSchema);

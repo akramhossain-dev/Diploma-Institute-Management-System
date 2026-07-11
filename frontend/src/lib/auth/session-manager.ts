@@ -13,7 +13,7 @@ export const sessionManager = {
     try {
       const data = localStorage.getItem(`dims_profile_${entityType}`);
       return data ? JSON.parse(data) : null;
-    } catch (e) {
+    } catch {
       return null;
     }
   },

@@ -34,7 +34,7 @@ export default function FeeStructuresAdminPage() {
       await deleteMutation.mutateAsync(selectedFee._id);
       addToast('Fee structure deleted successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed.', 'error');
     }
   };
@@ -47,7 +47,7 @@ export default function FeeStructuresAdminPage() {
         data: { status: nextStatus },
       });
       addToast(`Fee structure status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to toggle status.', 'error');
     }
   };

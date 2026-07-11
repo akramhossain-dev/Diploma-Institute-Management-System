@@ -48,7 +48,7 @@ export default function CreateFeeStructurePage() {
       await createMutation.mutateAsync(data);
       addToast('Fee structure created successfully', 'success');
       router.push('/admin/fees');
-    } catch (err) {
+    } catch {
       addToast('Failed to save fee structure details.', 'error');
     }
   };

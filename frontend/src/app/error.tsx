@@ -12,7 +12,7 @@ interface ErrorProps {
 
 export default function GlobalError({ error, reset }: ErrorProps) {
   React.useEffect(() => {
-    // Log the error to an error reporting service
+    
     captureException(error, { context: 'Global Error Boundary' });
   }, [error]);
 

@@ -59,8 +59,6 @@ academicSessionSchema.virtual("endYear").get(function() {
 
 academicSessionSchema.index({ status:    1 });
 
-// Enforce at DB level: at most one document where isCurrent = true
-// Application-level enforcement also applied in the service layer
 academicSessionSchema.index(
   { isCurrent: 1 },
   { unique: true, partialFilterExpression: { isCurrent: true } }

@@ -43,17 +43,17 @@ export default function AdminAnalyticsPage() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Student Growth */}
+        {}
         <ChartCard title="Student Enrollment Growth (Current Year)">
           <SvgLineChart data={analytics.studentGrowth} color="#3b82f6" />
         </ChartCard>
 
-        {/* Collections */}
+        {}
         <ChartCard title="Monthly Fees Collection Stream (BDT)">
           <SvgBarChart data={analytics.feeCollection} color="#10b981" />
         </ChartCard>
 
-        {/* Attendance trend */}
+        {}
         <ChartCard title="Weekly Student Attendance Performance Trend (%)">
           <SvgLineChart data={analytics.attendanceTrend} color="#f59e0b" />
         </ChartCard>
@@ -63,7 +63,7 @@ export default function AdminAnalyticsPage() {
           <SvgBarChart data={analytics.resultPerformance} color="#8b5cf6" />
         </ChartCard>
 
-        {/* Admission trend */}
+        {}
         <ChartCard title="Yearly Admission Registrations History Trends">
           <SvgLineChart data={analytics.admissionTrend} color="#ec4899" />
         </ChartCard>

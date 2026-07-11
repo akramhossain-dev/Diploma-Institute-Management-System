@@ -66,7 +66,7 @@ const analyticsService = {
         { $sort: { "_id.year": 1, "_id.month": 1 } },
         { $project: { _id: 0, year: "$_id.year", month: "$_id.month", total: 1, present: 1, attendancePercent: { $round: [{ $multiply: [{ $divide: ["$present", "$total"] }, 100] }, 1] } } },
       ]),
-      // Students with < 75% attendance (uses AttendanceRecord aggregate)
+      
       AttendanceRecord.aggregate([
         { $match: sessionMatch },
         { $group: { _id: "$studentId", total: { $sum: 1 }, present: { $sum: { $cond: [{ $in: ["$status", ["present", "late"]] }, 1, 0] } } } },

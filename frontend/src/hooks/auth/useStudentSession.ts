@@ -27,7 +27,7 @@ export function useStudentSession() {
         const { accessToken: newAccessToken, profile: studentProfile } = response.data.data;
         const existingProfile = useStudentAuthStore.getState().profile;
         setSession(newAccessToken, studentProfile || existingProfile);
-      } catch (err) {
+      } catch {
         clearSession();
         if (typeof window !== 'undefined') {
           window.location.href = '/login/student';

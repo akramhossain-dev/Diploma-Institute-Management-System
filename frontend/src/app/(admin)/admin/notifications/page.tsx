@@ -47,7 +47,6 @@ export default function AdminNotificationsPage() {
     );
   }
 
-  // Filter local notifications
   const filteredNotifications = notifications.filter((item) => {
     if (statusFilter === 'unread') return !item.read;
     if (statusFilter === 'read') return item.read;

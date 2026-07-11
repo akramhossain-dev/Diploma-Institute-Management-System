@@ -15,7 +15,7 @@ const { ObjectId } = mongoose.Schema.Types;
  */
 const attendanceSessionSchema = new mongoose.Schema(
   {
-    // ── Academic context (denormalized for query efficiency) ───────────────
+    
     courseId:            { type: ObjectId, ref: "Course",            required: [true, "Course is required"] },
     teacherId:           { type: ObjectId, ref: "Teacher",           required: [true, "Teacher is required"] },
     departmentId:        { type: ObjectId, ref: "Department",        required: [true, "Department is required"] },
@@ -23,15 +23,12 @@ const attendanceSessionSchema = new mongoose.Schema(
     academicSessionId:   { type: ObjectId, ref: "AcademicSession",   required: [true, "Academic session is required"] },
     section:             { type: String, trim: true, default: null },
 
-    // ── Optional reference anchors ─────────────────────────────────────────
     teacherAssignmentId: { type: ObjectId, ref: "TeacherAssignment", default: null },
     classRoutineId:      { type: ObjectId, ref: "ClassRoutine",      default: null },
 
-    // ── Session metadata ───────────────────────────────────────────────────
     attendanceDate: { type: Date, required: [true, "Attendance date is required"] },
-    topic:          { type: String, trim: true, default: null },  // topic covered
+    topic:          { type: String, trim: true, default: null },  
 
-    // ── Status & markers ──────────────────────────────────────────────────
     sessionStatus: {
       type:    String,
       enum:    ["open", "finalized", "cancelled"],
@@ -40,7 +37,6 @@ const attendanceSessionSchema = new mongoose.Schema(
     markedByTeacherId: { type: ObjectId, ref: "Teacher", default: null },
     markedByAdminId:   { type: ObjectId, ref: "Admin",   default: null },
 
-    // ── Aggregate counters (updated after bulk mark) ───────────────────────
     totalStudents:  { type: Number, default: 0 },
     presentCount:   { type: Number, default: 0 },
     absentCount:    { type: Number, default: 0 },

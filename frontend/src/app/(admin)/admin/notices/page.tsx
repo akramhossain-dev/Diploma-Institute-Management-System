@@ -15,7 +15,7 @@ import { AdminNotice } from '@/types/admin/notice-admin.types';
 export default function NoticesAdminPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  const { data: notices = [], isLoading, refetch } = useAdminNotices();
+  const { data: notices = [], isLoading } = useAdminNotices();
   const updateMutation = useUpdateAdminNotice();
   const deleteMutation = useDeleteAdminNotice();
 
@@ -33,7 +33,7 @@ export default function NoticesAdminPage() {
       await deleteMutation.mutateAsync(selectedNotice._id);
       addToast('Notice circular deleted successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed.', 'error');
     }
   };
@@ -46,7 +46,7 @@ export default function NoticesAdminPage() {
         data: { status: nextStatus },
       });
       addToast(`Notice status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch status.', 'error');
     }
   };

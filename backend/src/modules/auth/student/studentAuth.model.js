@@ -19,7 +19,7 @@ const studentAuthSchema = new mongoose.Schema(
     passwordHash: {
       type: String,
       required: true,
-      select: false,                              // never returned in queries by default
+      select: false,                              
     },
     studentId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -33,7 +33,7 @@ const studentAuthSchema = new mongoose.Schema(
     },
     mustChangePassword: {
       type: Boolean,
-      default: false,                             // true when admin creates account
+      default: false,                             
     },
     refreshToken: {
       type: String,

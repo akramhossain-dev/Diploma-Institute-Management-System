@@ -21,7 +21,6 @@ function dateFilter(fromDate, toDate, field = "createdAt") {
 
 const reportService = {
 
-  // ── A) Student Reports ─────────────────────────────────────────────────────
   async getStudentReport(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { departmentId, semesterId, academicSessionId, status, fromDate, toDate, search } = query;
@@ -47,7 +46,6 @@ const reportService = {
     return { students, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ── B) Attendance Reports ──────────────────────────────────────────────────
   async getAttendanceReport(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { studentId, teacherId, courseId, departmentId, semesterId, academicSessionId, fromDate, toDate } = query;
@@ -70,7 +68,6 @@ const reportService = {
       AttendanceRecord.countDocuments(filter),
     ]);
 
-    // Aggregate summary for the filtered context
     const matchFilter = {};
     if (studentId)         matchFilter.studentId         = new mongoose.Types.ObjectId(studentId);
     if (teacherId)         matchFilter.teacherId         = new mongoose.Types.ObjectId(teacherId);
@@ -88,7 +85,6 @@ const reportService = {
     return { records, summary: summary[0] || {}, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ── C) Result Reports ──────────────────────────────────────────────────────
   async getResultReport(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { examId, studentId, departmentId, semesterId, academicSessionId, resultStatus } = query;
@@ -125,7 +121,6 @@ const reportService = {
     return { results, summary: summary[0] || {}, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ── D) Finance Reports ─────────────────────────────────────────────────────
   async getFinanceReport(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { studentId, departmentId, semesterId, academicSessionId, billingStatus, fromDate, toDate, paymentMethod } = query;
@@ -160,7 +155,6 @@ const reportService = {
     return { assignments, payments, summary: totals[0] || {}, assignPagination: buildPaginationMeta(assignTotal, page, limit) };
   },
 
-  // ── E) Admission Reports ───────────────────────────────────────────────────
   async getAdmissionReport(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { departmentId, semesterId, academicSessionId, admissionStatus, fromDate, toDate } = query;

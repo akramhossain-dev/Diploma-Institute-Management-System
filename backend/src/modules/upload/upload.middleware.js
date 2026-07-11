@@ -1,17 +1,15 @@
 import multer from "multer";
 import ApiError from "../../utils/ApiError.js";
 
-// Use memory storage to process file buffers directly without temp disk files
 const storage = multer.memoryStorage();
 
-// Allowed MIME types
 const ALLOWED_MIME_TYPES = [
   "image/jpeg",
   "image/png",
   "image/webp",
   "application/pdf",
   "text/csv",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // xlsx
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
 ];
 
 const fileFilter = (req, file, cb) => {
@@ -33,7 +31,7 @@ export const uploadMiddleware = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB maximum file size
+    fileSize: 10 * 1024 * 1024, 
   },
 });
 

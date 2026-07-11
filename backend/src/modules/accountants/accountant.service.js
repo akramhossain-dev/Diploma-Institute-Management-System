@@ -14,10 +14,8 @@ const accountantService = {
     const emailTaken = await AccountantAuth.findOne({ email: email.toLowerCase() });
     if (emailTaken) throw new ApiError(409, `Accountant with email '${email}' already exists`, "DUPLICATE_ENTRY");
 
-    // Auto-generate staffId
     const staffId = await generateAccountantId(Accountant);
 
-    // Create accountant profile
     const accountant = await Accountant.create({
       ...profileData,
       email: email.toLowerCase(),

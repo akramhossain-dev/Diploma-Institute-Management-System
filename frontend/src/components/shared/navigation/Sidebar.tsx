@@ -18,7 +18,7 @@ import { teacherAuthService } from '@/services/auth/teacher-auth.service';
 import { accountantAuthService } from '@/services/auth/accountant-auth.service';
 
 interface SidebarProps {
-  title: string;
+  title?: string;
   items: NavItem[];
   entityType: 'admin' | 'student' | 'teacher' | 'accountant';
   profileName: string;
@@ -40,7 +40,7 @@ const entityAvatarMap: Record<string, string> = {
   accountant: 'bg-[#FEF3C7] text-[#B45309]',
 };
 
-export function Sidebar({ title, items, entityType, profileName, profileRole }: SidebarProps) {
+export function Sidebar({ items, entityType, profileName, profileRole }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const sidebarOpen = useUiStore((state) => state.sidebarOpen);
@@ -152,7 +152,7 @@ export function Sidebar({ title, items, entityType, profileName, profileRole }: 
   const sidebarContent = (
     <div className="flex h-full flex-col bg-white border-r border-[#E2E8F0]">
 
-      {/* Brand Header */}
+      {}
       <div className="flex h-14 items-center justify-between px-4 border-b border-[#E2E8F0]">
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1D4ED8] shadow-[0_0_12px_rgba(29,78,216,0.20)] transition-shadow group-hover:shadow-[0_0_16px_rgba(29,78,216,0.35)]">
@@ -173,7 +173,7 @@ export function Sidebar({ title, items, entityType, profileName, profileRole }: 
         </Button>
       </div>
 
-      {/* Entity Panel Badge */}
+      {}
       <div className="px-4 py-3 border-b border-[#E2E8F0]">
         <span className={cn(
           'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-wide',
@@ -184,14 +184,14 @@ export function Sidebar({ title, items, entityType, profileName, profileRole }: 
         </span>
       </div>
 
-      {/* Navigation Links */}
+      {}
       <div className="flex-1 overflow-y-auto px-3 py-3 space-y-0.5 scrollbar-thin scrollbar-thumb-[#E2E8F0] scrollbar-track-transparent">
         {items.map((item) => renderNavItem(item))}
       </div>
 
-      {/* Footer — Profile + Actions */}
+      {}
       <div className="border-t border-[#E2E8F0] p-3 space-y-1">
-        {/* Profile Block */}
+        {}
         <div className="flex items-center gap-3 rounded-xl p-3 bg-[#F8FAFC] border border-[#E2E8F0]">
           <div className={cn(
             'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold shadow-sm',
@@ -205,7 +205,7 @@ export function Sidebar({ title, items, entityType, profileName, profileRole }: 
           </div>
         </div>
 
-        {/* Logout */}
+        {}
         <button
           onClick={handleLogout}
           className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] text-[#64748B] hover:bg-[#FEE2E2] hover:text-[#DC2626] transition-all duration-150"
@@ -219,7 +219,7 @@ export function Sidebar({ title, items, entityType, profileName, profileRole }: 
 
   return (
     <>
-      {/* Mobile Drawer Backdrop */}
+      {}
       {mobileMenuOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/20 backdrop-blur-[2px] lg:hidden animate-fade-in"
@@ -227,7 +227,7 @@ export function Sidebar({ title, items, entityType, profileName, profileRole }: 
         />
       )}
 
-      {/* Mobile Drawer */}
+      {}
       <aside
         className={cn(
           'fixed inset-y-0 left-0 z-40 w-64 transform transition-transform duration-300 ease-in-out lg:hidden',
@@ -237,7 +237,7 @@ export function Sidebar({ title, items, entityType, profileName, profileRole }: 
         {sidebarContent}
       </aside>
 
-      {/* Desktop Sidebar */}
+      {}
       <aside
         className={cn(
           'hidden lg:block shrink-0 h-screen sticky top-0 transition-all duration-300 ease-in-out overflow-hidden',

@@ -21,21 +21,19 @@ export const csrfProtection = (req, res, next) => {
   
   if (!csrfToken) {
     csrfToken = crypto.randomBytes(32).toString("hex");
-    // Set cookie, make sure path=/ is set so it works across all routes
+    
     res.cookie("XSRF-TOKEN", csrfToken, {
       path: "/",
       sameSite: "lax",
       secure: env.isProd,
-      httpOnly: false, // Must be readable by Axios
+      httpOnly: false, 
     });
   }
 
-  // 2. Bypass safe methods or development environment
   if (SAFE_METHODS.includes(req.method) || env.isDev) {
     return next();
   }
 
-  // 3. Verify token for mutating methods
   const headerToken = req.headers["x-xsrf-token"] || req.headers["x-csrf-token"];
 
   if (!headerToken || headerToken !== csrfToken) {

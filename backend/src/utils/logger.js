@@ -3,7 +3,6 @@ import env from "../config/env.js";
 
 const { combine, timestamp, printf, colorize, errors } = winston.format;
 
-// Custom log format
 const logFormat = printf(({ level, message, timestamp, stack }) => {
   return `[${timestamp}] ${level}: ${stack || message}`;
 });
@@ -16,7 +15,7 @@ const logger = winston.createLogger({
     logFormat
   ),
   transports: [
-    // Console — always active
+    
     new winston.transports.Console({
       format: combine(
         colorize({ all: true }),
@@ -26,13 +25,11 @@ const logger = winston.createLogger({
       ),
     }),
 
-    // Error log file
     new winston.transports.File({
       filename: "logs/error.log",
       level: "error",
     }),
 
-    // Combined log file
     new winston.transports.File({
       filename: "logs/combined.log",
     }),

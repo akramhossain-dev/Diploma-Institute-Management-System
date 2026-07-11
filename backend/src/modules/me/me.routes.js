@@ -10,7 +10,6 @@ import {
 
 const router = Router();
 
-// ── /api/me/student/* ──────────────────────────────────────────────────────
 const studentRouter = Router();
 studentRouter.use(authenticate, authorizeEntity("student"));
 studentRouter.get("/profile",    studentMeController.getProfile);
@@ -21,7 +20,6 @@ studentRouter.get("/results",    studentMeController.getResults);
 studentRouter.get("/fees",       studentMeController.getFees);
 router.use("/student", studentRouter);
 
-// ── /api/me/teacher/* ──────────────────────────────────────────────────────
 const teacherRouter = Router();
 teacherRouter.use(authenticate, authorizeEntity("teacher"));
 teacherRouter.get("/profile",              teacherMeController.getProfile);
@@ -32,7 +30,6 @@ teacherRouter.get("/attendance-sessions",  teacherMeController.getAttendanceSess
 teacherRouter.get("/exam-responsibilities", teacherMeController.getExamResponsibilities);
 router.use("/teacher", teacherRouter);
 
-// ── /api/me/accountant/* ───────────────────────────────────────────────────
 const accountantRouter = Router();
 accountantRouter.use(authenticate, authorizeEntity("accountant"));
 accountantRouter.get("/profile",  accountantMeController.getProfile);
@@ -41,7 +38,6 @@ accountantRouter.get("/summary",  accountantMeController.getSummary);
 accountantRouter.get("/notices",  accountantMeController.getNotices);
 router.use("/accountant", accountantRouter);
 
-// ── /api/me/admin/* ────────────────────────────────────────────────────────
 const adminRouter = Router();
 adminRouter.use(authenticate, authorizeEntity("admin"));
 adminRouter.get("/profile",   adminMeController.getProfile);

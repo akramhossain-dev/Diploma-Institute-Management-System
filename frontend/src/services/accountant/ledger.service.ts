@@ -80,7 +80,7 @@ export const accountantLedgerService = {
     try {
       const response = await accountantAxios.get<ApiResponse<LedgerEntry[]>>(`/ledger/${studentId}`);
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn(`[Accountant Service] GET /ledger/${studentId} failed. Falling back to mock ledger data.`);
       return mockLedgers[studentId] || [];
     }

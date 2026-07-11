@@ -6,7 +6,6 @@ import authorizeEntity from "../../middlewares/authorizeEntity.js";
 
 const router = Router();
 
-// Protect all routes
 router.use(authenticate, authorizeEntity("admin"));
 
 router.get("/jobs", importExportController.getImportJobs);

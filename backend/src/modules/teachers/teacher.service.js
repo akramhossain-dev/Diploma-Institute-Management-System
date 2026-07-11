@@ -19,10 +19,8 @@ const teacherService = {
     const emailTaken = await TeacherAuth.findOne({ email: email.toLowerCase() });
     if (emailTaken) throw new ApiError(409, `Teacher with email '${email}' already exists`, "DUPLICATE_ENTRY");
 
-    // 3. Auto-generate employeeId
     const employeeId = await generateTeacherId(Teacher);
 
-    // 4. Create teacher profile
     const teacher = await Teacher.create({
       ...profileData,
       email: email.toLowerCase(),
@@ -126,7 +124,6 @@ const teacherService = {
     return teacher;
   },
 
-  // ── Assign courses to a teacher ────────────────────────────────────────
   async assignCourses(id, courseIds) {
     const teacher = await Teacher.findByIdAndUpdate(
       id,

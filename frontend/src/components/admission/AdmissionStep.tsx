@@ -15,7 +15,7 @@ interface AdmissionStepProps {
 export function AdmissionStep({ steps, currentStep }: AdmissionStepProps) {
   return (
     <div className="w-full pb-8">
-      {/* Progress Line & Steps Indicator */}
+      {}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 md:gap-8">
         {steps.map((step, index) => {
           const stepNumber = index + 1;
@@ -31,7 +31,7 @@ export function AdmissionStep({ steps, currentStep }: AdmissionStepProps) {
                 index < steps.length - 1 && isCompleted && 'sm:after:bg-primary'
               )}
             >
-              {/* Step indicator circle */}
+              {}
               <div
                 className={cn(
                   'h-10 w-10 rounded-full flex items-center justify-center font-semibold text-sm border z-10 transition-all duration-300 mr-4 sm:mr-0 sm:mb-2',
@@ -49,7 +49,7 @@ export function AdmissionStep({ steps, currentStep }: AdmissionStepProps) {
                 )}
               </div>
 
-              {/* Text metadata */}
+              {}
               <div className="flex flex-col">
                 <span
                   className={cn(

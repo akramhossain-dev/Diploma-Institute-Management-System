@@ -11,7 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 const DAYS: DayOfWeek[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday'];
 
 export default function TeacherRoutinePage() {
-  // Simulating active logged-in teacher "t-1"
+  
   const { data: slots = [], isLoading } = useTeacherRoutine('t-1');
 
   return (

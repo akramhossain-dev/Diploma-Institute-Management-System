@@ -29,7 +29,6 @@ export interface AdmissionStatus {
   createdAt: string;
 }
 
-// Client-side mock submission database for testing out status checks instantly
 const mockSubmittedAdmissions: Record<string, AdmissionStatus> = {
   'ADM-123456': {
     _id: 'mock-adm-1',
@@ -58,9 +57,9 @@ export const admissionService = {
     try {
       const response = await publicAxios.post<ApiResponse<{ trackingId: string }>>('/admissions', data);
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Public Service] POST /admissions failed. Falling back to mock tracking ID.');
-      // Fallback: generate a random tracking ID and store it in mock database
+      
       const trackingId = 'ADM-' + Math.floor(100000 + Math.random() * 900000);
       mockSubmittedAdmissions[trackingId] = {
         _id: 'mock-gen-' + Math.random().toString(36).substring(2, 9),
@@ -72,8 +71,7 @@ export const admissionService = {
         remarks: 'Form submitted successfully. Documents validation pending.',
         createdAt: new Date().toISOString(),
       };
-      
-      // Delay to simulate network
+
       await new Promise(resolve => setTimeout(resolve, 800));
       return { trackingId };
     }
@@ -83,7 +81,7 @@ export const admissionService = {
     try {
       const response = await publicAxios.get<ApiResponse<AdmissionStatus>>(`/admissions/status?trackingId=${trackingId}`);
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Public Service] GET /admissions/status failed. Checking mock database.');
       await new Promise(resolve => setTimeout(resolve, 500));
       const record = mockSubmittedAdmissions[trackingId];

@@ -49,7 +49,7 @@ export default function AdminDashboardPage() {
         description="Consolidated overview of institute metrics, student registrations, outstanding accounts, and circular notice statuses."
       />
 
-      {/* Stats Cards */}
+      {}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
         <MetricCard
           title="Total Active Students"
@@ -112,9 +112,9 @@ export default function AdminDashboardPage() {
         />
       </div>
 
-      {/* Main Grid Sections */}
+      {}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Recent Admissions */}
+        {}
         <Card className="border shadow-md">
           <CardHeader className="bg-muted/10 border-b pb-4">
             <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">
@@ -144,7 +144,7 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Notices Board */}
+        {}
         <Card className="border shadow-md">
           <CardHeader className="bg-muted/10 border-b pb-4">
             <CardTitle className="text-sm font-bold flex items-center gap-2 text-foreground">

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export interface AcademicSession {
   _id: string;
-  name: string; // e.g. "2026-2027"
+  name: string; 
   startYear: number;
   endYear: number;
   status: 'active' | 'inactive';

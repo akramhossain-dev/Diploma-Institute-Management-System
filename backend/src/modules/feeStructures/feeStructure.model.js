@@ -25,12 +25,10 @@ const feeStructureSchema = new mongoose.Schema(
     },
     description: { type: String, trim: true, default: null },
 
-    // ── Academic scope (all nullable = global fee) ────────────────────────
     departmentId:      { type: ObjectId, ref: "Department",      default: null },
     semesterId:        { type: ObjectId, ref: "Semester",        default: null },
     academicSessionId: { type: ObjectId, ref: "AcademicSession", default: null },
 
-    // ── Amount config ─────────────────────────────────────────────────────
     amount:   { type: Number, required: [true, "Amount is required"], min: 0 },
     currency: { type: String, trim: true, default: "BDT" },
     frequency: {
@@ -40,11 +38,9 @@ const feeStructureSchema = new mongoose.Schema(
     },
     allowPartialPayment: { type: Boolean, default: true },
 
-    // ── Validity window ───────────────────────────────────────────────────
     effectiveFrom: { type: Date, default: null },
     effectiveTo:   { type: Date, default: null },
 
-    // ── Lifecycle ─────────────────────────────────────────────────────────
     status: {
       type:    String,
       enum:    ["active", "inactive", "archived"],

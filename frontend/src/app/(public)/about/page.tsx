@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="min-h-screen">
-      {/* Hero Banner */}
+      {}
       <section className="bg-[#0F172A] py-14 px-4">
         <div className="mx-auto max-w-4xl text-center">
           <div className="inline-flex items-center gap-2 bg-[#1D4ED8]/20 border border-[#1D4ED8]/30 text-[#93C5FD] text-xs font-semibold px-3 py-1 rounded-full mb-4">
@@ -26,7 +26,7 @@ export default function AboutPage() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-14 space-y-14">
 
-        {/* Institute Overview */}
+        {}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           <div>
             <h2 className="text-2xl font-bold text-foreground mb-4">Institute Overview</h2>

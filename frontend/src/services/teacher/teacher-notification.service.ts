@@ -10,7 +10,7 @@ let mockNotifications: Notification[] = [
     type: 'warning',
     createdAt: '2026-07-09T09:30:00Z',
     read: false,
-    targetLink: '/teacher/exams', // Or appropriate teacher exam list view
+    targetLink: '/teacher/exams', 
   },
   {
     _id: 'not-tc-2',
@@ -46,7 +46,7 @@ export const teacherNotificationService = {
     try {
       const response = await teacherAxios.get<ApiResponse<Notification[]>>('/notifications');
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Teacher Service] GET /notifications failed. Falling back to mock notifications.');
       return [...mockNotifications];
     }
@@ -56,7 +56,7 @@ export const teacherNotificationService = {
     try {
       const response = await teacherAxios.patch<ApiResponse<Notification>>(`/notifications/${id}/read`);
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn(`[Teacher Service] PATCH /notifications/${id}/read failed. Modifying mock state.`);
       const idx = mockNotifications.findIndex(n => n._id === id);
       if (idx !== -1) {
@@ -71,7 +71,7 @@ export const teacherNotificationService = {
     try {
       await teacherAxios.post('/notifications/read-all');
       return true;
-    } catch (e) {
+    } catch {
       console.warn('[Teacher Service] POST /notifications/read-all failed. Modifying mock state.');
       mockNotifications = mockNotifications.map(n => ({ ...n, read: true }));
       return true;

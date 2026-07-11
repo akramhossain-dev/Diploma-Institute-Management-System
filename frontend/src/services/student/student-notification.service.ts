@@ -10,7 +10,7 @@ let mockNotifications: Notification[] = [
     type: 'warning',
     createdAt: '2026-07-09T09:00:00Z',
     read: false,
-    targetLink: '/student/results', // Or other appropriate link if available
+    targetLink: '/student/results', 
   },
   {
     _id: 'not-st-2',
@@ -46,7 +46,7 @@ export const studentNotificationService = {
     try {
       const response = await studentAxios.get<ApiResponse<Notification[]>>('/notifications');
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Student Service] GET /notifications failed. Falling back to mock notifications.');
       return [...mockNotifications];
     }
@@ -56,7 +56,7 @@ export const studentNotificationService = {
     try {
       const response = await studentAxios.patch<ApiResponse<Notification>>(`/notifications/${id}/read`);
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn(`[Student Service] PATCH /notifications/${id}/read failed. Modifying mock state.`);
       const idx = mockNotifications.findIndex(n => n._id === id);
       if (idx !== -1) {
@@ -71,7 +71,7 @@ export const studentNotificationService = {
     try {
       await studentAxios.post('/notifications/read-all');
       return true;
-    } catch (e) {
+    } catch {
       console.warn('[Student Service] POST /notifications/read-all failed. Modifying mock state.');
       mockNotifications = mockNotifications.map(n => ({ ...n, read: true }));
       return true;

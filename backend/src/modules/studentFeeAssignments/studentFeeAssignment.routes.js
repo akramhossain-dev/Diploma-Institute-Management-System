@@ -17,8 +17,6 @@ const router = Router();
 const validateId        = [param("id").isMongoId().withMessage("Invalid assignment ID"), handleValidationErrors];
 const validateStudentId = [param("studentId").isMongoId().withMessage("Invalid student ID"), handleValidationErrors];
 
-// ── IMPORTANT: specific paths before /:id ──────────────────────────────────
-
 // GET ledger/summary — admin, accountant, and the student themselves
 router.get(
   "/ledger/students/:studentId",
@@ -29,7 +27,6 @@ router.get(
   studentFeeAssignmentController.getLedger
 );
 
-// Bulk assign — admin only
 router.post(
   "/bulk-assign",
   authenticate, authorizeEntity("admin"),
@@ -37,7 +34,6 @@ router.post(
   studentFeeAssignmentController.bulkAssign
 );
 
-// Standard CRUD
 router.post("/",              authenticate, authorizeEntity("admin"), createAssignmentValidation, handleValidationErrors, studentFeeAssignmentController.create);
 router.get("/",               authenticate, authorizeEntity("admin", "accountant"), studentFeeAssignmentController.getAll);
 router.get("/:id",            authenticate, authorizeEntity("admin", "accountant"), validateId, studentFeeAssignmentController.getById);

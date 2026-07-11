@@ -14,8 +14,6 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
-// ── IMPORTANT: /feed must be before /:id to prevent route shadowing ───────
-// GET /api/notices/feed — entity-specific published notice feed
 // All authenticated entities can access their relevant notices
 router.get(
   "/feed",
@@ -24,7 +22,6 @@ router.get(
   noticeController.getFeed
 );
 
-// ── Admin: full notice management ─────────────────────────────────────────
 router.post(
   "/",
   authenticate, authorizeEntity("admin"),
@@ -38,7 +35,6 @@ router.get(
   noticeController.getPublic
 );
 
-// GET list — admin sees all; others use /feed
 router.get(
   "/",
   authenticate, authorizeEntity("admin"),

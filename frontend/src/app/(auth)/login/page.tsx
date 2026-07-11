@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { LucideIcon } from '@/components/shared/navigation/LucideIcon';
-import { Button } from '@/components/ui/button';
 
 export default function PortalSelectorPage() {
   const portals = [
@@ -59,11 +58,11 @@ export default function PortalSelectorPage() {
 
   return (
     <div className="aurora-hero min-h-screen flex flex-col items-center justify-center p-6">
-      {/* Top accent */}
+      {}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1D4ED8] via-[#6366F1] to-[#06B6D4]" />
 
       <div className="w-full max-w-4xl space-y-10 animate-fade-in-up">
-        {/* Header */}
+        {}
         <div className="text-center space-y-3">
           <Link href="/" className="inline-flex items-center gap-2.5 mb-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1D4ED8] shadow-[0_0_20px_rgba(29,78,216,0.35)]">
@@ -82,7 +81,7 @@ export default function PortalSelectorPage() {
           </p>
         </div>
 
-        {/* Portal cards */}
+        {}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {portals.map((portal, i) => (
             <div

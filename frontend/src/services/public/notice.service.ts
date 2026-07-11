@@ -1,5 +1,5 @@
 import { publicAxios } from '@/lib/publicAxios';
-import { ApiResponse, PaginatedResponse } from '@/types/shared/api.types';
+import { PaginatedResponse } from '@/types/shared/api.types';
 
 export interface NoticeInfo {
   _id: string;
@@ -46,7 +46,7 @@ export const noticeService = {
 
       const response = await publicAxios.get<PaginatedResponse<NoticeInfo>>(`/notices/public?${queryParams.toString()}`);
       return response.data;
-    } catch (e) {
+    } catch {
       console.warn('[Public Service] /notices failed. Falling back to mock data.');
       let data = [...fallbackNotices];
       

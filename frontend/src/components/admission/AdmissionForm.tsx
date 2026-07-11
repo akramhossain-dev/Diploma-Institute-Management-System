@@ -6,13 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useDepartments } from '@/hooks/public/useDepartments';
 import { useAdmissionSubmit } from '@/hooks/public/useAdmission';
 import {
-  personalInfoSchema,
   personalInfoSchema as step1Schema,
   academicInfoSchema as step2Schema,
-  documentUploadSchema as step3Schema,
-  PersonalInfoInput,
-  AcademicInfoInput,
-  DocumentUploadInput,
   AdmissionFormInput,
 } from '@/types/admission.schema';
 import { Button } from '@/components/ui/button';
@@ -29,11 +24,9 @@ export function AdmissionForm() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [trackingId, setTrackingId] = useState<string | null>(null);
 
-  // Fetch departments dynamically to populate choices
   const { data: departments = [], isLoading: deptsLoading } = useDepartments();
   const submissionMutation = useAdmissionSubmit();
 
-  // Step schemas definitions
   const steps = [
     { title: 'Personal Info', description: 'Address & Contact' },
     { title: 'Academic Profile', description: 'SSC & Technology' },
@@ -41,7 +34,6 @@ export function AdmissionForm() {
     { title: 'Summary & Submit', description: 'Review details' },
   ];
 
-  // Forms setup
   const step1Form = useForm<any>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -66,7 +58,6 @@ export function AdmissionForm() {
     },
   });
 
-  // Step Navigation Actions
   const handleStep1Submit = (data: any) => {
     setFormData((prev) => ({ ...prev, ...data }));
     setStep(2);
@@ -101,7 +92,6 @@ export function AdmissionForm() {
     }
   };
 
-  // Success screen
   if (trackingId) {
     return (
       <Card className="border shadow-md max-w-xl mx-auto text-center py-10 animate-in zoom-in-95 duration-300">
@@ -144,7 +134,7 @@ export function AdmissionForm() {
             </div>
           )}
 
-          {/* STEP 1: Personal Info Form */}
+          {}
           {step === 1 && (
             <form onSubmit={step1Form.handleSubmit(handleStep1Submit)} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -193,7 +183,7 @@ export function AdmissionForm() {
             </form>
           )}
 
-          {/* STEP 2: Academic Profile Form */}
+          {}
           {step === 2 && (
             <form onSubmit={step2Form.handleSubmit(handleStep2Submit)} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -248,7 +238,7 @@ export function AdmissionForm() {
             </form>
           )}
 
-          {/* STEP 3: Document Uploads Form */}
+          {}
           {step === 3 && (
             <div className="space-y-6">
               <div className="space-y-2">
@@ -300,7 +290,7 @@ export function AdmissionForm() {
             </div>
           )}
 
-          {/* STEP 4: Review and Submit */}
+          {}
           {step === 4 && (
             <div className="space-y-6">
               <AdmissionSummary data={formData} />

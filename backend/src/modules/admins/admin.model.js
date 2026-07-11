@@ -1,16 +1,13 @@
 import mongoose from "mongoose";
 
-/**
- * Admin entity profile collection.
- */
 const adminSchema = new mongoose.Schema(
   {
-    adminId:       { type: String, trim: true },         // e.g. ADM-001
+    adminId:       { type: String, trim: true },         
     fullName:      { type: String, required: true, trim: true },
     email:         { type: String, required: true, lowercase: true, trim: true },
     phone:         { type: String, trim: true },
     photo:         { type: String, default: null },
-    designation:   { type: String, trim: true },                       // Principal, IT Admin
+    designation:   { type: String, trim: true },                       
     isSuperAdmin:  { type: Boolean, default: false },
     joiningDate:   { type: Date },
     status: {

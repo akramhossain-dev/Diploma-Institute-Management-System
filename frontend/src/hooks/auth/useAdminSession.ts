@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useAdminAuthStore } from '@/store/auth/adminAuthStore';
-import { adminAuthService } from '@/services/auth/admin-auth.service';
 import { API_CONFIG } from '@/services/api/api-config';
 import axios from 'axios';
 
@@ -10,7 +9,7 @@ export function useAdminSession() {
   const refreshAttempted = useRef(false);
 
   useEffect(() => {
-    // 1. Try to hydrate the local state first
+    
     hydrateSession();
   }, [hydrateSession]);
 
@@ -31,8 +30,8 @@ export function useAdminSession() {
         const { accessToken: newAccessToken, profile: adminProfile } = response.data.data;
         const existingProfile = useAdminAuthStore.getState().profile;
         setSession(newAccessToken, adminProfile || existingProfile);
-      } catch (err) {
-        // Failed silent refresh -> clear state and redirect to login
+      } catch {
+        
         clearSession();
         if (typeof window !== 'undefined') {
           window.location.href = '/login/admin';
@@ -53,3 +52,4 @@ export function useAdminSession() {
   };
 }
 export default useAdminSession;
+

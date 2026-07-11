@@ -22,7 +22,7 @@ export default function StudentFeesPage() {
         description="Verify assigned fees, monitor outstanding dues, and check payment history records."
       />
 
-      {/* Summary Cards */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {isSummaryLoading ? (
           Array.from({ length: 3 }).map((_, i) => (
@@ -61,7 +61,7 @@ export default function StudentFeesPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left Column: Assigned Fees */}
+        {}
         <div className="space-y-6">
           <Card className="border shadow-md">
             <CardHeader className="bg-muted/10 border-b pb-4">

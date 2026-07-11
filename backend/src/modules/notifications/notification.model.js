@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const notificationSchema = new mongoose.Schema(
   {
-    // ── Recipient ─────────────────────────────────────────────────────────────
+    
     recipientType: {
       type: String,
       enum: ["admin", "teacher", "accountant", "student", "all"],
@@ -10,13 +10,12 @@ const notificationSchema = new mongoose.Schema(
       index: true,
     },
     recipientId: {
-      // null = broadcast to all of recipientType
+      
       type: mongoose.Schema.Types.ObjectId,
       default: null,
       index: true,
     },
 
-    // ── Content ───────────────────────────────────────────────────────────────
     title: {
       type: String,
       required: true,
@@ -35,7 +34,6 @@ const notificationSchema = new mongoose.Schema(
       default: "info",
     },
 
-    // ── Interaction ───────────────────────────────────────────────────────────
     read: {
       type: Boolean,
       default: false,
@@ -46,9 +44,8 @@ const notificationSchema = new mongoose.Schema(
       default: null,
     },
 
-    // ── Audit ─────────────────────────────────────────────────────────────────
     createdBy: {
-      type: String,        // "system" | admin name
+      type: String,        
       default: "system",
     },
   },
@@ -58,7 +55,6 @@ const notificationSchema = new mongoose.Schema(
   }
 );
 
-// Compound index for efficient recipient lookups
 notificationSchema.index({ recipientType: 1, recipientId: 1, read: 1 });
 notificationSchema.index({ recipientType: 1, read: 1, createdAt: -1 });
 

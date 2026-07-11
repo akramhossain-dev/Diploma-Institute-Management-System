@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
 
-/**
- * Course — a diploma subject/course that belongs to a department and semester.
- * Referenced by: attendance, results, exams, teacher assignments
- */
 const courseSchema = new mongoose.Schema(
   {
     title: {
@@ -47,7 +43,7 @@ const courseSchema = new mongoose.Schema(
     assignedTeacherId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
-      default: null,                          // assigned in Phase 4
+      default: null,                          
     },
     status: {
       type: String,

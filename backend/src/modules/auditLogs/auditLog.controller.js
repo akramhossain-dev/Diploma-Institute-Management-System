@@ -4,7 +4,6 @@ import auditLogService from "./auditLog.service.js";
 
 const auditLogController = {
 
-  // GET /api/audit-logs
   getAuditLogs: asyncHandler(async (req, res) => {
     const { logs, pagination } = await auditLogService.getAuditLogs(req.query);
     return successResponse(res, {
@@ -15,7 +14,6 @@ const auditLogController = {
     });
   }),
 
-  // GET /api/audit-logs/filter-options
   getFilterOptions: asyncHandler(async (req, res) => {
     const options = await auditLogService.getFilterOptions();
     return successResponse(res, {

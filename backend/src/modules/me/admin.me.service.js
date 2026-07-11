@@ -19,7 +19,6 @@ const adminMeService = {
     );
   },
 
-  // Reuse dashboard service for mini snapshot
   async getDashboard() {
     return dashboardService.getAdminDashboard();
   },

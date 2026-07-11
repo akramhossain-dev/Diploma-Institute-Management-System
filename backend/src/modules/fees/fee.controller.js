@@ -45,7 +45,7 @@ export const feeController = {
   }),
 
   getFeesOverview: asyncHandler(async (req, res) => {
-    // Only accountant or admin can see the general overview
+    
     if (req.entityType !== "accountant" && req.entityType !== "admin") {
       throw new ApiError(403, "Access denied. Requires accountant or admin privileges.", "FORBIDDEN");
     }

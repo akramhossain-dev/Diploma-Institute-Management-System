@@ -24,20 +24,17 @@ import { Teacher, teacherFormSchema } from '@/types/admin/teacher.types';
 export default function TeachersCrudPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
   const { data: teachers = [], isLoading } = useAdminTeachers();
   const { data: departments = [], isLoading: deptsLoading } = useAdminDepartments();
 
   const createMutation = useCreateTeacher();
   const updateMutation = useUpdateTeacher();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
   const [deptFilter, setDeptFilter] = useState<string>('');
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -97,7 +94,7 @@ export default function TeachersCrudPage() {
         addToast('Teacher registered successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please try again.', 'error');
     }
   };
@@ -110,12 +107,11 @@ export default function TeachersCrudPage() {
         data: { status: nextStatus },
       });
       addToast(`Teacher status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch status.', 'error');
     }
   };
 
-  // Filter rows by departmentId
   const filteredTeachers = React.useMemo(() => {
     if (!deptFilter) return teachers;
     return teachers.filter((t) => t.departmentId === deptFilter || t.departmentCode === deptFilter);
@@ -167,7 +163,7 @@ export default function TeachersCrudPage() {
         action={<Button onClick={handleOpenCreate}>Add Teacher</Button>}
       />
 
-      {/* Department Filter Option */}
+      {}
       <div className="flex items-center gap-2 mb-4">
         <span className="text-xs font-semibold text-muted-foreground uppercase">Filter Technology:</span>
         <select
@@ -193,7 +189,7 @@ export default function TeachersCrudPage() {
         searchPlaceholder="Search faculty members by name..."
       />
 
-      {/* Form Dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>
@@ -277,7 +273,7 @@ export default function TeachersCrudPage() {
               <Input error={errors.teacherId?.message as string} {...register('teacherId')} />
             </div>
 
-            {/* Avatar uploader */}
+            {}
             <div className="space-y-1 pt-2 border-t">
               <label className="text-xs font-semibold block">Profile Avatar Image</label>
               {avatarUrl ? (

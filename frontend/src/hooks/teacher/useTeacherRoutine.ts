@@ -7,7 +7,7 @@ export function useTeacherRoutine(teacherId?: string) {
     queryFn: async () => {
       const allSlots = await adminRoutineService.getRoutineSlots();
       if (!teacherId) return allSlots;
-      // Filter slots assigned to this specific teacher ID
+      
       return allSlots.filter((slot) => slot.teacherId === teacherId);
     },
     enabled: !!teacherId,

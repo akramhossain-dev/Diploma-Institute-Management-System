@@ -19,11 +19,9 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// ── Public ────────────────────────────────────────────────────────────────
 router.post("/login", loginLimiter, loginValidation, handleValidationErrors, teacherAuthController.login);
 router.post("/refresh", teacherAuthController.refresh);
 
-// ── Protected ─────────────────────────────────────────────────────────────
 router.post("/logout",          authenticate, authorizeEntity("teacher"), teacherAuthController.logout);
 router.get("/me",               authenticate, authorizeEntity("teacher"), teacherAuthController.getMe);
 router.put("/change-password",  authenticate, authorizeEntity("teacher"), changePasswordValidation, handleValidationErrors, teacherAuthController.changePassword);

@@ -8,12 +8,12 @@ import MRIST from '@/config/mrist.config';
 export function PublicFooter() {
   return (
     <footer className="bg-[#0F172A] text-[#94A3B8]">
-      {/* Top accent line */}
+      {}
       <div className="h-px bg-gradient-to-r from-transparent via-[#1D4ED8]/60 to-transparent" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-14 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          {/* Brand Column */}
+          {}
           <div className="space-y-4 md:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 group w-fit">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1D4ED8] shadow-[0_0_12px_rgba(29,78,216,0.35)]">
@@ -44,7 +44,7 @@ export function PublicFooter() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2.5">
@@ -66,7 +66,7 @@ export function PublicFooter() {
             </ul>
           </div>
 
-          {/* Portal Access */}
+          {}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Portal Access</h4>
             <ul className="space-y-2.5">
@@ -106,7 +106,7 @@ export function PublicFooter() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Contact Info</h4>
             <div className="space-y-3">
@@ -127,7 +127,7 @@ export function PublicFooter() {
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {}
       <div className="border-t border-white/8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12px] text-[#475569]">
           <p>

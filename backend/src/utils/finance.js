@@ -1,13 +1,4 @@
-/**
- * Finance Utility — Phase 8
- *
- * Centralized finance calculation helpers.
- * All money values are in the smallest unit (2 decimal places, rounded).
- *
- * Future-readiness:
- *   - currency support can be plugged into InstituteSettings (Phase 5)
- *   - fine/late-fee policy can be made configurable
- */
+
 
 /**
  * Compute the final payable amount after discounts, waivers, and fines.
@@ -32,7 +23,7 @@ export function computeFinalAmount(amountDue = 0, discountAmount = 0, waiverAmou
  * @returns {'unpaid'|'partial'|'paid'}
  */
 export function computeBillingStatus(finalAmount, amountPaid) {
-  if (finalAmount <= 0)         return "paid";      // waived to zero
+  if (finalAmount <= 0)         return "paid";      
   if (amountPaid <= 0)          return "unpaid";
   if (amountPaid >= finalAmount) return "paid";
   return "partial";

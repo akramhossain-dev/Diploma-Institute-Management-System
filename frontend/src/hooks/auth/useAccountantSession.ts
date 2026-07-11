@@ -27,7 +27,7 @@ export function useAccountantSession() {
         const { accessToken: newAccessToken, profile: accountantProfile } = response.data.data;
         const existingProfile = useAccountantAuthStore.getState().profile;
         setSession(newAccessToken, accountantProfile || existingProfile);
-      } catch (err) {
+      } catch {
         clearSession();
         if (typeof window !== 'undefined') {
           window.location.href = '/login/accountant';

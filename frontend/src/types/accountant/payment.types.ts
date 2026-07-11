@@ -18,7 +18,7 @@ export interface LedgerEntry {
   _id: string;
   date: string;
   description: string; // e.g. "Fee Assigned: Admission Fee", "Payment Received - Cash"
-  debit: number; // fee assigned / charge
+  debit: number; 
   credit: number; // payment received
   balance: number; // running balance
 }

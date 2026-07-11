@@ -16,7 +16,6 @@ const courseService = {
       throw new ApiError(400, "Cannot create a course for an inactive department", "BUSINESS_RULE_VIOLATION");
     }
 
-    // Resolve activeSemesterId if missing
     let activeSemesterId = semesterId;
     if (!activeSemesterId) {
       const firstSem = await Semester.findOne({ status: "active" }).sort({ number: 1 }).lean();
@@ -32,14 +31,12 @@ const courseService = {
       }
     }
 
-    // Verify semester exists and is active
     const semester = await Semester.findById(activeSemesterId).lean();
     if (!semester) throw new ApiError(404, "Semester not found", "NOT_FOUND");
     if (semester.status === "inactive") {
       throw new ApiError(400, "Cannot create a course for an inactive semester", "BUSINESS_RULE_VIOLATION");
     }
 
-    // Code uniqueness
     const codeExists = await Course.findOne({ code: code.trim().toUpperCase() });
     if (codeExists) throw new ApiError(409, `Course code '${code.trim().toUpperCase()}' already exists`, "DUPLICATE_ENTRY");
 
@@ -111,13 +108,11 @@ const courseService = {
       if (!sem) throw new ApiError(404, "Semester not found", "NOT_FOUND");
     }
 
-    // Code uniqueness if changing
     if (code) {
       const conflict = await Course.findOne({ code: code.trim().toUpperCase(), _id: { $ne: id } });
       if (conflict) throw new ApiError(409, `Course code '${code.trim().toUpperCase()}' already exists`, "DUPLICATE_ENTRY");
     }
 
-    // Prepare update payload
     const updatePayload = { ...data };
     if (name !== undefined) {
       updatePayload.title = name;

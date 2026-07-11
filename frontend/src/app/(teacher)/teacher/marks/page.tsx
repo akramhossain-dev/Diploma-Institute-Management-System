@@ -22,18 +22,16 @@ export default function TeacherMarksEntryPage() {
   const fullMarks = Number(searchParams.get('fullMarks') || 100);
   const passMarks = Number(searchParams.get('passMarks') || 40);
 
-  // Queries & Mutations
   const { data: students = [], isLoading } = useCourseStudents(courseId);
   const submitMutation = useSubmitMarks();
 
-  // Obtained marks state map: { [studentId]: marksNumber }
   const [marksMap, setMarksMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (students.length > 0) {
       const initialMap: Record<string, string> = {};
       students.forEach((s) => {
-        initialMap[s._id] = '80'; // Default sample marks
+        initialMap[s._id] = '80'; 
       });
       setMarksMap(initialMap);
     }
@@ -79,7 +77,7 @@ export default function TeacherMarksEntryPage() {
       });
       addToast('Marks sheet submitted to board registry successfully', 'success');
       router.push('/teacher/exams');
-    } catch (err) {
+    } catch {
       addToast('Failed to submit marks ledger.', 'error');
     }
   };
@@ -92,7 +90,7 @@ export default function TeacherMarksEntryPage() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Parameters card */}
+        {}
         <div className="md:col-span-1 space-y-4">
           <Card className="border shadow-xs bg-card text-xs">
             <CardContent className="pt-6 space-y-3">

@@ -7,7 +7,7 @@ export function useImportExport() {
   const jobsQuery = useQuery({
     queryKey: ['admin', 'import-jobs'],
     queryFn: () => adminImportExportService.getImportJobs(),
-    refetchInterval: 5000, // Poll import status every 5 seconds since imports are async jobs
+    refetchInterval: 5000, 
   });
 
   const importMutation = useMutation({

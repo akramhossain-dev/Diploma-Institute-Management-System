@@ -18,22 +18,19 @@ import {
   useCreateAccountant,
   useUpdateAccountant,
 } from '@/hooks/admin/useAdminAccountants';
-import { Accountant, accountantFormSchema, AccountantFormInput } from '@/types/admin/accountant.types';
+import { Accountant, accountantFormSchema } from '@/types/admin/accountant.types';
 
 export default function AccountantsCrudPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
   const { data: accountants = [], isLoading } = useAdminAccountants();
   const createMutation = useCreateAccountant();
   const updateMutation = useUpdateAccountant();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedAcc, setSelectedAcc] = useState<Accountant | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -89,7 +86,7 @@ export default function AccountantsCrudPage() {
         addToast('Accountant account registered successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please try again.', 'error');
     }
   };
@@ -102,7 +99,7 @@ export default function AccountantsCrudPage() {
         data: { status: nextStatus },
       });
       addToast(`Accountant status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch status.', 'error');
     }
   };
@@ -160,7 +157,7 @@ export default function AccountantsCrudPage() {
         searchPlaceholder="Search accountants by name..."
       />
 
-      {/* Form Dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>
@@ -220,7 +217,7 @@ export default function AccountantsCrudPage() {
               </div>
             </div>
 
-            {/* Avatar uploader */}
+            {}
             <div className="space-y-1 pt-2 border-t">
               <label className="text-xs font-semibold block">Profile Avatar Image</label>
               {avatarUrl ? (

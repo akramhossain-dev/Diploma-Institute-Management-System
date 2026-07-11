@@ -2,7 +2,6 @@ import { v2 as cloudinary } from "cloudinary";
 import env from "../config/env.js";
 import logger from "./logger.js";
 
-// Configure Cloudinary
 cloudinary.config({
   cloud_name: env.CLOUDINARY_CLOUD_NAME,
   api_key:    env.CLOUDINARY_API_KEY,
@@ -22,7 +21,7 @@ export const uploadBuffer = (buffer, folder = "dims_uploads") => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder,
-        resource_type: "auto", // Automatically detect PDF, PNG, JPG, CSV, etc.
+        resource_type: "auto", 
       },
       (error, result) => {
         if (error) {

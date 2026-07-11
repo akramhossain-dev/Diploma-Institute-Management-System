@@ -23,18 +23,15 @@ import { AcademicSession, sessionFormSchema } from '@/types/admin/session.types'
 export default function SessionsCrudPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
-  const { data: sessions = [], isLoading, isError } = useAdminSessions();
+  const { data: sessions = [], isLoading } = useAdminSessions();
   const createMutation = useCreateSession();
   const updateMutation = useUpdateSession();
   const deleteMutation = useDeleteSession();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedSess, setSelectedSess] = useState<AcademicSession | null>(null);
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -81,7 +78,7 @@ export default function SessionsCrudPage() {
         addToast('Academic session created successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please check year ranges.', 'error');
     }
   };
@@ -92,7 +89,7 @@ export default function SessionsCrudPage() {
       await deleteMutation.mutateAsync(selectedSess._id);
       addToast('Academic session deleted successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed. Please try again.', 'error');
     }
   };
@@ -105,12 +102,11 @@ export default function SessionsCrudPage() {
         data: { status: nextStatus },
       });
       addToast(`Session status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch active status.', 'error');
     }
   };
 
-  // Columns definition
   const columns = [
     { key: 'name', label: 'Academic Session' },
     { key: 'startYear', label: 'Start Year' },
@@ -160,7 +156,7 @@ export default function SessionsCrudPage() {
         searchPlaceholder="Search sessions by name..."
       />
 
-      {/* CRUD dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -208,7 +204,7 @@ export default function SessionsCrudPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Confirmation Modal */}
+      {}
       <ConfirmDialog
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}

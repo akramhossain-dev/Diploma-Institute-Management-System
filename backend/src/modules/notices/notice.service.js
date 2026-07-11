@@ -5,18 +5,14 @@ import AcademicSession from "../academicSessions/academicSession.model.js";
 import ApiError from "../../utils/ApiError.js";
 import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination.js";
 
-// ── Status transition map ───────────────────────────────────────────────────
 const NOTICE_TRANSITIONS = {
   draft:     ["published", "archived"],
   published: ["archived"],
-  archived:  [],                          // terminal
+  archived:  [],                          
 };
 
 const noticeService = {
 
-  // ────────────────────────────────────────────────────────────────────────
-  // CREATE (creates in draft by default)
-  // ────────────────────────────────────────────────────────────────────────
   async createNotice(data, adminId) {
     const {
       targetDepartmentIds = [],
@@ -37,9 +33,6 @@ const noticeService = {
     return notice;
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // LIST with filters
-  // ────────────────────────────────────────────────────────────────────────
   async getAllNotices(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { publishStatus, noticeType, priority, audience, departmentId, semesterId, search } = query;
@@ -56,13 +49,12 @@ const noticeService = {
       { content: { $regex: search, $options: "i" } },
     ];
 
-    // Exclude expired notices unless explicitly requesting archived
     if (publishStatus !== "archived") {
       filter.$or = filter.$or || [];
       filter.$or = [
         ...(filter.$or || []),
       ];
-      // Filter out expired notices
+      
       filter.$and = [
         { $or: [{ expiresAt: null }, { expiresAt: { $gt: new Date() } }] },
       ];
@@ -82,10 +74,8 @@ const noticeService = {
     return { notices, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ────────────────────────────────────────────────────────────────────────
   // PUBLIC LIST — published notices only, no auth required
-  // Used by the public website homepage and notices page
-  // ────────────────────────────────────────────────────────────────────────
+
   async getPublicNotices(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { category, search } = query;
@@ -113,7 +103,6 @@ const noticeService = {
       Notice.countDocuments(filter),
     ]);
 
-    // Map to public-safe shape expected by frontend
     const mapped = notices.map((n) => ({
       _id:         n._id,
       title:       n.title,
@@ -138,9 +127,6 @@ const noticeService = {
     return notice;
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // UPDATE (only drafts can be freely edited)
-  // ────────────────────────────────────────────────────────────────────────
   async updateNotice(id, data, adminId) {
     const notice = await Notice.findById(id);
     if (!notice) throw new ApiError(404, "Notice not found", "NOT_FOUND");
@@ -157,7 +143,6 @@ const noticeService = {
 
     await this._validateTargetRefs(targetDepartmentIds, targetSemesterIds, targetAcademicSessionIds);
 
-    // Strip status — handled by dedicated methods
     const { publishStatus, publishedAt, ...allowedUpdates } = data;
 
     const updated = await Notice.findByIdAndUpdate(
@@ -171,9 +156,6 @@ const noticeService = {
     return updated;
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // STATUS TRANSITIONS
-  // ────────────────────────────────────────────────────────────────────────
   async _changeStatus(id, targetStatus, adminId) {
     const notice = await Notice.findById(id);
     if (!notice) throw new ApiError(404, "Notice not found", "NOT_FOUND");
@@ -210,7 +192,6 @@ const noticeService = {
     return this._changeStatus(id, "archived", adminId);
   },
 
-  // ── Internal: validate referenced ID arrays ────────────────────────────
   async _validateTargetRefs(deptIds, semIds, sessionIds) {
     const checks = [];
 
@@ -242,9 +223,6 @@ const noticeService = {
     await Promise.all(checks);
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // ENTITY-SPECIFIC NOTICE FEED (used by students/teachers to get their notices)
-  // ────────────────────────────────────────────────────────────────────────
   async getNoticesForEntity(entityType, { departmentId, semesterId, academicSessionId } = {}, query = {}) {
     const { page, limit, skip } = getPaginationParams(query);
 
@@ -280,7 +258,6 @@ const noticeService = {
         ],
       });
     }
-
 
     const [notices, total] = await Promise.all([
       Notice.find(filter)

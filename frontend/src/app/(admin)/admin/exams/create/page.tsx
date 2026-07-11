@@ -13,7 +13,7 @@ import { useUiStore } from '@/store/ui/uiStore';
 import { useAdminSemesters } from '@/hooks/admin/useAdminSemesters';
 import { useAdminSessions } from '@/hooks/admin/useAdminSessions';
 import { useCreateExam } from '@/hooks/admin/useExams';
-import { ExamFormInput, examSchema } from '@/types/admin/exam.types';
+import { examSchema } from '@/types/admin/exam.types';
 
 export default function CreateExamPage() {
   const router = useRouter();
@@ -43,7 +43,7 @@ export default function CreateExamPage() {
       await createMutation.mutateAsync(data);
       addToast('Exam created successfully', 'success');
       router.push('/admin/exams');
-    } catch (err) {
+    } catch {
       addToast('Failed to configure exam details.', 'error');
     }
   };

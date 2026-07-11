@@ -12,7 +12,6 @@ const validateId = [
   handleValidationErrors,
 ];
 
-// All routes are protected and admin-only
 router.use(authenticate, authorizeEntity("admin"));
 
 router.get("/", batchController.getBatches);

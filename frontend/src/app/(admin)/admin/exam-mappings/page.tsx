@@ -27,7 +27,6 @@ import { ExamMapping, examMappingSchema } from '@/types/admin/exam-mapping.types
 export default function ExamMappingsPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
   const { data: mappings = [], isLoading } = useExamMappings();
   const { data: exams = [] } = useExams();
   const { data: departments = [] } = useAdminDepartments();
@@ -39,12 +38,10 @@ export default function ExamMappingsPage() {
   const updateMutation = useUpdateExamMapping();
   const deleteMutation = useDeleteExamMapping();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedMapping, setSelectedMapping] = useState<ExamMapping | null>(null);
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -55,7 +52,6 @@ export default function ExamMappingsPage() {
     resolver: zodResolver(examMappingSchema),
   });
 
-  // Watch department choice to dynamically filter course lists
   const selectedDept = useWatch({ control, name: 'departmentId' });
 
   const filteredCourses = React.useMemo(() => {
@@ -106,7 +102,7 @@ export default function ExamMappingsPage() {
         addToast('Course mapped to exam successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Check marks thresholds.', 'error');
     }
   };
@@ -117,7 +113,7 @@ export default function ExamMappingsPage() {
       await deleteMutation.mutateAsync(selectedMapping._id);
       addToast('Mapping removed successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed. Please try again.', 'error');
     }
   };
@@ -162,7 +158,7 @@ export default function ExamMappingsPage() {
         searchPlaceholder="Search mappings by exam name..."
       />
 
-      {/* Form Dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

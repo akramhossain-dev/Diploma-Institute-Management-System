@@ -65,7 +65,7 @@ export default function EditFeeStructurePage() {
       await updateMutation.mutateAsync({ id, data });
       addToast('Fee structure updated successfully', 'success');
       router.push('/admin/fees');
-    } catch (err) {
+    } catch {
       addToast('Failed to update fee structure details.', 'error');
     }
   };

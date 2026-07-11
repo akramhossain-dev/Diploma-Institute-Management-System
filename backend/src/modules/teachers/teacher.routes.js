@@ -18,13 +18,10 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
-// ── Self-access: teacher views own profile ────────────────────────────────
 router.get("/me", authenticate, authorizeEntity("teacher"), teacherController.getMe);
 
-// ── Admin: list all teachers ───────────────────────────────────────────────
 router.get("/",   authenticate, authorizeEntity("admin"), teacherController.getAll);
 
-// ── Admin/Teacher: get single teacher ─────────────────────────────────────
 router.get(
   "/:id",
   authenticate,
@@ -33,7 +30,6 @@ router.get(
   teacherController.getById
 );
 
-// ── Admin: create teacher ─────────────────────────────────────────────────
 router.post(
   "/",
   authenticate, authorizeEntity("admin"),
@@ -41,7 +37,6 @@ router.post(
   teacherController.create
 );
 
-// ── Admin: update teacher profile ─────────────────────────────────────────
 router.patch(
   "/:id",
   authenticate, authorizeEntity("admin"),
@@ -49,7 +44,6 @@ router.patch(
   teacherController.update
 );
 
-// ── Admin: update teacher status ──────────────────────────────────────────
 router.patch(
   "/:id/status",
   authenticate, authorizeEntity("admin"),
@@ -57,7 +51,6 @@ router.patch(
   teacherController.updateStatus
 );
 
-// ── Admin: assign courses to teacher ──────────────────────────────────────
 router.post(
   "/:id/courses",
   authenticate, authorizeEntity("admin"),
@@ -70,7 +63,6 @@ router.post(
   teacherController.assignCourses
 );
 
-// ── Admin: remove course from teacher ─────────────────────────────────────
 router.delete(
   "/:id/courses/:courseId",
   authenticate, authorizeEntity("admin"),

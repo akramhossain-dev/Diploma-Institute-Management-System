@@ -4,7 +4,6 @@ import adminService from "./admin.service.js";
 
 const adminController = {
 
-  // POST /api/admins
   create: asyncHandler(async (req, res) => {
     const admin = await adminService.createAdmin(req.body, req.entityId);
     return successResponse(res, {
@@ -14,7 +13,6 @@ const adminController = {
     });
   }),
 
-  // GET /api/admins
   getAll: asyncHandler(async (req, res) => {
     const { admins, pagination } = await adminService.getAllAdmins(req.query);
     return successResponse(res, {
@@ -25,7 +23,6 @@ const adminController = {
     });
   }),
 
-  // GET /api/admins/:id
   getById: asyncHandler(async (req, res) => {
     const admin = await adminService.getAdminById(req.params.id);
     return successResponse(res, {
@@ -35,7 +32,6 @@ const adminController = {
     });
   }),
 
-  // PATCH /api/admins/:id
   update: asyncHandler(async (req, res) => {
     const admin = await adminService.updateAdmin(req.params.id, req.body);
     return successResponse(res, {
@@ -45,7 +41,6 @@ const adminController = {
     });
   }),
 
-  // PATCH /api/admins/:id/status
   toggleStatus: asyncHandler(async (req, res) => {
     const admin = await adminService.toggleStatus(req.params.id);
     return successResponse(res, {

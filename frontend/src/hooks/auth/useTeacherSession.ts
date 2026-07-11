@@ -27,7 +27,7 @@ export function useTeacherSession() {
         const { accessToken: newAccessToken, profile: teacherProfile } = response.data.data;
         const existingProfile = useTeacherAuthStore.getState().profile;
         setSession(newAccessToken, teacherProfile || existingProfile);
-      } catch (err) {
+      } catch {
         clearSession();
         if (typeof window !== 'undefined') {
           window.location.href = '/login/teacher';

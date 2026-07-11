@@ -2,7 +2,7 @@ export interface AdminProfile {
   _id: string;
   fullName: string;
   email: string;
-  role: string; // e.g. 'admin'
+  role: string; 
   isSuperAdmin: boolean;
   status: 'active' | 'inactive';
 }

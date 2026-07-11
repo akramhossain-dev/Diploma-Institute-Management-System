@@ -14,7 +14,7 @@ const router = Router();
 
 // Strict rate limiter for login endpoint (brute-force protection)
 const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000, 
   max: 10,
   message: {
     success: false,
@@ -25,7 +25,6 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// ── Public routes ─────────────────────────────────────────────────────────
 router.post(
   "/login",
   loginLimiter,
@@ -36,7 +35,6 @@ router.post(
 
 router.post("/refresh", studentAuthController.refresh);
 
-// ── Protected routes (student must be authenticated) ──────────────────────
 router.post(
   "/logout",
   authenticate,

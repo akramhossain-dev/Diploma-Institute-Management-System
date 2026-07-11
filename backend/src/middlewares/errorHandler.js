@@ -4,21 +4,9 @@ import logger from "../utils/logger.js";
 import env from "../config/env.js";
 import { captureException } from "../utils/errorReporting.js";
 
-/**
- * Global Express error handler.
- * Must be registered LAST in app.js (after all routes).
- *
- * Handles:
- *  - ApiError (operational errors thrown intentionally)
- *  - Mongoose ValidationError
- *  - Mongoose CastError (invalid ObjectId)
- *  - Mongoose duplicate key error (code 11000)
- *  - JWT errors (reserved for Phase 2)
- *  - Unhandled system errors
- */
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
-  // Log the error
+  
   if (env.isProd && !err.isOperational) {
     logger.error(`[UNHANDLED] ${err.stack}`);
     captureException(err, { req, severity: "critical" });
@@ -29,7 +17,6 @@ const errorHandler = (err, req, res, next) => {
     }
   }
 
-  // ── Operational: ApiError thrown intentionally ───────────────────────────
   if (err instanceof ApiError) {
     return errorResponse(res, {
       statusCode: err.statusCode,
@@ -39,7 +26,6 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  // ── Mongoose ValidationError ─────────────────────────────────────────────
   if (err.name === "ValidationError") {
     const errors = Object.values(err.errors).map((e) => ({
       field: e.path,
@@ -53,7 +39,6 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  // ── Mongoose CastError (invalid ObjectId format) ─────────────────────────
   if (err.name === "CastError") {
     return errorResponse(res, {
       statusCode: 400,
@@ -62,7 +47,6 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  // ── Mongoose Duplicate Key ────────────────────────────────────────────────
   if (err.code === 11000) {
     const field = Object.keys(err.keyValue)[0];
     return errorResponse(res, {
@@ -73,7 +57,6 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  // ── JWT Errors (Phase 2 reserved) ────────────────────────────────────────
   if (err.name === "JsonWebTokenError") {
     return errorResponse(res, {
       statusCode: 401,
@@ -90,7 +73,6 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  // ── Unhandled / Unknown Errors ────────────────────────────────────────────
   return errorResponse(res, {
     statusCode: 500,
     message: env.isProd ? "Internal server error" : err.message,

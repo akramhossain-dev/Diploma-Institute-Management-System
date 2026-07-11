@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const { ObjectId } = mongoose.Schema.Types;
 
-// ── Sub-schemas ─────────────────────────────────────────────────────────────
 const addressSchema = new mongoose.Schema(
   {
     village:  { type: String, trim: true },
@@ -15,29 +14,20 @@ const addressSchema = new mongoose.Schema(
 
 const previousEducationSchema = new mongoose.Schema(
   {
-    board:        { type: String, trim: true },            // SSC/Dakhil board
-    year:         { type: Number },                        // passing year
+    board:        { type: String, trim: true },            
+    year:         { type: Number },                        
     roll:         { type: String, trim: true },
     registration: { type: String, trim: true },
     gpa:          { type: Number, min: 0, max: 5 },
     institution:  { type: String, trim: true },
-    examType:     { type: String, trim: true, default: "SSC" }, // SSC, Dakhil, O-Level
+    examType:     { type: String, trim: true, default: "SSC" }, 
   },
   { _id: false }
 );
 
-/**
- * Admission — pre-student intake record.
- *
- * Status machine:
- *   pending → reviewed → approved → (converted) OR rejected / cancelled
- *
- * convertedStudentId is set only after explicit convert-to-student action.
- * An approved admission that hasn't been converted has convertedStudentId = null.
- */
 const admissionSchema = new mongoose.Schema(
   {
-    // ── Applicant identity ────────────────────────────────────────────────
+    
     fullName:    { type: String, required: [true, "Full name is required"], trim: true },
     email:       { type: String, required: [true, "Email is required"], lowercase: true, trim: true },
     phone:       { type: String, required: [true, "Phone is required"], trim: true },
@@ -48,15 +38,14 @@ const admissionSchema = new mongoose.Schema(
       enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", null],
       default: null,
     },
-    applicantPhoto: { type: String, default: null },      // Cloudinary URL (Phase 6)
+    applicantPhoto: { type: String, default: null },      
 
-    // ── Academic / admission data ──────────────────────────────────────────
     desiredDepartmentId: {
       type: ObjectId, ref: "Department",
       required: [true, "Desired department is required"],
     },
     targetSemesterId: {
-      type: ObjectId, ref: "Semester", default: null,     // defaults to 1st sem if null
+      type: ObjectId, ref: "Semester", default: null,     
     },
     academicSessionId: {
       type: ObjectId, ref: "AcademicSession",
@@ -67,7 +56,6 @@ const admissionSchema = new mongoose.Schema(
       type: String, enum: ["online", "offline", "manual"], default: "online",
     },
 
-    // ── Status machine ────────────────────────────────────────────────────
     admissionStatus: {
       type: String,
       enum: ["pending", "reviewed", "approved", "rejected", "cancelled"],
@@ -78,12 +66,10 @@ const admissionSchema = new mongoose.Schema(
     rejectionReason:   { type: String, trim: true,        default: null },
     notes:             { type: String, trim: true,        default: null },
 
-    // ── Conversion tracking ────────────────────────────────────────────────
     convertedStudentId: { type: ObjectId, ref: "Student", default: null },
     convertedAt:        { type: Date,                      default: null },
     convertedByAdminId: { type: ObjectId, ref: "Admin",   default: null },
 
-    // ── Guardian / contact ─────────────────────────────────────────────────
     guardianName:     { type: String, trim: true, default: null },
     guardianPhone:    { type: String, trim: true, default: null },
     guardianRelation: { type: String, trim: true, default: null },

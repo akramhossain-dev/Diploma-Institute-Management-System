@@ -38,12 +38,10 @@ export function SvgLineChart({ data, height = 200, color = '#3b82f6', gridLines 
   }
 
   const maxVal = Math.max(...data.map((d) => d.value)) || 1;
-  const minVal = 0;
   const padding = 40;
   const chartHeight = height - padding * 2;
   const stepX = 400 / (data.length - 1 || 1);
 
-  // Generate coordinates
   const points = data.map((d, index) => {
     const x = padding + index * stepX;
     const y = padding + chartHeight - (d.value / maxVal) * chartHeight;
@@ -54,7 +52,6 @@ export function SvgLineChart({ data, height = 200, color = '#3b82f6', gridLines 
     return i === 0 ? `M ${p.x} ${p.y}` : `${acc} L ${p.x} ${p.y}`;
   }, '');
 
-  // Gradient area path
   const areaD = data.length > 0 
     ? `${pathD} L ${points[points.length - 1].x} ${height - padding} L ${points[0].x} ${height - padding} Z` 
     : '';
@@ -69,7 +66,7 @@ export function SvgLineChart({ data, height = 200, color = '#3b82f6', gridLines 
           </linearGradient>
         </defs>
 
-        {/* Grid lines */}
+        {}
         {gridLines && (
           <>
             <line x1={padding} y1={padding} x2={480 - padding} y2={padding} stroke="var(--border)" strokeDasharray="3 3" />
@@ -78,13 +75,13 @@ export function SvgLineChart({ data, height = 200, color = '#3b82f6', gridLines 
           </>
         )}
 
-        {/* Gradient fill */}
+        {}
         {areaD && <path d={areaD} fill="url(#chartGrad)" />}
 
-        {/* Trend line */}
+        {}
         <path d={pathD} fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
 
-        {/* Data points */}
+        {}
         {points.map((p, i) => (
           <g key={i} className="group cursor-pointer">
             <circle
@@ -96,12 +93,12 @@ export function SvgLineChart({ data, height = 200, color = '#3b82f6', gridLines 
               strokeWidth="2.5"
               className="transition-all duration-200 hover:r-6"
             />
-            {/* Tooltip trigger placeholder */}
+            {}
             <title>{`${p.label}: ${p.value}`}</title>
           </g>
         ))}
 
-        {/* Axis Labels */}
+        {}
         {points.map((p, i) => (
           <text
             key={i}
@@ -115,7 +112,7 @@ export function SvgLineChart({ data, height = 200, color = '#3b82f6', gridLines 
           </text>
         ))}
 
-        {/* Y Axis Max Label */}
+        {}
         <text x={padding - 5} y={padding + 4} textAnchor="end" fill="var(--muted-foreground)" className="text-[9px] font-bold">
           {maxVal}
         </text>
@@ -141,7 +138,7 @@ export function SvgBarChart({ data, height = 200, color = '#10b981', gridLines =
   return (
     <div className="w-full">
       <svg viewBox={`0 0 480 ${height}`} className="w-full overflow-visible">
-        {/* Grid lines */}
+        {}
         {gridLines && (
           <>
             <line x1={padding} y1={padding} x2={480 - padding} y2={padding} stroke="var(--border)" strokeDasharray="3 3" />
@@ -150,7 +147,7 @@ export function SvgBarChart({ data, height = 200, color = '#10b981', gridLines =
           </>
         )}
 
-        {/* Render Bars */}
+        {}
         {data.map((d, index) => {
           const x = padding + index * stepX + (stepX - barWidth) / 2;
           const barHeight = (d.value / maxVal) * chartHeight;
@@ -169,7 +166,7 @@ export function SvgBarChart({ data, height = 200, color = '#10b981', gridLines =
                 className="transition-all duration-200 hover:opacity-100"
               />
               <title>{`${d.label}: ${d.value}`}</title>
-              {/* X label */}
+              {}
               <text
                 x={x + barWidth / 2}
                 y={height - padding + 20}
@@ -183,7 +180,7 @@ export function SvgBarChart({ data, height = 200, color = '#10b981', gridLines =
           );
         })}
 
-        {/* Axis Labels */}
+        {}
         <text x={padding - 5} y={padding + 4} textAnchor="end" fill="var(--muted-foreground)" className="text-[9px] font-bold">
           {maxVal}
         </text>

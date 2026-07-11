@@ -32,13 +32,11 @@ const instituteSettingsController = {
     return successResponse(res, { statusCode: 200, message: "Institute info retrieved", data: publicData });
   }),
 
-  // POST /api/institute-settings (initial creation — admin only)
   create: asyncHandler(async (req, res) => {
     const settings = await instituteSettingsService.createSettings(req.body, req.entityId);
     return successResponse(res, { statusCode: 201, message: "Institute settings initialized successfully", data: settings });
   }),
 
-  // PATCH /api/institute-settings
   update: asyncHandler(async (req, res) => {
     const settings = await instituteSettingsService.updateSettings(req.body, req.entityId);
     return successResponse(res, { statusCode: 200, message: "Institute settings updated", data: settings });

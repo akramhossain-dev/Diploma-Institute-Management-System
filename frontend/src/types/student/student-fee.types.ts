@@ -6,7 +6,7 @@ export interface StudentFeeSummary {
 
 export interface StudentFeeItem {
   _id: string;
-  name: string; // fee title
+  name: string; 
   amount: number;
   paidAmount: number;
   dueAmount: number;

@@ -14,7 +14,7 @@ export default function AdmissionPage() {
 
   return (
     <main className="min-h-screen">
-      {/* Hero Banner */}
+      {}
       <section className="bg-[#0F172A] py-14 px-4">
         <div className="mx-auto max-w-4xl text-center">
           <div className="inline-flex items-center gap-2 bg-[#059669]/20 border border-[#059669]/30 text-[#6EE7B7] text-xs font-semibold px-3 py-1 rounded-full mb-4">
@@ -42,7 +42,7 @@ export default function AdmissionPage() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-14 space-y-14">
 
-        {/* Available Technologies */}
+        {}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-6">Available Technologies</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -63,7 +63,7 @@ export default function AdmissionPage() {
           </div>
         </section>
 
-        {/* Eligibility */}
+        {}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h2 className="text-2xl font-bold text-foreground mb-6">Eligibility Criteria</h2>
@@ -94,11 +94,11 @@ export default function AdmissionPage() {
           </div>
         </section>
 
-        {/* Admission Steps */}
+        {}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-6 text-center">Admission Process</h2>
           <div className="relative">
-            {/* Connector line */}
+            {}
             <div className="absolute left-6 top-8 bottom-8 w-px bg-border hidden md:block" />
             <div className="space-y-4">
               {adm.steps.map((step, i) => (
@@ -116,7 +116,7 @@ export default function AdmissionPage() {
           </div>
         </section>
 
-        {/* Helpline + Note */}
+        {}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#DBEAFE]/40 border border-[#1D4ED8]/20 rounded-xl p-6">
             <h3 className="text-base font-bold text-[#1D4ED8] mb-2 flex items-center gap-2">
@@ -140,7 +140,7 @@ export default function AdmissionPage() {
           </div>
         </section>
 
-        {/* Final CTA */}
+        {}
         <section className="bg-gradient-to-r from-[#1D4ED8] to-[#7C3AED] rounded-xl p-10 text-center text-white">
           <h2 className="text-2xl font-bold mb-3">Begin Your Engineering Journey</h2>
           <p className="text-[#BFDBFE] text-sm mb-6 max-w-md mx-auto">

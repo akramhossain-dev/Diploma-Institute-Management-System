@@ -4,7 +4,6 @@ import accountantService from "./accountant.service.js";
 
 const accountantController = {
 
-  // POST /api/accountants
   create: asyncHandler(async (req, res) => {
     const accountant = await accountantService.createAccountant(req.body, req.entityId);
     return successResponse(res, {
@@ -14,7 +13,6 @@ const accountantController = {
     });
   }),
 
-  // GET /api/accountants
   getAll: asyncHandler(async (req, res) => {
     const { accountants, pagination } = await accountantService.getAllAccountants(req.query);
     return successResponse(res, {
@@ -23,7 +21,6 @@ const accountantController = {
     });
   }),
 
-  // GET /api/accountants/me
   getMe: asyncHandler(async (req, res) => {
     const accountant = await accountantService.getMyProfile(req.entityId);
     return successResponse(res, {
@@ -31,7 +28,6 @@ const accountantController = {
     });
   }),
 
-  // GET /api/accountants/:id
   getById: asyncHandler(async (req, res) => {
     const accountant = await accountantService.getAccountantById(req.params.id);
     return successResponse(res, {
@@ -39,7 +35,6 @@ const accountantController = {
     });
   }),
 
-  // PATCH /api/accountants/:id
   update: asyncHandler(async (req, res) => {
     const accountant = await accountantService.updateAccountant(req.params.id, req.body);
     return successResponse(res, {
@@ -47,7 +42,6 @@ const accountantController = {
     });
   }),
 
-  // PATCH /api/accountants/:id/status
   updateStatus: asyncHandler(async (req, res) => {
     const accountant = await accountantService.updateStatus(req.params.id, req.body.status);
     return successResponse(res, {

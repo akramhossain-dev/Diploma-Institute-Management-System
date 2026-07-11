@@ -14,22 +14,17 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
-// POST   /api/departments           — Admin only
 router.post(  "/",            authenticate, authorizeEntity("admin"), createDepartmentValidation, handleValidationErrors, departmentController.create);
 
 // GET    /api/departments/public      — no auth, active departments only
 router.get(   "/public",      departmentController.getPublic);
 
-// GET    /api/departments           — Admin, teacher, student (public-facing structure)
 router.get(   "/",            authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), departmentController.getAll);
 
-// GET    /api/departments/:id
 router.get(   "/:id",         authenticate, authorizeEntity("admin", "teacher", "student", "accountant"), validateMongoId, departmentController.getById);
 
-// PATCH  /api/departments/:id       — Admin only
 router.patch( "/:id",         authenticate, authorizeEntity("admin"), validateMongoId, updateDepartmentValidation, handleValidationErrors, departmentController.update);
 
-// PATCH  /api/departments/:id/status — Admin only
 router.patch( "/:id/status",  authenticate, authorizeEntity("admin"), validateMongoId, departmentController.toggleStatus);
 
 export default router;

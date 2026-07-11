@@ -4,7 +4,7 @@ import ApiError from "../../utils/ApiError.js";
 const semesterService = {
 
   async createSemester(data) {
-    // Uniqueness — number and name
+    
     const [numTaken, nameTaken] = await Promise.all([
       Semester.findOne({ number: data.number }),
       Semester.findOne({ name: { $regex: `^${data.name}$`, $options: "i" } }),
@@ -18,7 +18,7 @@ const semesterService = {
   },
 
   async getAllSemesters() {
-    // Return all sorted by number — no pagination needed for a fixed small list
+    
     return Semester.find().sort({ number: 1 }).lean();
   },
 
@@ -36,7 +36,6 @@ const semesterService = {
       throw new ApiError(400, "Semester number cannot be changed after creation", "BUSINESS_RULE_VIOLATION");
     }
 
-    // Name uniqueness check if name is changing
     if (allowedUpdates.name) {
       const conflict = await Semester.findOne({
         name: { $regex: `^${allowedUpdates.name}$`, $options: "i" },

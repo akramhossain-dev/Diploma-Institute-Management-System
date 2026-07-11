@@ -26,7 +26,7 @@ export const courseService = {
       const url = departmentId ? `/courses/public?departmentId=${departmentId}` : '/courses/public';
       const response = await publicAxios.get<ApiResponse<CourseInfo[]>>(url);
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Public Service] /courses failed. Falling back to mock data.');
       if (departmentId) {
         return fallbackCourses.filter(c => c.departmentId === departmentId);

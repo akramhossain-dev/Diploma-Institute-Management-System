@@ -4,7 +4,6 @@ import logger from "../../utils/logger.js";
 
 const auditLogService = {
 
-  // ── CREATE — called internally from other services/middleware ─────────────
   /**
    * Log an action to the audit trail.
    * Safe to call without await — errors are caught and logged, never thrown.
@@ -36,12 +35,11 @@ const auditLogService = {
         severity:        opts.severity        || "low",
       });
     } catch (err) {
-      // Audit failures must never break application flow
+      
       logger.error(`[AuditLog] Failed to write audit entry: ${err.message}`);
     }
   },
 
-  // ── QUERY — admin reads the audit trail ───────────────────────────────────
   async getAuditLogs(query = {}) {
     const { page, limit, skip } = getPaginationParams(query);
     const { actorType, targetModule, action, severity, search, fromDate, toDate } = query;
@@ -80,7 +78,6 @@ const auditLogService = {
     return { logs, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ── GET DISTINCT VALUES — for filter dropdowns in admin UI ────────────────
   async getFilterOptions() {
     const [modules, actions] = await Promise.all([
       AuditLog.distinct("targetModule"),

@@ -28,11 +28,9 @@ export default function AdmissionDetailPage() {
   const { data: application, isLoading } = useAdminAdmissionReview(id);
   const statusMutation = useUpdateAdmissionReviewStatus();
 
-  // Dialog controllers
   const [isApproveOpen, setIsApproveOpen] = useState(false);
   const [isRejectOpen, setIsRejectOpen] = useState(false);
 
-  // Form for rejection reasons
   const {
     register,
     handleSubmit,
@@ -55,7 +53,7 @@ export default function AdmissionDetailPage() {
       addToast('Admission application approved', 'success');
       setIsApproveOpen(false);
       router.push('/admin/admissions');
-    } catch (err) {
+    } catch {
       addToast('Failed to approve application.', 'error');
     }
   };
@@ -70,7 +68,7 @@ export default function AdmissionDetailPage() {
       addToast('Admission application rejected', 'warning');
       setIsRejectOpen(false);
       router.push('/admin/admissions');
-    } catch (err) {
+    } catch {
       addToast('Failed to record rejection.', 'error');
     }
   };
@@ -89,7 +87,7 @@ export default function AdmissionDetailPage() {
         </div>
       ) : application ? (
         <div className="space-y-6 animate-in fade-in-50 duration-300">
-          {/* Header block */}
+          {}
           <ProfileHeader
             fullName={application.fullName}
             role="Applicant"
@@ -99,7 +97,7 @@ export default function AdmissionDetailPage() {
             photoUrl={application.photoUrl}
           />
 
-          {/* Action buttons */}
+          {}
           {application.status === 'pending' && (
             <div className="flex gap-3 bg-muted/40 p-4 border rounded-lg">
               <Button onClick={() => setIsApproveOpen(true)} className="font-bold">
@@ -111,7 +109,7 @@ export default function AdmissionDetailPage() {
             </div>
           )}
 
-          {/* Remarks display if reviewed */}
+          {}
           {application.status !== 'pending' && application.remarks && (
             <div className="p-4 bg-muted/40 rounded-lg border text-sm space-y-1">
               <span className="font-bold text-xs uppercase tracking-wide block">
@@ -121,7 +119,7 @@ export default function AdmissionDetailPage() {
             </div>
           )}
 
-          {/* Personal Info Grid */}
+          {}
           <ProfileSection title="Personal Information">
             <ProfileInformation label="Full Name" value={application.fullName} />
             <ProfileInformation label="Date of Birth" value={application.dateOfBirth} />
@@ -131,7 +129,7 @@ export default function AdmissionDetailPage() {
             <ProfileInformation label="Permanent Address" value={application.address} />
           </ProfileSection>
 
-          {/* Academic Info Grid */}
+          {}
           <ProfileSection title="Academic Profile">
             <ProfileInformation label="SSC Roll Index" value={application.sscRoll} />
             <ProfileInformation label="Education Board" value={application.sscBoard} />
@@ -141,7 +139,7 @@ export default function AdmissionDetailPage() {
             <ProfileInformation label="Desired Technology" value={application.departmentCode} />
           </ProfileSection>
 
-          {/* Uploaded Documents preview links */}
+          {}
           <Card className="border shadow-xs">
             <div className="border-b py-4 px-6 bg-card">
               <h4 className="text-sm font-bold text-primary uppercase tracking-wide">
@@ -168,7 +166,7 @@ export default function AdmissionDetailPage() {
             </CardContent>
           </Card>
 
-          {/* Approve Modal */}
+          {}
           <Dialog open={isApproveOpen} onOpenChange={setIsApproveOpen}>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
@@ -188,7 +186,7 @@ export default function AdmissionDetailPage() {
             </DialogContent>
           </Dialog>
 
-          {/* Reject Modal */}
+          {}
           <Dialog open={isRejectOpen} onOpenChange={setIsRejectOpen}>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>

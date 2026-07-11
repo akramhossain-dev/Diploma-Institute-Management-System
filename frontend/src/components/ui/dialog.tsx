@@ -26,12 +26,12 @@ const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) => {
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+      {}
       <div
         className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-200 animate-fade-in"
         onClick={() => onOpenChange(false)}
       />
-      {/* Content wrapper */}
+      {}
       <div className="relative z-10 w-full max-w-lg animate-fade-in-up">
         {children}
       </div>

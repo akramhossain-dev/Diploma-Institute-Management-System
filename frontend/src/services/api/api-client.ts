@@ -6,7 +6,6 @@ import { useStudentAuthStore } from '@/store/auth/studentAuthStore';
 import { useTeacherAuthStore } from '@/store/auth/teacherAuthStore';
 import { useAccountantAuthStore } from '@/store/auth/accountantAuthStore';
 
-// Helper to get access token from Zustand stores
 const getAccessTokenForEntity = (entityType: string): string | null => {
   switch (entityType) {
     case 'admin':
@@ -22,7 +21,6 @@ const getAccessTokenForEntity = (entityType: string): string | null => {
   }
 };
 
-// Helper to update session state in stores
 const updateSessionForEntity = (entityType: string, token: string, profile: any): void => {
   switch (entityType) {
     case 'admin':
@@ -40,7 +38,6 @@ const updateSessionForEntity = (entityType: string, token: string, profile: any)
   }
 };
 
-// Helper to clear session state in stores
 const clearSessionForEntity = (entityType: string): void => {
   switch (entityType) {
     case 'admin':
@@ -58,7 +55,6 @@ const clearSessionForEntity = (entityType: string): void => {
   }
 };
 
-// Helper to get cached profile from Zustand stores
 const getProfileFromStore = (entityType: string): any => {
   switch (entityType) {
     case 'admin':
@@ -74,7 +70,6 @@ const getProfileFromStore = (entityType: string): any => {
   }
 };
 
-// Tracks refreshing status per entity to prevent concurrent duplicate refresh requests
 const refreshRequests: Record<string, Promise<any> | null> = {
   admin: null,
   student: null,
@@ -90,7 +85,6 @@ export const createApiClient = (
     withCredentials: true, // Necessary for HTTP-only refresh token cookies
   });
 
-  // Request interceptor: Inject the scoped entity access token if available
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       if (entityType !== 'public') {
@@ -104,13 +98,11 @@ export const createApiClient = (
     (error) => Promise.reject(normalizeError(error))
   );
 
-  // Response interceptor: Handle 401 Unauthorized errors and perform token refresh flow
   instance.interceptors.response.use(
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
 
-      // Handle 401 Unauthorized errors (exclude public clients and prevent infinite loops)
       if (
         error.response?.status === 401 &&
         !originalRequest?._retry &&
@@ -119,7 +111,7 @@ export const createApiClient = (
         originalRequest._retry = true;
 
         try {
-          // Deduplicate concurrent token refresh calls
+          
           if (!refreshRequests[entityType]) {
             refreshRequests[entityType] = axios.post(
               `${API_CONFIG.baseURL}/auth/${entityType}/refresh`,
@@ -129,21 +121,18 @@ export const createApiClient = (
           }
 
           const refreshResponse = await refreshRequests[entityType];
-          refreshRequests[entityType] = null; // Reset refresh promise
+          refreshRequests[entityType] = null; 
 
           const { accessToken, profile } = refreshResponse.data.data;
           const currentProfile = profile || getProfileFromStore(entityType);
 
-          // Update Zustand store and sessionStorage
           updateSessionForEntity(entityType, accessToken, currentProfile);
 
-          // Update headers on original request and retry
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
           return instance(originalRequest);
         } catch (refreshError) {
-          refreshRequests[entityType] = null; // Reset refresh promise
-          
-          // Clear credentials and force redirect to login
+          refreshRequests[entityType] = null; 
+
           clearSessionForEntity(entityType);
           
           if (typeof window !== 'undefined') {

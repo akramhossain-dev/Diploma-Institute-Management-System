@@ -26,7 +26,6 @@ import { Student, studentFormSchema } from '@/types/admin/student.types';
 export default function StudentsCrudPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
   const { data: students = [], isLoading } = useAdminStudents();
   const { data: departments = [], isLoading: deptsLoading } = useAdminDepartments();
   const { data: semesters = [], isLoading: semsLoading } = useAdminSemesters();
@@ -35,18 +34,15 @@ export default function StudentsCrudPage() {
   const createMutation = useCreateStudent();
   const updateMutation = useUpdateStudent();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
 
-  // Filter states
   const [deptFilter, setDeptFilter] = useState('');
   const [semesterFilter, setSemesterFilter] = useState('');
   const [sessionFilter, setSessionFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -110,7 +106,7 @@ export default function StudentsCrudPage() {
         addToast('Student enrolled successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please try again.', 'error');
     }
   };
@@ -123,12 +119,11 @@ export default function StudentsCrudPage() {
         data: { status: nextStatus },
       });
       addToast(`Student status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch status.', 'error');
     }
   };
 
-  // Filter application rows dynamically
   const filteredStudents = React.useMemo(() => {
     return students.filter((s) => {
       const matchDept = !deptFilter || s.departmentId === deptFilter || s.departmentCode === deptFilter;
@@ -185,7 +180,7 @@ export default function StudentsCrudPage() {
         action={<Button onClick={handleOpenCreate}>Enroll Student</Button>}
       />
 
-      {/* Multi-Select Filters block */}
+      {}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6 bg-muted/30 p-4 border rounded-lg">
         <div className="space-y-1">
           <label className="text-xs font-semibold text-muted-foreground uppercase">Technology</label>
@@ -261,7 +256,7 @@ export default function StudentsCrudPage() {
         searchPlaceholder="Search students by name..."
       />
 
-      {/* Form Dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[520px]">
           <DialogHeader>
@@ -396,7 +391,7 @@ export default function StudentsCrudPage() {
               </div>
             </div>
 
-            {/* Photo uploader */}
+            {}
             <div className="space-y-1 pt-2 border-t">
               <label className="text-xs font-semibold block">Profile Photo Image</label>
               {avatarUrl ? (

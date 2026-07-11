@@ -26,7 +26,6 @@ export const importExportController = {
     const { module: moduleName } = req.params;
     const csvContent = await importExportService.triggerExport(moduleName);
 
-    // Set headers to trigger browser download
     res.setHeader("Content-Type", "text/csv");
     res.setHeader("Content-Disposition", `attachment; filename=export_${moduleName}_${Date.now()}.csv`);
     

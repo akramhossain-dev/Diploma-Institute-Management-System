@@ -2,30 +2,12 @@ import mongoose from "mongoose";
 
 const { ObjectId } = mongoose.Schema.Types;
 
-// ── Slug generator helper ────────────────────────────────────────────────────
 const toSlug = (text) =>
   text.toLowerCase().trim()
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
 
-/**
- * Notice — institute announcement / communication record.
- *
- * Publish status machine:
- *   draft → published → archived
- *   draft → archived  (skipping publish — admin decision)
- *
- * Target audience controls who can see this notice when listed:
- *   - 'all'         → everyone
- *   - 'students'    → students only
- *   - 'teachers'    → teachers only
- *   - 'accountants' → accountants only
- *   - 'admins'      → admins only
- *   - combinations: ['students', 'teachers']
- *
- * Optional departmentIds / semesterIds narrow the audience further.
- */
 const noticeSchema = new mongoose.Schema(
   {
     title: {
@@ -48,7 +30,6 @@ const noticeSchema = new mongoose.Schema(
       type: String, trim: true, default: null,
     },
 
-    // ── Categorization ────────────────────────────────────────────────────
     noticeType: {
       type: String,
       enum: ["general", "academic", "exam", "finance", "urgent", "holiday", "other"],
@@ -60,7 +41,6 @@ const noticeSchema = new mongoose.Schema(
       default: "normal",
     },
 
-    // ── Audience targeting ────────────────────────────────────────────────
     targetAudience: {
       type: [String],
       enum:    ["all", "students", "teachers", "accountants", "admins"],
@@ -74,7 +54,6 @@ const noticeSchema = new mongoose.Schema(
     targetSemesterIds:        [{ type: ObjectId, ref: "Semester"   }],
     targetAcademicSessionIds: [{ type: ObjectId, ref: "AcademicSession" }],
 
-    // ── Publish lifecycle ─────────────────────────────────────────────────
     publishStatus: {
       type: String,
       enum:    ["draft", "published", "archived"],
@@ -83,7 +62,6 @@ const noticeSchema = new mongoose.Schema(
     publishedAt: { type: Date, default: null },
     expiresAt:   { type: Date, default: null },
 
-    // ── Attachment metadata (file uploads handled in Phase 6) ─────────────
     attachments: [
       {
         fileName:    { type: String, trim: true },
@@ -93,7 +71,6 @@ const noticeSchema = new mongoose.Schema(
       },
     ],
 
-    // ── Authorship ────────────────────────────────────────────────────────
     createdByAdminId: {
       type: ObjectId, ref: "Admin",
       required: [true, "Creator admin is required"],
@@ -105,11 +82,10 @@ const noticeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Auto-generate slug from title before save
 noticeSchema.pre("save", function (next) {
   if (this.isNew || this.isModified("title")) {
     const base = toSlug(this.title);
-    // Append short timestamp suffix to ensure uniqueness
+    
     this.slug = `${base}-${Date.now().toString(36)}`;
   }
   next();

@@ -10,11 +10,9 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 
 const resultService = {
 
-  // ── Core generation algorithm ──────────────────────────────────────────────
   async _generateForStudent(exam, mappings, student, adminId) {
     const studentId = student._id;
 
-    // Load all marks for this student under this exam's mappings
     const mappingIds = mappings.map((m) => m._id);
     const markDocs = await Mark.find({
       studentId,
@@ -24,11 +22,10 @@ const resultService = {
     const marksByMapping = {};
     for (const m of markDocs) marksByMapping[String(m.examCourseMappingId)] = m;
 
-    // Build per-course result snapshot
     const courseResults = mappings.map((mapping) => {
       const mark = marksByMapping[String(mapping._id)];
       if (!mark) {
-        // Missing mark treated as 0 (absent/not submitted)
+        
         const { percentage, gradePoint, letterGrade, passFailStatus } =
           computeCourseResult(0, mapping.fullMarks, mapping.passMarks);
         return {
@@ -55,7 +52,6 @@ const resultService = {
 
     const summary = computeExamSummary(courseResults);
 
-    // Upsert result (idempotent)
     const result = await Result.findOneAndUpdate(
       { studentId, examId: exam._id },
       {
@@ -76,7 +72,6 @@ const resultService = {
     return result;
   },
 
-  // ── Single student result generation ─────────────────────────────────────
   async generateForStudent(examId, studentId, adminId) {
     const [exam, student] = await Promise.all([
       Exam.findById(examId).lean(),
@@ -105,7 +100,6 @@ const resultService = {
     return this._generateForStudent(exam, mappings, student, adminId);
   },
 
-  // ── Bulk: all students in exam context ────────────────────────────────────
   async bulkGenerateForExam(examId, adminId) {
     const exam = await Exam.findById(examId).lean();
     if (!exam) throw new ApiError(404, "Exam not found", "NOT_FOUND");
@@ -126,7 +120,6 @@ const resultService = {
     if (!mappings.length) throw new ApiError(400, "No active course mappings for this exam", "NO_MAPPINGS");
     if (!students.length) throw new ApiError(400, "No active students found for this exam context", "NOT_FOUND");
 
-    // Generate results in parallel (batched to avoid overwhelming DB)
     const BATCH_SIZE = 20;
     const results = [];
     for (let i = 0; i < students.length; i += BATCH_SIZE) {
@@ -137,7 +130,6 @@ const resultService = {
       results.push(...batchResults);
     }
 
-    // Assign ranks based on GPA (desc), marks obtained (desc)
     results.sort((a, b) => b.gpa - a.gpa || b.totalMarksObtained - a.totalMarksObtained);
     const rankOps = results.map((r, i) => ({
       updateOne: {

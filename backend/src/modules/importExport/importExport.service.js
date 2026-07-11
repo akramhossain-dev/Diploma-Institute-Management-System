@@ -13,7 +13,6 @@ export const importExportService = {
   async triggerImport(moduleName, file) {
     if (!file) throw new ApiError(400, "No import file provided", "VALIDATION_ERROR");
 
-    // Initialize job record
     const job = await ImportJob.create({
       module: moduleName,
       fileName: file.originalname,
@@ -23,7 +22,7 @@ export const importExportService = {
 
     try {
       const csvData = file.buffer.toString("utf8");
-      // Split by lines, filtering empty ones
+      
       const lines = csvData.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
       
       if (lines.length <= 1) {

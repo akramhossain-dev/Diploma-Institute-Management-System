@@ -8,10 +8,9 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 
 const paymentService = {
 
-  // ──────────────────────────────────────────────────────────────────────────
   // CREATE PAYMENT — atomic via MongoDB transaction
   // Creates payment + updates all targeted fee assignments in one transaction
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async createPayment(data, collectorId, collectorType) {
     const { studentId, paymentItems, totalAmount } = data;
 
@@ -66,7 +65,6 @@ const paymentService = {
       );
       payment = createdPayment;
 
-      // Update each fee assignment
       for (const item of paymentItems) {
         const a           = assignmentMap[String(item.studentFeeAssignmentId)];
         const newPaid      = Math.round((a.amountPaid + item.amountApplied) * 100) / 100;
@@ -130,7 +128,6 @@ const paymentService = {
     return p;
   },
 
-  // ── REVERSE PAYMENT — atomic rollback ─────────────────────────────────────
   async reversePayment(id, reversalReason, adminId) {
     const payment = await Payment.findById(id).lean();
     if (!payment) throw new ApiError(404, "Payment not found", "NOT_FOUND");

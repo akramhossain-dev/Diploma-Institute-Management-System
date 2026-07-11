@@ -39,7 +39,7 @@ const getAuthModel = async (entityType) => {
  * Use GET /me or a profile-loading middleware for the full profile.
  */
 const authenticate = asyncHandler(async (req, res, next) => {
-  // ── 1. Extract token ────────────────────────────────────────────────────
+  
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     throw new ApiError(401, "Access token is required", "UNAUTHORIZED");
@@ -47,7 +47,6 @@ const authenticate = asyncHandler(async (req, res, next) => {
 
   const token = authHeader.split(" ")[1];
 
-  // ── 2. Verify token ─────────────────────────────────────────────────────
   let decoded;
   try {
     decoded = verifyAccessToken(token);
@@ -57,13 +56,11 @@ const authenticate = asyncHandler(async (req, res, next) => {
 
   const { sub: authId, entityType, entityId } = decoded;
 
-  // ── 3. Validate entityType ───────────────────────────────────────────────
   const VALID_ENTITY_TYPES = ["student", "teacher", "accountant", "admin"];
   if (!VALID_ENTITY_TYPES.includes(entityType)) {
     throw new ApiError(401, "Invalid token entity type", "INVALID_TOKEN");
   }
 
-  // ── 4. Load auth record — confirm account is still active ───────────────
   const AuthModel = await getAuthModel(entityType);
   const authRecord = await AuthModel.findById(authId).select("isActive");
 
@@ -75,7 +72,6 @@ const authenticate = asyncHandler(async (req, res, next) => {
     throw new ApiError(403, "Your account has been deactivated", "ACCOUNT_INACTIVE");
   }
 
-  // ── 5. Attach context to request ─────────────────────────────────────────
   req.authId = authId;
   req.entityType = entityType;
   req.entityId = entityId;

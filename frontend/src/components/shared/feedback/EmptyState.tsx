@@ -28,7 +28,7 @@ export function EmptyState({
         className
       )}
     >
-      {/* Icon Container */}
+      {}
       <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#DBEAFE] text-[#1D4ED8]">
         {icon || (
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-7 w-7">

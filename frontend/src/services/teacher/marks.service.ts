@@ -8,12 +8,11 @@ export const teacherMarksService = {
   submitMarks: async (data: MarksSubmissionInput): Promise<void> => {
     try {
       await teacherAxios.post<ApiResponse<null>>('/marks/submit', data);
-    } catch (e) {
+    } catch {
       console.warn('[Teacher Service] POST /marks/submit failed. Simulating persistence.');
-      // Update local marks status to submitted!
+      
       teacherExamService.updateDutyStatus(data.courseId, 'submitted');
 
-      // Propagate mock results into student self-service dashboard!
       studentResultService.injectMockResult({
         examName: 'Mid Term 2026',
         semesterName: '3rd Semester',

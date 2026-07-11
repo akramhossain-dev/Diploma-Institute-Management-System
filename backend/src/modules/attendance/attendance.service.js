@@ -7,10 +7,8 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 
 const attendanceService = {
 
-  // ──────────────────────────────────────────────────────────────────────────
   // CREATE SESSION + BULK MARK ATTENDANCE
-  // Uses bulkWrite for O(1) DB round trips regardless of student count
-  // ──────────────────────────────────────────────────────────────────────────
+
   async createSessionWithAttendance(data, markerId, markerType = "teacher") {
     const {
       courseId, teacherId, departmentId, semesterId, academicSessionId,
@@ -19,7 +17,6 @@ const attendanceService = {
       records = [],
     } = data;
 
-    // 1. Normalize date to midnight UTC to avoid time-zone collisions
     const normalizedDate = new Date(attendanceDate);
     normalizedDate.setUTCHours(0, 0, 0, 0);
 
@@ -77,7 +74,6 @@ const attendanceService = {
       totalStudents:     records.length,
     });
 
-    // 5. Bulk-insert attendance records using bulkWrite (upsert-safe)
     const bulkOps = records.map((record) => ({
       insertOne: {
         document: {
@@ -104,9 +100,8 @@ const attendanceService = {
     return session;
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
   // LIST SESSIONS
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async getAllSessions(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { teacherId, courseId, departmentId, semesterId, academicSessionId, section, sessionStatus, fromDate, toDate } = query;
@@ -139,9 +134,8 @@ const attendanceService = {
     return { sessions, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
   // GET SESSION WITH ALL RECORDS
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async getSessionById(id) {
     const [session, records] = await Promise.all([
       AttendanceSession.findById(id)
@@ -161,9 +155,8 @@ const attendanceService = {
     return { session, records };
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
   // UPDATE RECORDS (correction flow — only allowed on open sessions)
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async updateSessionRecords(sessionId, records, markerId, markerType) {
     const session = await AttendanceSession.findById(sessionId);
     if (!session) throw new ApiError(404, "Attendance session not found", "NOT_FOUND");
@@ -179,7 +172,6 @@ const attendanceService = {
       throw new ApiError(400, "Cancelled sessions cannot be modified", "BUSINESS_RULE_VIOLATION");
     }
 
-    // Update records using bulkWrite for efficiency
     const bulkOps = records.map((r) => ({
       updateOne: {
         filter: { attendanceSessionId: sessionId, studentId: r.studentId },
@@ -196,15 +188,13 @@ const attendanceService = {
 
     await AttendanceRecord.bulkWrite(bulkOps, { ordered: false });
 
-    // Refresh counters
     await this._refreshSessionCounters(sessionId);
 
     return AttendanceSession.findById(sessionId).lean();
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
   // FINALIZE SESSION — lock it permanently
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async finalizeSession(sessionId, markerId, markerType) {
     const session = await AttendanceSession.findById(sessionId);
     if (!session) throw new ApiError(404, "Attendance session not found", "NOT_FOUND");
@@ -224,9 +214,6 @@ const attendanceService = {
     return session;
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // GET STUDENT'S ATTENDANCE RECORDS
-  // ──────────────────────────────────────────────────────────────────────────
   async getStudentAttendance(studentId, query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { courseId, academicSessionId, fromDate, toDate, status } = query;
@@ -253,10 +240,6 @@ const attendanceService = {
     return { records, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // ATTENDANCE SUMMARY PER STUDENT — percentage per course
-  // Supports future exam eligibility checks
-  // ──────────────────────────────────────────────────────────────────────────
   async getStudentAttendanceSummary(studentId, query) {
     const { academicSessionId } = query;
 
@@ -287,11 +270,11 @@ const attendanceService = {
                   100,
                 ],
               },
-              1,   // 1 decimal place
+              1,   
             ],
           },
           isEligible: {
-            // Eligible if attendance % >= 75% (configurable in Phase 5 institute settings)
+            
             $gte: [
               { $divide: [{ $add: ["$presentCount", "$lateCount"] }, "$totalClasses"] },
               0.75,
@@ -315,9 +298,8 @@ const attendanceService = {
     return summary;
   },
 
-  // ──────────────────────────────────────────────────────────────────────────
   // INTERNAL: Refresh aggregate counters on AttendanceSession
-  // ──────────────────────────────────────────────────────────────────────────
+  
   async _refreshSessionCounters(sessionId) {
     const counts = await AttendanceRecord.aggregate([
       { $match: { attendanceSessionId: new mongoose.Types.ObjectId(sessionId) } },
@@ -341,7 +323,6 @@ const attendanceService = {
     }
   },
 
-  // ── ADMIN ATTENDANCE SUMMARY ── GET /api/attendance/summary ──────────────
   async getAdminAttendanceSummary(query = {}) {
     const { academicSessionId, fromDate, toDate } = query;
     const matchFilter = {};
@@ -427,7 +408,6 @@ const attendanceService = {
     };
   },
 
-  // ── ADMIN ATTENDANCE REPORTS ── GET /api/attendance/reports ──────────────
   async getAdminAttendanceReports(query = {}) {
     const { page, limit, skip } = getPaginationParams(query);
     const { departmentId, semesterId, academicSessionId, sessionStatus, fromDate, toDate, courseId } = query;

@@ -20,13 +20,11 @@ export default function AccountantFeesPage() {
   const { data: semesters = [] } = useAdminSemesters();
   const { data: sessions = [] } = useAdminSessions();
 
-  // Filters state
   const [selectedDept, setSelectedDept] = useState('');
   const [selectedSem, setSelectedSem] = useState('');
   const [selectedSession, setSelectedSession] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
 
-  // Filtering logic
   const filteredBilling = useMemo(() => {
     return billingData.filter((item) => {
       const matchDept = !selectedDept || item.departmentName === selectedDept;
@@ -37,7 +35,6 @@ export default function AccountantFeesPage() {
     });
   }, [billingData, selectedDept, selectedSem, selectedSession, selectedStatus]);
 
-  // Aggregate stats
   const stats = useMemo(() => {
     let assigned = 0;
     let paid = 0;
@@ -91,7 +88,7 @@ export default function AccountantFeesPage() {
         description="Verify overall student billing, filter by semester level, department categories, and review payments histories."
       />
 
-      {/* Aggregate Cards */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-in fade-in-50 duration-300">
         <Card className="border shadow-xs">
           <CardHeader className="pb-2">
@@ -119,7 +116,7 @@ export default function AccountantFeesPage() {
         </Card>
       </div>
 
-      {/* Filter Bar */}
+      {}
       <div className="flex flex-wrap gap-4 items-center justify-between border rounded-lg p-4 mb-6 bg-card">
         <div className="flex flex-wrap gap-4 items-center">
           <div className="space-y-1">

@@ -37,7 +37,7 @@ function AdmissionStatusContent() {
 
   return (
     <div className="max-w-xl mx-auto space-y-6">
-      {/* Tracker Search Form */}
+      {}
       <Card className="border shadow-xs">
         <CardContent className="pt-6">
           <form onSubmit={handleSearch} className="space-y-4">
@@ -59,7 +59,7 @@ function AdmissionStatusContent() {
         </CardContent>
       </Card>
 
-      {/* Results Screen */}
+      {}
       {isLoading && (
         <div className="text-center py-12 flex flex-col items-center justify-center gap-3">
           <svg className="animate-spin h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24">
@@ -103,7 +103,7 @@ function AdmissionStatusContent() {
             </Badge>
           </CardHeader>
           <CardContent className="pt-6 space-y-6">
-            {/* Profile Overview */}
+            {}
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="block text-xs font-semibold text-muted-foreground">Applicant Name</span>
@@ -123,7 +123,7 @@ function AdmissionStatusContent() {
               </div>
             </div>
 
-            {/* Committee Remarks */}
+            {}
             {record.remarks && (
               <div className="p-4 bg-muted/40 rounded-lg border text-sm space-y-1">
                 <span className="font-bold text-xs text-foreground uppercase tracking-wide block">

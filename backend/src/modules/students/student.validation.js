@@ -1,6 +1,5 @@
 import { body } from "express-validator";
 
-// ── Shared address sub-validator ──────────────────────────────────────────
 const addressValidation = (prefix) => [
   body(`${prefix}.village`).optional({ checkFalsy: true }).trim(),
   body(`${prefix}.district`).optional({ checkFalsy: true }).trim(),

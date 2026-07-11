@@ -1,6 +1,5 @@
 import { body } from "express-validator";
 
-// HH:MM 24-hour format validator
 const isHHMM = (val) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(val);
 
 export const createRoutineValidation = [

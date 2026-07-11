@@ -71,7 +71,7 @@ export default function AdminAuditLogsPage() {
         searchPlaceholder="Search logs by actor name, identifier, target..."
         filterContent={
           <div className="flex flex-wrap items-center gap-3">
-            {/* Actor Type Select */}
+            {}
             <div className="flex flex-col gap-1">
               <span className="text-[10px] text-muted-foreground font-bold uppercase select-none">Actor Role</span>
               <select
@@ -87,7 +87,7 @@ export default function AdminAuditLogsPage() {
               </select>
             </div>
 
-            {/* Module Select */}
+            {}
             <div className="flex flex-col gap-1">
               <span className="text-[10px] text-muted-foreground font-bold uppercase select-none">Target Module</span>
               <select
@@ -103,7 +103,7 @@ export default function AdminAuditLogsPage() {
               </select>
             </div>
 
-            {/* Action Select */}
+            {}
             <div className="flex flex-col gap-1">
               <span className="text-[10px] text-muted-foreground font-bold uppercase select-none">Action Logged</span>
               <select
@@ -188,7 +188,7 @@ export default function AdminAuditLogsPage() {
         </Card>
       )}
 
-      {/* Details Inspect Modal */}
+      {}
       {selectedLog && (
         <Dialog open={!!selectedLog} onOpenChange={() => setSelectedLog(null)}>
           <DialogContent onClose={() => setSelectedLog(null)} className="max-w-2xl rounded-xl">

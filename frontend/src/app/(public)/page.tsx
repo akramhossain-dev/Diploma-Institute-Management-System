@@ -20,16 +20,16 @@ export default function HomePage() {
   return (
     <div className="flex flex-col">
 
-      {/* ── AURORA HERO ─────────────────────────────────────────────────── */}
+      {}
       <section className="aurora-hero py-24 sm:py-32 border-b border-border/60">
         <PublicContainer className="flex flex-col items-center text-center gap-8">
-          {/* Eyebrow badge */}
+          {}
           <Badge variant="soft-primary" className="px-4 py-1.5 text-[12px] font-semibold rounded-full shadow-sm animate-fade-in flex items-center gap-1.5">
             <LucideIcon name="GraduationCap" size={14} />
             Now Accepting Applications — Session 2025–26
           </Badge>
 
-          {/* Hero title */}
+          {}
           <h1 className="text-4xl sm:text-5xl lg:text-[62px] font-extrabold tracking-tight text-[#0F172A] max-w-4xl leading-[1.1] animate-fade-in-up stagger-1">
             Welcome to{' '}
             <span className="bg-gradient-to-r from-[#1D4ED8] via-[#6366F1] to-[#06B6D4] bg-clip-text text-transparent">
@@ -41,7 +41,7 @@ export default function HomePage() {
             {MRIST.about.intro}
           </p>
 
-          {/* CTA buttons */}
+          {}
           <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up stagger-3">
             <Link href="/admission">
               <Button size="lg" className="px-8 font-bold shadow-[0_4px_14px_rgba(29,78,216,0.3)] hover:shadow-[0_6px_20px_rgba(29,78,216,0.4)]">
@@ -56,7 +56,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Hero stat cards — subtle glass treatment */}
+          {}
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl animate-fade-in-up stagger-4">
             {[
               { label: 'Students Enrolled', value: MRIST.atAGlance.totalStudents, icon: 'Users', color: 'text-[#1D4ED8]', bg: 'bg-[#DBEAFE]' },
@@ -77,7 +77,7 @@ export default function HomePage() {
         </PublicContainer>
       </section>
 
-      {/* ── PROGRAMS ────────────────────────────────────────────────────── */}
+      {}
       <PublicSection bg="default">
         <PublicContainer>
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -128,7 +128,7 @@ export default function HomePage() {
         </PublicContainer>
       </PublicSection>
 
-      {/* ── LATEST NOTICES ──────────────────────────────────────────────── */}
+      {}
       <PublicSection bg="muted">
         <PublicContainer>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
@@ -194,7 +194,7 @@ export default function HomePage() {
         </PublicContainer>
       </PublicSection>
 
-      {/* ── WHY DIMS / FEATURES ─────────────────────────────────────────── */}
+      {}
       <PublicSection bg="default">
         <PublicContainer>
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -221,7 +221,7 @@ export default function HomePage() {
         </PublicContainer>
       </PublicSection>
 
-      {/* ── ADMISSION CTA ────────────────────────────────────────────────── */}
+      {}
       <section className="aurora-section py-20 border-y border-border">
         <PublicContainer className="flex flex-col items-center text-center gap-6">
           <Badge variant="soft-primary">Open Enrollment</Badge>
@@ -247,7 +247,7 @@ export default function HomePage() {
         </PublicContainer>
       </section>
 
-      {/* ── CONTACT HIGHLIGHT ────────────────────────────────────────────── */}
+      {}
       <PublicSection bg="default">
         <PublicContainer>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">

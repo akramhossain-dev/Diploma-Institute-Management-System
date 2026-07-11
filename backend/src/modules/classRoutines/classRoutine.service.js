@@ -8,17 +8,12 @@ import AcademicSession from "../academicSessions/academicSession.model.js";
 import ApiError from "../../utils/ApiError.js";
 import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination.js";
 
-/**
- * Detect time overlap between two HH:MM slots.
- * Two slots overlap when slot1.start < slot2.end AND slot1.end > slot2.start
- * String lexicographic comparison works for HH:MM 24-hour format.
- */
 const buildOverlapFilter = (dayOfWeek, startTime, endTime, excludeId = null) => {
   const filter = {
     dayOfWeek,
     routineStatus: "active",
-    startTime: { $lt: endTime },   // existing slot starts before new slot ends
-    endTime:   { $gt: startTime }, // existing slot ends after new slot starts
+    startTime: { $lt: endTime },   
+    endTime:   { $gt: startTime }, 
   };
   if (excludeId) filter._id = { $ne: excludeId };
   return filter;
@@ -65,19 +60,16 @@ const classRoutineService = {
       }
     }
 
-    // 3. Time conflict detection — run 3 checks in parallel
     const baseConflict = buildOverlapFilter(dayOfWeek, startTime, endTime);
 
     const [teacherConflict, roomConflict, sectionConflict] = await Promise.all([
-      // Same teacher, same day, overlapping time
+      
       ClassRoutine.findOne({ ...baseConflict, teacherId }),
 
-      // Same room, same day, overlapping time (only if room provided)
       room
         ? ClassRoutine.findOne({ ...baseConflict, room })
         : Promise.resolve(null),
 
-      // Same dept+sem+section, same day, overlapping time (student timetable conflict)
       section
         ? ClassRoutine.findOne({ ...baseConflict, departmentId, semesterId, section })
         : Promise.resolve(null),
@@ -123,7 +115,6 @@ const classRoutineService = {
     if (routineStatus)     filter.routineStatus     = routineStatus;
     if (section)           filter.section           = section;
 
-    // Default: active only
     if (!routineStatus) filter.routineStatus = "active";
 
     const [routines, total] = await Promise.all([
@@ -164,7 +155,6 @@ const classRoutineService = {
       throw new ApiError(400, "Cancelled routines cannot be edited", "BUSINESS_RULE_VIOLATION");
     }
 
-    // Re-check time conflicts if time/day fields are changing
     const dayOfWeek = data.dayOfWeek  || existing.dayOfWeek;
     const startTime = data.startTime  || existing.startTime;
     const endTime   = data.endTime    || existing.endTime;
@@ -173,7 +163,6 @@ const classRoutineService = {
     const teacherId = data.teacherId || existing.teacherId;
     const departmentId = data.departmentId || existing.departmentId;
     const semesterId   = data.semesterId || existing.semesterId;
-
 
     if (endTime <= startTime) {
       throw new ApiError(400, "endTime must be after startTime", "VALIDATION_ERROR");

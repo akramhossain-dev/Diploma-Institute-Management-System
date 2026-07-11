@@ -5,7 +5,7 @@ export function useNotices(params?: { page?: number; limit?: number; search?: st
   return useQuery({
     queryKey: ['public', 'notices', params || {}],
     queryFn: () => noticeService.getNotices(params),
-    staleTime: 1000 * 60 * 3, // 3 minutes cache
+    staleTime: 1000 * 60 * 3, 
   });
 }
 export default useNotices;

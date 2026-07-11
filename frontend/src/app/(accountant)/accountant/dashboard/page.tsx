@@ -53,7 +53,7 @@ export default function AccountantDashboardPage() {
         }
       />
 
-      {/* Summary metrics Cards */}
+      {}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8 animate-in fade-in-50 duration-300">
         <MetricCard
           title="Daily Counters collected"
@@ -121,7 +121,7 @@ export default function AccountantDashboardPage() {
           </Card>
         </div>
 
-        {/* Notices Board Widget */}
+        {}
         <div className="lg:col-span-1">
           <Card className="border shadow-md">
             <CardHeader className="bg-muted/10 border-b pb-4">

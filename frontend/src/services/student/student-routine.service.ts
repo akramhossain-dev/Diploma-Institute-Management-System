@@ -38,7 +38,7 @@ export const studentRoutineService = {
     try {
       const response = await studentAxios.get<ApiResponse<RoutineSlot[]>>('/routine/my');
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Student Service] GET /routine/my failed. Resolving active mock routine.');
       return [...mockStudentRoutineSlots];
     }

@@ -31,11 +31,9 @@ export default function AdminFilesPage() {
     deleteFile,
   } = useFiles({ search, type: typeFilter });
 
-  // Dialog states
   const [selectedFile, setSelectedFile] = React.useState<UploadedFile | null>(null);
   const [fileToDelete, setFileToDelete] = React.useState<UploadedFile | null>(null);
-  
-  // Drag and drop states
+
   const [dragActive, setDragActive] = React.useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -57,7 +55,6 @@ export default function AdminFilesPage() {
     );
   }
 
-  // Format file size
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -66,7 +63,6 @@ export default function AdminFilesPage() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
-  // Get file type icon
   const getFileIconName = (mime: string) => {
     if (mime.includes('pdf')) return 'FileText';
     if (mime.includes('image')) return 'Image';
@@ -75,7 +71,6 @@ export default function AdminFilesPage() {
     return 'FileQuestion';
   };
 
-  // Handle file drops
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -111,7 +106,7 @@ export default function AdminFilesPage() {
         description="Inspect, review, download, or remove static attachments, notices archives, student reports, and exam schedules."
       />
 
-      {/* Drag & Drop Upload Zone */}
+      {}
       <Card className="border-2 border-dashed rounded-xl mb-6 shadow-xs overflow-hidden transition-all bg-card/40 backdrop-blur-md">
         <CardContent className="p-6">
           <form
@@ -248,7 +243,7 @@ export default function AdminFilesPage() {
         </Card>
       )}
 
-      {/* File Preview Dialog */}
+      {}
       {selectedFile && (
         <Dialog open={!!selectedFile} onOpenChange={() => setSelectedFile(null)}>
           <DialogContent onClose={() => setSelectedFile(null)} className="max-w-lg rounded-xl">
@@ -311,7 +306,7 @@ export default function AdminFilesPage() {
         </Dialog>
       )}
 
-      {/* File Deletion Confirmation */}
+      {}
       {fileToDelete && (
         <ConfirmDialog
           open={!!fileToDelete}

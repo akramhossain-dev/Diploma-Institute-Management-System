@@ -15,26 +15,21 @@ import { Input } from '@/components/ui/input';
 export default function TeacherAttendancePage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
-  const { data: courses = [], isLoading: isCoursesLoading } = useAssignedCourses();
+  const { data: courses = [] } = useAssignedCourses();
   const markMutation = useMarkAttendance();
 
-  // Selected filters state
   const [courseId, setCourseId] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
-  // Load students for selected course
   const { data: students = [], isLoading: isStudentsLoading } = useCourseStudents(courseId);
 
-  // Map to hold student attendance state: { [studentId]: 'present' | 'absent' }
   const [attendanceMap, setAttendanceMap] = useState<Record<string, 'present' | 'absent'>>({});
 
-  // Trigger mapping initialization when students list changes
   React.useEffect(() => {
     if (students.length > 0) {
       const initialMap: Record<string, 'present' | 'absent'> = {};
       students.forEach((s) => {
-        initialMap[s._id] = 'present'; // Default to present
+        initialMap[s._id] = 'present'; 
       });
       setAttendanceMap(initialMap);
     } else {
@@ -74,7 +69,7 @@ export default function TeacherAttendancePage() {
         records,
       });
       addToast('Attendance sheet submitted successfully', 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to record attendance sheet.', 'error');
     }
   };
@@ -87,7 +82,7 @@ export default function TeacherAttendancePage() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left Side Selection Parameter controls */}
+        {}
         <div className="md:col-span-1 space-y-4">
           <Card className="border shadow-xs bg-card">
             <CardContent className="pt-6 space-y-4">
@@ -126,7 +121,7 @@ export default function TeacherAttendancePage() {
           </Card>
         </div>
 
-        {/* Right Side Students Roster List table */}
+        {}
         <div className="md:col-span-2">
           <Card className="border shadow-xs bg-card">
             <CardContent className="pt-6">

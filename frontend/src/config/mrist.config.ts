@@ -1,16 +1,7 @@
-/**
- * mrist.config.ts
- *
- * Central MRIST public content configuration.
- * All public pages and components should consume from here.
- * This is the single source of truth for institute identity.
- *
- * Based on: Dr. Mahbubur Rahman Mollah Institute of Science and Technology
- * Official site: https://mrist.edu.bd
- */
+
 
 export const MRIST = {
-  // ── Identity ──────────────────────────────────────────────────────────────
+  
   fullName: 'Dr. Mahbubur Rahman Mollah Institute of Science and Technology',
   shortName: 'MRIST',
   tagline: 'আমরা আগামীর — Building Tomorrow\'s Engineers',
@@ -23,7 +14,6 @@ export const MRIST = {
   ministry: 'Ministry of Education, Government of Bangladesh',
   emisCode: 'MRIST-2021-DHA',
 
-  // ── Contact ───────────────────────────────────────────────────────────────
   contact: {
     address: '64 No. Ward, Matuail, Demra Road, Jatrabari, Dhaka-1362, Bangladesh',
     addressShort: 'Matuail, Jatrabari, Dhaka-1362',
@@ -35,13 +25,11 @@ export const MRIST = {
     mapEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.9025305834!2d90.44601931498187!3d23.711419684588!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b39d9f0001%3A0x89cd5e54e54e5e54!2sJatrabari%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd',
   },
 
-  // ── Social Links ──────────────────────────────────────────────────────────
   social: {
     facebook: 'https://facebook.com/mrist.edu.bd',
     youtube: 'https://youtube.com/@mrist',
   },
 
-  // ── About / History ───────────────────────────────────────────────────────
   about: {
     intro:
       'MRIST is one of the best polytechnic institutes in Dhaka, Bangladesh. MRIST is a very well-known institute for developing skilled engineers in different sectors and also for professional and leadership development training programs.',
@@ -60,7 +48,6 @@ export const MRIST = {
     ],
   },
 
-  // ── At a Glance Stats ─────────────────────────────────────────────────────
   atAGlance: {
     established: '2021',
     affiliation: 'BTEB',
@@ -79,7 +66,6 @@ export const MRIST = {
     totalFaculty: '40+',
   },
 
-  // ── Departments / Technologies ────────────────────────────────────────────
   departments: [
     {
       code: 'CST',
@@ -138,7 +124,6 @@ export const MRIST = {
     },
   ],
 
-  // ── Facilities ───────────────────────────────────────────────────────────
   facilities: [
     { icon: 'Bus', label: 'Institute Bus', desc: 'Daily transport for students and faculty.' },
     { icon: 'FlaskConical', label: 'Enriched Labs', desc: 'Well-equipped engineering labs across all departments.' },
@@ -148,7 +133,6 @@ export const MRIST = {
     { icon: 'GraduationCap', label: 'Positive Learning', desc: 'Experienced faculty committed to student excellence.' },
   ],
 
-  // ── Why Choose MRIST ─────────────────────────────────────────────────────
   whyChoose: [
     {
       title: 'Quality Education',
@@ -176,7 +160,6 @@ export const MRIST = {
     },
   ],
 
-  // ── Admission Info ────────────────────────────────────────────────────────
   admission: {
     intro:
       'MRIST welcomes applications from students who have completed SSC or equivalent examination. Admission is merit-based and subject to Bangladesh Technical Education Board (BTEB) guidelines.',

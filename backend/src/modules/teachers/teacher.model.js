@@ -21,15 +21,11 @@ const emergencyContactSchema = new mongoose.Schema(
   { _id: false }
 );
 
-/**
- * Teacher — entity profile collection.
- * Auth credentials live in teacher_auth (Phase 2).
- */
 const teacherSchema = new mongoose.Schema(
   {
-    // ── Identity ──────────────────────────────────────────────────────────
+    
     employeeId: {
-      type: String, trim: true,    // e.g. TCH-2024-001
+      type: String, trim: true,    
     },
     fullName: {
       type: String, required: [true, "Full name is required"], trim: true,
@@ -47,24 +43,20 @@ const teacherSchema = new mongoose.Schema(
       default: null,
     },
 
-    // ── Professional ──────────────────────────────────────────────────────
     departmentId: {
       type: ObjectId, ref: "Department", required: [true, "Department is required"],
     },
-    designation:    { type: String, trim: true },           // Lecturer, Sr. Lecturer, HOD
-    qualification:  { type: String, trim: true },           // B.Sc, M.Sc, PhD
+    designation:    { type: String, trim: true },           
+    qualification:  { type: String, trim: true },           
     specialization: { type: String, trim: true, default: null },
     joiningDate:    { type: Date, default: null },
 
-    // Future-ready: courses assigned to this teacher
     assignedCourses: [{ type: ObjectId, ref: "Course" }],
 
-    // ── Address / Contact ─────────────────────────────────────────────────
     presentAddress:   { type: addressSchema, default: null },
     permanentAddress: { type: addressSchema, default: null },
     emergencyContact: { type: emergencyContactSchema, default: null },
 
-    // ── System ────────────────────────────────────────────────────────────
     linkedAuthId: {
       type: ObjectId, ref: "TeacherAuth", default: null,
     },

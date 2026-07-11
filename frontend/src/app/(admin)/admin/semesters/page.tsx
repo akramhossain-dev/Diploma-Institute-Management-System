@@ -23,18 +23,15 @@ import { Semester, semesterFormSchema } from '@/types/admin/semester.types';
 export default function SemestersCrudPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
-  const { data: semesters = [], isLoading, isError } = useAdminSemesters();
+  const { data: semesters = [], isLoading } = useAdminSemesters();
   const createMutation = useCreateSemester();
   const updateMutation = useUpdateSemester();
   const deleteMutation = useDeleteSemester();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedSem, setSelectedSem] = useState<Semester | null>(null);
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -81,7 +78,7 @@ export default function SemestersCrudPage() {
         addToast('Semester created successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please try again.', 'error');
     }
   };
@@ -92,7 +89,7 @@ export default function SemestersCrudPage() {
       await deleteMutation.mutateAsync(selectedSem._id);
       addToast('Semester deleted successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed. Please try again.', 'error');
     }
   };
@@ -105,12 +102,11 @@ export default function SemestersCrudPage() {
         data: { status: nextStatus },
       });
       addToast(`Semester status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch status.', 'error');
     }
   };
 
-  // Columns definition
   const columns = [
     { key: 'name', label: 'Semester Name' },
     { key: 'number', label: 'Semester Index' },
@@ -164,7 +160,7 @@ export default function SemestersCrudPage() {
         searchPlaceholder="Search semesters by name..."
       />
 
-      {/* CRUD dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -211,7 +207,7 @@ export default function SemestersCrudPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Confirmation Modal */}
+      {}
       <ConfirmDialog
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}

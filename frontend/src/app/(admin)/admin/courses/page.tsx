@@ -24,20 +24,17 @@ import { Course, courseFormSchema } from '@/types/admin/course.types';
 export default function CoursesCrudPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
-  const { data: courses = [], isLoading, isError } = useAdminCourses();
+  const { data: courses = [], isLoading } = useAdminCourses();
   const { data: departments = [], isLoading: deptsLoading } = useAdminDepartments();
   
   const createMutation = useCreateCourse();
   const updateMutation = useUpdateCourse();
   const deleteMutation = useDeleteCourse();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -90,7 +87,7 @@ export default function CoursesCrudPage() {
         addToast('Course registered successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please try again.', 'error');
     }
   };
@@ -101,7 +98,7 @@ export default function CoursesCrudPage() {
       await deleteMutation.mutateAsync(selectedCourse._id);
       addToast('Course removed successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed. Please try again.', 'error');
     }
   };
@@ -114,12 +111,11 @@ export default function CoursesCrudPage() {
         data: { status: nextStatus },
       });
       addToast(`Course status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch course status.', 'error');
     }
   };
 
-  // Columns definition
   const columns = [
     { key: 'code', label: 'Course Code' },
     { key: 'name', label: 'Course Name' },
@@ -175,7 +171,7 @@ export default function CoursesCrudPage() {
         searchPlaceholder="Search courses by name..."
       />
 
-      {/* CRUD dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -259,7 +255,7 @@ export default function CoursesCrudPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Confirmation Modal */}
+      {}
       <ConfirmDialog
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}

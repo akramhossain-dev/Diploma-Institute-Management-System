@@ -11,11 +11,11 @@ const parseEnv = () => {
 
   if (!result.success) {
     console.error('[DIMS Config Error] Invalid environment variables:', result.error.format());
-    // In production we don't want to crash the server instantly, but in dev or during build it's useful.
+    
     if (process.env.NODE_ENV === 'development') {
       throw new Error(`Invalid environment variables: ${JSON.stringify(result.error.format())}`);
     }
-    // Fallback/defaults in case they are missing in production but needed for boot
+    
     return {
       NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
     };

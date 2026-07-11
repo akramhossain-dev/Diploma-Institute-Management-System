@@ -15,13 +15,11 @@ import { PaymentStatusBadge } from '@/components/shared/finance/PaymentStatusBad
 import { LucideIcon } from '@/components/shared/navigation/LucideIcon';
 
 export default function AccountantLedgerPage() {
-  const { data: studentsOverview = [], isLoading: isOverviewLoading } = useAccountantFees();
+  const { data: studentsOverview = [] } = useAccountantFees();
 
-  // Selection states
   const [selectedStudent, setSelectedStudent] = useState<StudentBillingOverview | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Date filters
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -30,7 +28,6 @@ export default function AccountantLedgerPage() {
     selectedStudent?.studentId || ''
   );
 
-  // Filter students matching search query
   const filteredStudents = useMemo(() => {
     if (!searchQuery.trim()) return [];
     return studentsOverview.filter(
@@ -43,7 +40,7 @@ export default function AccountantLedgerPage() {
 
   const handleSelectStudent = (student: StudentBillingOverview) => {
     setSelectedStudent(student);
-    setSearchQuery(''); // clear search input
+    setSearchQuery(''); 
   };
 
   // Filter ledger entries by date range
@@ -64,7 +61,7 @@ export default function AccountantLedgerPage() {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Left Search Sidebar panel */}
+        {}
         <div className="space-y-6 lg:col-span-1">
           <Card className="border shadow-xs">
             <CardHeader>
@@ -83,7 +80,7 @@ export default function AccountantLedgerPage() {
                 </div>
               </div>
 
-              {/* Suggestions */}
+              {}
               {searchQuery && (
                 <div className="border rounded-md divide-y max-h-60 overflow-y-auto bg-card shadow-lg">
                   {filteredStudents.length > 0 ? (
@@ -107,7 +104,7 @@ export default function AccountantLedgerPage() {
                 </div>
               )}
 
-              {/* Active selection info */}
+              {}
               {selectedStudent ? (
                 <div className="pt-4 border-t space-y-3 animate-in fade-in-50 duration-200">
                   <div>

@@ -37,7 +37,7 @@ const feeStructureService = {
     if (semesterId)        filter.semesterId        = semesterId;
     if (academicSessionId) filter.academicSessionId = academicSessionId;
     if (status)            filter.status            = status;
-    else                   filter.status            = { $ne: "archived" };  // default: exclude archived
+    else                   filter.status            = { $ne: "archived" };  
     if (search)            filter.title             = { $regex: search, $options: "i" };
 
     const [feeStructures, total] = await Promise.all([

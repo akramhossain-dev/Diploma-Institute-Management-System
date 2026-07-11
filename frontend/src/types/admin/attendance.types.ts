@@ -3,7 +3,7 @@ import { z } from 'zod';
 export interface StudentAttendanceStatus {
   studentId: string;
   studentName: string;
-  studentCode: string; // e.g. Roll
+  studentCode: string; 
   status: 'present' | 'absent';
 }
 

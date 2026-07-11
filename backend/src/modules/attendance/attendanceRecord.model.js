@@ -17,22 +17,20 @@ const { ObjectId } = mongoose.Schema.Types;
  */
 const attendanceRecordSchema = new mongoose.Schema(
   {
-    // ── Session anchor ────────────────────────────────────────────────────
+    
     attendanceSessionId: {
       type:     ObjectId,
       ref:      "AttendanceSession",
       required: [true, "Attendance session is required"],
     },
 
-    // ── Denormalized for fast queries (avoids joins for reports) ──────────
     studentId:         { type: ObjectId, ref: "Student",         required: [true, "Student is required"] },
     courseId:          { type: ObjectId, ref: "Course",          required: [true] },
     departmentId:      { type: ObjectId, ref: "Department",      required: [true] },
     semesterId:        { type: ObjectId, ref: "Semester",        required: [true] },
     academicSessionId: { type: ObjectId, ref: "AcademicSession", required: [true] },
-    attendanceDate:    { type: Date,                             required: [true] },  // denormalized
+    attendanceDate:    { type: Date,                             required: [true] },  
 
-    // ── Attendance status ─────────────────────────────────────────────────
     status: {
       type:    String,
       enum:    ["present", "absent", "late", "excused"],
@@ -49,7 +47,6 @@ attendanceRecordSchema.index(
   { unique: true, name: "unique_student_session_record" }
 );
 
-// Core reporting indexes
 attendanceRecordSchema.index({ studentId: 1, courseId: 1, academicSessionId: 1 });
 attendanceRecordSchema.index({ studentId: 1, attendanceDate: 1 });
 attendanceRecordSchema.index({ attendanceSessionId: 1 });

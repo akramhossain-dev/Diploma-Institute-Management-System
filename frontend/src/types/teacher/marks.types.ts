@@ -3,7 +3,7 @@ import { z } from 'zod';
 export interface StudentMarksRecord {
   studentId: string;
   studentName: string;
-  studentCode: string; // e.g. Roll
+  studentCode: string; 
   obtainedMarks?: number;
   isAbsent?: boolean;
 }

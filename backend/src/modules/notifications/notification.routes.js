@@ -12,7 +12,6 @@ const validateId = [
   handleValidationErrors,
 ];
 
-// GET /api/notifications — admin only, lists all system notifications
 router.get(
   "/",
   authenticate,
@@ -20,7 +19,6 @@ router.get(
   notificationController.getNotifications
 );
 
-// GET /api/notifications/unread-count
 router.get(
   "/unread-count",
   authenticate,
@@ -28,7 +26,6 @@ router.get(
   notificationController.getUnreadCount
 );
 
-// POST /api/notifications — admin creates a notification
 router.post(
   "/",
   authenticate,
@@ -43,7 +40,6 @@ router.post(
   notificationController.createNotification
 );
 
-// PATCH /api/notifications/:id/read — mark single notification as read
 router.patch(
   "/:id/read",
   authenticate,
@@ -52,7 +48,6 @@ router.patch(
   notificationController.markAsRead
 );
 
-// POST /api/notifications/read-all — mark all as read (admin)
 router.post(
   "/read-all",
   authenticate,
@@ -60,7 +55,6 @@ router.post(
   notificationController.markAllAsRead
 );
 
-// DELETE /api/notifications/:id
 router.delete(
   "/:id",
   authenticate,

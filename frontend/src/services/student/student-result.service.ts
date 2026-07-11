@@ -37,7 +37,7 @@ export const studentResultService = {
     try {
       const response = await studentAxios.get<ApiResponse<StudentExamResultSummary[]>>('/results/my');
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Student Service] GET /results/my failed. Loading current resolved results.');
       return [...mockResults];
     }

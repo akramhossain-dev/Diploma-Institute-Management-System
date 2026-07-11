@@ -34,7 +34,6 @@ router.get(
   classRoutineController.getById
 );
 
-// Mutations — admin only
 router.post(
   "/",
   authenticate, authorizeEntity("admin"),

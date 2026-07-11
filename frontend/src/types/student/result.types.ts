@@ -3,8 +3,8 @@ export interface StudentSubjectResult {
   courseName: string;
   credits: number;
   obtainedMarks: number;
-  gradePoint: number; // e.g. 4.0
-  letterGrade: string; // e.g. "A+"
+  gradePoint: number; 
+  letterGrade: string; 
   status: 'pass' | 'fail';
 }
 

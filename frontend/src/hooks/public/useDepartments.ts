@@ -5,7 +5,7 @@ export function useDepartments() {
   return useQuery({
     queryKey: ['public', 'departments'],
     queryFn: () => departmentService.getDepartments(),
-    staleTime: 1000 * 60 * 10, // 10 minutes cache
+    staleTime: 1000 * 60 * 10, 
   });
 }
 export default useDepartments;

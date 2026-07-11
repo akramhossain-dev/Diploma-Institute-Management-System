@@ -33,7 +33,7 @@ export default function ExamsAdminPage() {
       await deleteMutation.mutateAsync(selectedExam._id);
       addToast('Exam deleted successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed.', 'error');
     }
   };
@@ -46,7 +46,7 @@ export default function ExamsAdminPage() {
         data: { status: nextStatus },
       });
       addToast(`Exam status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch status.', 'error');
     }
   };

@@ -12,8 +12,7 @@ export interface DepartmentInfo {
   status: 'active' | 'inactive';
 }
 
-/** Fallback using the official MRIST department list */
-const fallbackDepartments: DepartmentInfo[] = MRIST.departments.map((d, i) => ({
+const fallbackDepartments: DepartmentInfo[] = MRIST.departments.map((d) => ({
   _id:         `mrist-dept-${d.code.toLowerCase()}`,
   code:        d.code,
   name:        d.name,
@@ -27,7 +26,7 @@ export const departmentService = {
     try {
       const response = await publicAxios.get<ApiResponse<DepartmentInfo[]>>('/departments/public');
       const data = response.data.data;
-      // If backend has no departments yet, fall back to config
+      
       if (!data || data.length === 0) return fallbackDepartments;
       return data;
     } catch {

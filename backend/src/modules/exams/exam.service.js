@@ -5,14 +5,13 @@ import AcademicSession from "../academicSessions/academicSession.model.js";
 import ApiError from "../../utils/ApiError.js";
 import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination.js";
 
-// ── Status transition map ───────────────────────────────────────────────────
 const EXAM_TRANSITIONS = {
   draft:     ["scheduled", "cancelled"],
   scheduled: ["ongoing", "draft", "cancelled"],
   ongoing:   ["completed", "cancelled"],
   completed: ["published"],
-  published: [],    // terminal — use revision flow for corrections
-  cancelled: [],    // terminal
+  published: [],    
+  cancelled: [],    
 };
 
 const examService = {
@@ -20,7 +19,6 @@ const examService = {
   async createExam(data, adminId) {
     const { departmentId, semesterId, sessionId, name, type, description, startDate, endDate, notes, status } = data;
 
-    // Resolve activeDeptId if missing from frontend form
     let activeDeptId = departmentId;
     if (!activeDeptId) {
       const firstDept = await Department.findOne({ status: "active" }).lean();
@@ -108,7 +106,6 @@ const examService = {
       throw new ApiError(400, `Cannot edit a ${exam.examStatus} exam`, "BUSINESS_RULE_VIOLATION");
     }
 
-    // Map properties from incoming client data to db model properties
     const updatePayload = { ...data };
     if (data.type !== undefined) {
       updatePayload.examType = data.type;

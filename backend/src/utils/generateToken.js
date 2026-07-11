@@ -15,9 +15,6 @@ const buildPayload = ({ authId, entityType, entityId }) => ({
   entityId: entityId.toString(),
 });
 
-/**
- * Generate a short-lived access token (15m default).
- */
 export const generateAccessToken = ({ authId, entityType, entityId }) => {
   return jwt.sign(
     buildPayload({ authId, entityType, entityId }),
@@ -26,9 +23,6 @@ export const generateAccessToken = ({ authId, entityType, entityId }) => {
   );
 };
 
-/**
- * Generate a long-lived refresh token (7d default).
- */
 export const generateRefreshToken = ({ authId, entityType, entityId }) => {
   return jwt.sign(
     buildPayload({ authId, entityType, entityId }),
@@ -37,16 +31,10 @@ export const generateRefreshToken = ({ authId, entityType, entityId }) => {
   );
 };
 
-/**
- * Verify an access token. Throws JsonWebTokenError on failure.
- */
 export const verifyAccessToken = (token) => {
   return jwt.verify(token, env.JWT_SECRET);
 };
 
-/**
- * Verify a refresh token. Throws JsonWebTokenError on failure.
- */
 export const verifyRefreshToken = (token) => {
   return jwt.verify(token, env.JWT_REFRESH_SECRET);
 };

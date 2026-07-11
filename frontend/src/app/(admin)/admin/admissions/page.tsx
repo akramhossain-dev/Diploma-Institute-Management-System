@@ -15,7 +15,6 @@ export default function AdmissionsReviewPage() {
   const { data: applications = [], isLoading } = useAdminAdmissionsReview();
   const [statusFilter, setStatusFilter] = useState<string>('');
 
-  // Filter application rows
   const filteredApps = React.useMemo(() => {
     if (!statusFilter) return applications;
     return applications.filter((app) => app.status === statusFilter);
@@ -67,7 +66,7 @@ export default function AdmissionsReviewPage() {
         description="Verify online applicant credentials, SSC transcripts, and approve/reject applications."
       />
 
-      {/* Category filters */}
+      {}
       <div className="flex gap-2 mb-4">
         <Button variant={statusFilter === '' ? 'default' : 'outline'} size="sm" onClick={() => setStatusFilter('')}>
           All Application

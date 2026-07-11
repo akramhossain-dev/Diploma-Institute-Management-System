@@ -19,9 +19,8 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
-// ── PUBLIC: Online admission application (no auth required) ───────────────
 // Comment out authenticate + authorizeEntity to make it fully public,
-// or add them to require a specific entity type to submit applications.
+
 router.post(
   "/",
   createAdmissionValidation,
@@ -29,7 +28,6 @@ router.post(
   admissionController.create
 );
 
-// ── ADMIN: List + detail + management ────────────────────────────────────
 router.get(
   "/",
   authenticate, authorizeEntity("admin"),
@@ -43,7 +41,6 @@ router.get(
   admissionController.getById
 );
 
-// Update basic info (pending/reviewed states only)
 router.patch(
   "/:id",
   authenticate, authorizeEntity("admin"),
@@ -51,7 +48,6 @@ router.patch(
   admissionController.update
 );
 
-// ── Status transitions ────────────────────────────────────────────────────
 router.patch(
   "/:id/review",
   authenticate, authorizeEntity("admin"),
@@ -80,7 +76,6 @@ router.patch(
   admissionController.cancel
 );
 
-// ── Explicit convert to student (admin only, approved admissions only) ────
 router.post(
   "/:id/convert-to-student",
   authenticate, authorizeEntity("admin"),

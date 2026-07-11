@@ -35,7 +35,7 @@ export const studentAttendanceService = {
     try {
       const response = await studentAxios.get<ApiResponse<StudentAttendanceSummary>>('/attendance/my-summary');
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Student Service] GET /attendance/my-summary failed. Resolving metrics mock.');
       return mockSummary;
     }
@@ -45,7 +45,7 @@ export const studentAttendanceService = {
     try {
       const response = await studentAxios.get<ApiResponse<StudentAttendanceHistoryItem[]>>('/attendance/my-history');
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Student Service] GET /attendance/my-history failed. Resolving log history.');
       return [...mockHistory];
     }

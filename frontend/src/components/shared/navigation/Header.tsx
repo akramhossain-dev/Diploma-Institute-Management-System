@@ -18,7 +18,7 @@ export function Header({ panelTitle, breadcrumb }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-14 w-full items-center justify-between border-b border-[#E2E8F0] bg-white px-4 shadow-[0_1px_3px_rgba(15,23,42,0.04)]">
       <div className="flex items-center gap-3">
-        {/* Mobile menu trigger */}
+        {}
         <Button
           variant="ghost"
           size="icon-sm"
@@ -28,7 +28,7 @@ export function Header({ panelTitle, breadcrumb }: HeaderProps) {
           <LucideIcon name="Menu" size={18} />
         </Button>
 
-        {/* Desktop sidebar toggle — shown only when sidebar is collapsed */}
+        {}
         {!sidebarOpen && (
           <Button
             variant="ghost"
@@ -40,7 +40,7 @@ export function Header({ panelTitle, breadcrumb }: HeaderProps) {
           </Button>
         )}
 
-        {/* Title + optional breadcrumb */}
+        {}
         <div className="flex flex-col">
           {breadcrumb && (
             <span className="text-[10px] text-[#94A3B8] leading-none mb-0.5">{breadcrumb}</span>
@@ -51,20 +51,20 @@ export function Header({ panelTitle, breadcrumb }: HeaderProps) {
         </div>
       </div>
 
-      {/* Right-side actions */}
+      {}
       <div className="flex items-center gap-1.5">
-        {/* Notification bell */}
+        {}
         <Button
           variant="ghost"
           size="icon-sm"
           className="relative text-[#94A3B8] hover:text-[#334155] hover:bg-[#F1F5F9]"
         >
           <LucideIcon name="Bell" size={17} />
-          {/* Notification dot */}
+          {}
           <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-[#1D4ED8] ring-2 ring-white" />
         </Button>
 
-        {/* Help */}
+        {}
         <Button
           variant="ghost"
           size="icon-sm"

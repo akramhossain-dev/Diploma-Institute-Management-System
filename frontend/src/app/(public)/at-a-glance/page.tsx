@@ -13,7 +13,7 @@ export default function AtAGlancePage() {
 
   return (
     <main className="min-h-screen">
-      {/* Hero Banner */}
+      {}
       <section className="bg-[#0F172A] py-14 px-4">
         <div className="mx-auto max-w-4xl text-center">
           <div className="inline-flex items-center gap-2 bg-[#1D4ED8]/20 border border-[#1D4ED8]/30 text-[#93C5FD] text-xs font-semibold px-3 py-1 rounded-full mb-4">
@@ -28,7 +28,7 @@ export default function AtAGlancePage() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-14 space-y-14">
 
-        {/* Quick Stats Grid */}
+        {}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-6 text-center">Quick Facts</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -51,7 +51,7 @@ export default function AtAGlancePage() {
           </div>
         </section>
 
-        {/* Departments / Technologies */}
+        {}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-6">Diploma Technologies Offered</h2>
           <div className="overflow-x-auto rounded-xl border">
@@ -82,7 +82,7 @@ export default function AtAGlancePage() {
           </div>
         </section>
 
-        {/* Facilities */}
+        {}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-6">Campus Facilities</h2>
           <div className="overflow-x-auto rounded-xl border">
@@ -125,7 +125,7 @@ export default function AtAGlancePage() {
           </div>
         </section>
 
-        {/* Clubs */}
+        {}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-6">Student Clubs & Activities</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -140,7 +140,7 @@ export default function AtAGlancePage() {
           </div>
         </section>
 
-        {/* CTA */}
+        {}
         <section className="bg-gradient-to-r from-[#1D4ED8] to-[#1E40AF] rounded-xl p-8 text-center text-white">
           <h2 className="text-2xl font-bold mb-3">Start Your Journey at MRIST</h2>
           <p className="text-[#BFDBFE] text-sm mb-6 max-w-md mx-auto">

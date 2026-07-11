@@ -5,8 +5,8 @@ export type DayOfWeek = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursda
 export interface RoutineSlot {
   _id: string;
   day: DayOfWeek;
-  startTime: string; // e.g. "09:00"
-  endTime: string; // e.g. "10:00"
+  startTime: string; 
+  endTime: string; 
   departmentId: string;
   departmentName?: string;
   semesterId: string;

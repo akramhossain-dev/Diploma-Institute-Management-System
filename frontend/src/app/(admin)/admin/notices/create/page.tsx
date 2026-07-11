@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { FileUploader } from '@/components/upload/FileUploader';
 import { useUiStore } from '@/store/ui/uiStore';
 import { useCreateAdminNotice } from '@/hooks/admin/useAdminNotices';
-import { NoticeFormInput, noticeFormSchema } from '@/types/admin/notice-admin.types';
+import { noticeFormSchema } from '@/types/admin/notice-admin.types';
 
 export default function CreateNoticePage() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function CreateNoticePage() {
       await createMutation.mutateAsync(payload);
       addToast('Notice published successfully', 'success');
       router.push('/admin/notices');
-    } catch (err) {
+    } catch {
       addToast('Failed to compose notice circular.', 'error');
     }
   };
@@ -118,7 +118,7 @@ export default function CreateNoticePage() {
               </div>
             </div>
 
-            {/* Document attachment loader */}
+            {}
             <div className="space-y-2 pt-2 border-t">
               <label className="text-sm font-semibold block">Attach document flyers (PDF only)</label>
               {attachmentUrl ? (

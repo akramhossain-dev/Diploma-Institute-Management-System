@@ -33,16 +33,14 @@ const hashToken = (token) => crypto.createHash("sha256").update(token).digest("h
  * @param {string}         opts.entityType    - 'student' | 'teacher' | 'accountant' | 'admin'
  */
 export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entityType }) => {
-  // ── Shared token-pair builder ─────────────────────────────────────────────
+  
   const issueTokens = (authId, entityId) => ({
     accessToken: generateAccessToken({ authId, entityType, entityId }),
     refreshToken: generateRefreshToken({ authId, entityType, entityId }),
   });
 
   return {
-    // ────────────────────────────────────────────────────────────────────────
-    // LOGIN
-    // ────────────────────────────────────────────────────────────────────────
+
     async login(email, password) {
       // 1. Find auth record — explicitly select passwordHash (hidden by default)
       const authRecord = await AuthModel
@@ -54,18 +52,15 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
         throw new ApiError(401, "Invalid email or password", "INVALID_CREDENTIALS");
       }
 
-      // 2. Check account is active
       if (!authRecord.isActive) {
         throw new ApiError(403, "Your account has been deactivated. Contact admin.", "ACCOUNT_INACTIVE");
       }
 
-      // 3. Verify password
       const isMatch = await comparePassword(password, authRecord.passwordHash);
       if (!isMatch) {
         throw new ApiError(401, "Invalid email or password", "INVALID_CREDENTIALS");
       }
 
-      // 4. Load entity profile
       const entityId = authRecord[entityIdField];
       const profile = await EntityModel.findById(entityId).lean();
 
@@ -73,7 +68,6 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
         throw new ApiError(500, "Entity profile not found", "PROFILE_NOT_FOUND");
       }
 
-      // 5. Generate tokens
       const { accessToken, refreshToken } = issueTokens(authRecord._id, entityId);
 
       // 6. Persist HASHED refresh token + update lastLoginAt
@@ -90,18 +84,12 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
       };
     },
 
-    // ────────────────────────────────────────────────────────────────────────
-    // LOGOUT
-    // ────────────────────────────────────────────────────────────────────────
     async logout(authId) {
       await AuthModel.findByIdAndUpdate(authId, {
         refreshToken: null,
       });
     },
 
-    // ────────────────────────────────────────────────────────────────────────
-    // REFRESH TOKEN
-    // ────────────────────────────────────────────────────────────────────────
     async refresh(refreshToken) {
       // 1. Verify the refresh token signature and expiry
       let decoded;
@@ -111,7 +99,6 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
         throw new ApiError(401, "Invalid or expired refresh token", "INVALID_TOKEN");
       }
 
-      // 2. Confirm decoded entityType matches this service's entity
       if (decoded.entityType !== entityType) {
         throw new ApiError(401, "Token entity mismatch", "INVALID_TOKEN");
       }
@@ -136,7 +123,6 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
       authRecord.refreshToken = hashToken(tokens.refreshToken);
       await authRecord.save();
 
-      // Fetch and sanitize profile for frontend context preservation
       const profile = await EntityModel.findById(entityId).lean();
       const sanitizedProfile = profile ? sanitizeProfile(profile) : null;
 
@@ -147,9 +133,8 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
       };
     },
 
-    // ────────────────────────────────────────────────────────────────────────
     // GET ME (load profile for currently authenticated entity)
-    // ────────────────────────────────────────────────────────────────────────
+    
     async getMe(entityId) {
       const profile = await EntityModel.findById(entityId).lean();
       if (!profile) {
@@ -158,9 +143,6 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
       return { entityType, profile: sanitizeProfile(profile) };
     },
 
-    // ────────────────────────────────────────────────────────────────────────
-    // CHANGE PASSWORD
-    // ────────────────────────────────────────────────────────────────────────
     async changePassword(authId, currentPassword, newPassword) {
       const authRecord = await AuthModel
         .findById(authId)
@@ -170,7 +152,6 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
         throw new ApiError(404, "Auth record not found", "NOT_FOUND");
       }
 
-      // Verify current password
       const isMatch = await comparePassword(currentPassword, authRecord.passwordHash);
       if (!isMatch) {
         throw new ApiError(401, "Current password is incorrect", "INVALID_CREDENTIALS");
@@ -179,7 +160,7 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
       // Hash new password and invalidate all refresh tokens
       authRecord.passwordHash = await hashPassword(newPassword);
       authRecord.passwordChangedAt = new Date();
-      authRecord.refreshToken = null; // force re-login
+      authRecord.refreshToken = null; 
       authRecord.mustChangePassword = false;
 
       await authRecord.save();
@@ -187,10 +168,6 @@ export const createAuthService = ({ AuthModel, EntityModel, entityIdField, entit
   };
 };
 
-// ── Internal helper ───────────────────────────────────────────────────────
-/**
- * Strip any sensitive fields from entity profile before returning to client.
- */
 const sanitizeProfile = (profile) => {
   const { passwordHash, refreshToken, __v, ...safe } = profile;
   return safe;

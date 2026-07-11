@@ -41,7 +41,7 @@ export function PublicNavbar() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand */}
+        {}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1D4ED8] shadow-[0_0_12px_rgba(29,78,216,0.25)] transition-shadow group-hover:shadow-[0_0_16px_rgba(29,78,216,0.4)]">
             <span className="text-[12px] font-black text-white tracking-tight">M</span>
@@ -52,7 +52,7 @@ export function PublicNavbar() {
           </div>
         </Link>
 
-        {/* Desktop nav */}
+        {}
         <nav className="hidden md:flex items-center gap-7" ref={dropdownRef}>
           {publicNavigation.map((item) => {
             const isActive = pathname === item.route || (item.children && item.children.some(c => pathname === c.route));
@@ -119,7 +119,7 @@ export function PublicNavbar() {
           })}
         </nav>
 
-        {/* Desktop CTAs */}
+        {}
         <div className="hidden md:flex items-center gap-2.5">
           <Link href="/admission">
             <Button variant="outline" size="sm" className="font-semibold">
@@ -133,7 +133,7 @@ export function PublicNavbar() {
           </Link>
         </div>
 
-        {/* Mobile */}
+        {}
         <div className="flex md:hidden items-center gap-2">
           <Link href="/login">
             <Button size="sm" className="h-8 text-xs font-semibold">Login</Button>
@@ -144,7 +144,7 @@ export function PublicNavbar() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {}
       {mobileOpen && (
         <div className="md:hidden border-t border-border bg-white px-4 py-4 space-y-1 animate-fade-in-up">
           {publicNavigation.map((item) => {

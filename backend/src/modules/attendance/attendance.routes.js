@@ -24,7 +24,6 @@ const validateStudentId = [
   handleValidationErrors,
 ];
 
-// ── Attendance Sessions ────────────────────────────────────────────────────
 // POST /api/attendance/sessions — teacher or admin marks attendance
 router.post(
   "/sessions",
@@ -35,7 +34,6 @@ router.post(
   attendanceController.createSession
 );
 
-// GET /api/attendance/summary — admin-level aggregate overview
 router.get(
   "/summary",
   authenticate,
@@ -90,8 +88,6 @@ router.patch(
   attendanceController.finalizeSession
 );
 
-// ── Student-specific endpoints ─────────────────────────────────────────────
-// GET /api/attendance/students/:studentId — student or admin fetches records
 router.get(
   "/students/:studentId",
   authenticate,
@@ -103,7 +99,6 @@ router.get(
   attendanceController.getStudentAttendance
 );
 
-// GET /api/attendance/summary/students/:studentId — percentage per course
 router.get(
   "/summary/students/:studentId",
   authenticate,

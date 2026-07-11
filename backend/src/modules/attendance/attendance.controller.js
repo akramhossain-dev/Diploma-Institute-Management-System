@@ -40,19 +40,16 @@ const attendanceController = {
     return successResponse(res, { statusCode: 200, message: "Attendance session finalized and locked", data: session });
   }),
 
-  // GET /api/attendance/students/:studentId
   getStudentAttendance: asyncHandler(async (req, res) => {
     const { records, pagination } = await attendanceService.getStudentAttendance(req.params.studentId, req.query);
     return successResponse(res, { statusCode: 200, message: "Student attendance records retrieved", data: records, pagination });
   }),
 
-  // GET /api/attendance/summary/students/:studentId
   getStudentSummary: asyncHandler(async (req, res) => {
     const summary = await attendanceService.getStudentAttendanceSummary(req.params.studentId, req.query);
     return successResponse(res, { statusCode: 200, message: "Student attendance summary retrieved", data: summary });
   }),
 
-  // GET /api/attendance/summary — admin-level aggregate across all departments
   getAdminSummary: asyncHandler(async (req, res) => {
     const summary = await attendanceService.getAdminAttendanceSummary(req.query);
     return successResponse(res, { statusCode: 200, message: "Attendance summary retrieved", data: summary });

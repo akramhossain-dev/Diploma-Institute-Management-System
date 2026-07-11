@@ -29,8 +29,7 @@ const DAYS: DayOfWeek[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday
 export default function RoutineManagementPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
-  const { data: slots = [], isLoading } = useRoutine();
+  const { data: slots = [] } = useRoutine();
   const { data: teachers = [] } = useAdminTeachers();
   const { data: departments = [] } = useAdminDepartments();
   const { data: semesters = [] } = useAdminSemesters();
@@ -40,16 +39,13 @@ export default function RoutineManagementPage() {
   const updateMutation = useUpdateRoutine();
   const deleteMutation = useDeleteRoutine();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<RoutineSlot | null>(null);
 
-  // Filter states
   const [deptFilter, setDeptFilter] = useState('');
   const [semesterFilter, setSemesterFilter] = useState('');
 
-  // Form setup
   const {
     register,
     handleSubmit,
@@ -104,7 +100,7 @@ export default function RoutineManagementPage() {
         addToast('Class schedule slot added successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please try again.', 'error');
     }
   };
@@ -115,12 +111,11 @@ export default function RoutineManagementPage() {
       await deleteMutation.mutateAsync(selectedSlot._id);
       addToast('Routine entry removed successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed. Please try again.', 'error');
     }
   };
 
-  // Filter slots dynamically
   const filteredSlots = React.useMemo(() => {
     return slots.filter((slot) => {
       const matchDept = !deptFilter || slot.departmentId === deptFilter;
@@ -137,7 +132,7 @@ export default function RoutineManagementPage() {
         action={<Button onClick={handleOpenCreate}>Add Schedule Slot</Button>}
       />
 
-      {/* Routine filters */}
+      {}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 max-w-xl">
         <div className="space-y-1">
           <label className="text-xs font-semibold text-muted-foreground uppercase">Filter Technology</label>
@@ -172,7 +167,7 @@ export default function RoutineManagementPage() {
         </div>
       </div>
 
-      {/* Weekly Schedule Grid Layout */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         {DAYS.map((day) => {
           const daySlots = filteredSlots.filter((slot) => slot.day === day);
@@ -215,7 +210,7 @@ export default function RoutineManagementPage() {
         })}
       </div>
 
-      {/* Form Dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

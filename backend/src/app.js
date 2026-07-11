@@ -12,7 +12,6 @@ import routes from "./routes/index.js";
 
 const app = express();
 
-// ── Security ──────────────────────────────────────────────────────────────
 app.use(helmet());
 
 app.use(
@@ -24,10 +23,9 @@ app.use(
   })
 );
 
-// ── Scoped Rate Limiting ──────────────────────────────────────────────────
 const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 1000,                // Global rate limit of 1000 requests per 15 minutes
+  windowMs: 15 * 60 * 1000, 
+  max: 1000,                
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -38,7 +36,7 @@ const globalLimiter = rateLimit({
 });
 
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000, 
   max: 50,                  // Stricter limit to prevent brute force attacks on auth endpoints
   standardHeaders: true,
   legacyHeaders: false,
@@ -53,16 +51,13 @@ const authLimiter = rateLimit({
 app.use("/api/auth", authLimiter);
 app.use("/api", globalLimiter);
 
-// ── Body Parsing ──────────────────────────────────────────────────────────
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 app.use(csrfProtection);
 
-// ── Request Logging ───────────────────────────────────────────────────────
 app.use(requestLogger);
 
-// ── Health Check ──────────────────────────────────────────────────────────
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
@@ -72,13 +67,10 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// ── API Routes ────────────────────────────────────────────────────────────
 app.use("/api", routes);
 
-// ── 404 Handler ───────────────────────────────────────────────────────────
 app.use(notFound);
 
-// ── Global Error Handler (must be last) ──────────────────────────────────
 app.use(errorHandler);
 
 export default app;

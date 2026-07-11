@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { FileUploader } from '@/components/upload/FileUploader';
 import { useUiStore } from '@/store/ui/uiStore';
 import { useAdminNotice, useUpdateAdminNotice } from '@/hooks/admin/useAdminNotices';
-import { NoticeFormInput, noticeFormSchema } from '@/types/admin/notice-admin.types';
+import { noticeFormSchema } from '@/types/admin/notice-admin.types';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function EditNoticePage() {
@@ -58,7 +58,7 @@ export default function EditNoticePage() {
       await updateMutation.mutateAsync({ id, data: payload });
       addToast('Notice updated successfully', 'success');
       router.push('/admin/notices');
-    } catch (err) {
+    } catch {
       addToast('Failed to update notice circular.', 'error');
     }
   };
@@ -140,7 +140,7 @@ export default function EditNoticePage() {
                 </div>
               </div>
 
-              {/* Attachment replacement uploader */}
+              {}
               <div className="space-y-2 pt-2 border-t">
                 <label className="text-sm font-semibold block">Attach document flyers (PDF only)</label>
                 {attachmentUrl ? (

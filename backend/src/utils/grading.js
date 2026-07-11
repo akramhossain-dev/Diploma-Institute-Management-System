@@ -1,23 +1,4 @@
-/**
- * Grading Utility — Phase 7
- *
- * Centralized, reusable grade calculation logic.
- * Follows a Bangladesh BTEB-style diploma grading scale by default.
- *
- * Future-readiness:
- *   - gradeScale can be loaded from InstituteSettings (Phase 5) to make it
- *     configurable per institute without touching this utility.
- *   - Pass through a custom gradeScale array to override defaults.
- *
- * Default scale (BTEB Diploma standard):
- *   ≥ 80  → A+  (4.0)
- *   ≥ 70  → A   (3.5)
- *   ≥ 60  → A-  (3.0)
- *   ≥ 50  → B   (2.5)
- *   ≥ 40  → C   (2.0)
- *   ≥ 33  → D   (1.0)
- *    < 33  → F   (0.0)
- */
+
 
 export const DEFAULT_GRADE_SCALE = [
   { minPercent: 80, letterGrade: "A+", gradePoint: 4.0 },
@@ -37,7 +18,7 @@ export const DEFAULT_GRADE_SCALE = [
  */
 export function getGradeInfo(percentage, gradeScale = DEFAULT_GRADE_SCALE) {
   const grade = gradeScale.find((g) => percentage >= g.minPercent);
-  return grade ?? gradeScale[gradeScale.length - 1];   // fallback → F
+  return grade ?? gradeScale[gradeScale.length - 1];   
 }
 
 /**
@@ -56,7 +37,7 @@ export function getGradeInfo(percentage, gradeScale = DEFAULT_GRADE_SCALE) {
  */
 export function computeCourseResult(obtainedMarks, fullMarks, passMarks, gradeScale = DEFAULT_GRADE_SCALE) {
   const percentage = fullMarks > 0
-    ? Math.round((obtainedMarks / fullMarks) * 10000) / 100  // 2 decimal places
+    ? Math.round((obtainedMarks / fullMarks) * 10000) / 100  
     : 0;
 
   const passFailStatus = obtainedMarks >= passMarks ? "pass" : "fail";
@@ -110,7 +91,6 @@ export function computeExamSummary(courseResults, gradeScale = DEFAULT_GRADE_SCA
     ? Math.round((totalMarksObtained / totalFullMarks) * 10000) / 100
     : 0;
 
-  // Weighted GPA: sum(gradePoint * fullMarks) / totalFullMarks
   const weightedGpaSum = courseResults.reduce((s, r) => s + r.gradePoint * r.fullMarks, 0);
   const gpa = totalFullMarks > 0
     ? Math.round((weightedGpaSum / totalFullMarks) * 100) / 100

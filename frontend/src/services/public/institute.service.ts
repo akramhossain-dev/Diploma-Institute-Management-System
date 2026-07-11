@@ -15,7 +15,6 @@ export interface InstituteInfo {
   vision: string;
 }
 
-/** Fallback using the official MRIST config */
 const fallbackInfo: InstituteInfo = {
   name:          MRIST.fullName,
   code:          MRIST.shortName,

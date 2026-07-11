@@ -46,7 +46,7 @@ export default function StudentDashboardPage() {
         description="Welcome back! Verify attendance indexes, outstanding dues, results records, and today's schedule calendar."
       />
 
-      {/* Summary Cards */}
+      {}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8 animate-in fade-in-50 duration-300">
         <MetricCard
           title="Attendance Rate"
@@ -72,7 +72,7 @@ export default function StudentDashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Classes Routines snapshot */}
+        {}
         <div className="lg:col-span-2 space-y-6">
           <Card className="border shadow-md">
             <CardHeader className="bg-muted/10 border-b pb-4">

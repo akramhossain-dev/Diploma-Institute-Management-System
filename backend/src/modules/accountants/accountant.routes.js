@@ -18,14 +18,11 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
-// ── Self-access ───────────────────────────────────────────────────────────
 router.get("/me", authenticate, authorizeEntity("accountant"), accountantController.getMe);
 
-// ── Admin: list accountants ───────────────────────────────────────────────
 router.get("/",    authenticate, authorizeEntity("admin"), accountantController.getAll);
 router.get("/:id", authenticate, authorizeEntity("admin"), validateMongoId, accountantController.getById);
 
-// ── Admin: mutations ──────────────────────────────────────────────────────
 router.post(  "/",           authenticate, authorizeEntity("admin"), createAccountantValidation,      handleValidationErrors, accountantController.create);
 router.patch( "/:id",        authenticate, authorizeEntity("admin"), validateMongoId, updateAccountantValidation,      handleValidationErrors, accountantController.update);
 router.patch( "/:id/status", authenticate, authorizeEntity("admin"), validateMongoId, updateAccountantStatusValidation, handleValidationErrors, accountantController.updateStatus);

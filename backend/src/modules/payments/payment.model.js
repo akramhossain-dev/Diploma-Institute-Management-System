@@ -36,11 +36,9 @@ const paymentSchema = new mongoose.Schema(
   {
     studentId: { type: ObjectId, ref: "Student", required: [true, "Student is required"] },
 
-    // ── Collector (accountant or admin) ───────────────────────────────────
     collectedByAccountantId: { type: ObjectId, ref: "Accountant", default: null },
     collectedByAdminId:      { type: ObjectId, ref: "Admin",      default: null },
 
-    // ── Transaction details ───────────────────────────────────────────────
     paymentDate: { type: Date, required: [true, "Payment date is required"] },
     paymentMethod: {
       type: String,
@@ -49,11 +47,9 @@ const paymentSchema = new mongoose.Schema(
     },
     transactionReference: { type: String, trim: true, default: null },
 
-    // ── Amounts ───────────────────────────────────────────────────────────
     totalAmount: { type: Number, required: [true, "Total amount is required"], min: 0.01 },
     currency:    { type: String, default: "BDT" },
 
-    // ── Breakdown ─────────────────────────────────────────────────────────
     paymentItems: {
       type:     [paymentItemSchema],
       required: [true],
@@ -63,14 +59,12 @@ const paymentSchema = new mongoose.Schema(
       },
     },
 
-    // ── Status ────────────────────────────────────────────────────────────
     paymentStatus: {
       type:    String,
       enum:    ["completed", "reversed", "refunded", "cancelled"],
       default: "completed",
     },
 
-    // ── Reversal audit ────────────────────────────────────────────────────
     reversedAt:    { type: Date,   default: null },
     reversalReason: { type: String, trim: true, default: null },
     reversedByAdminId: { type: ObjectId, ref: "Admin", default: null },

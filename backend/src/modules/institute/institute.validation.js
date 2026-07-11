@@ -41,5 +41,4 @@ export const createSettingsValidation = [
     .isIn(["4.0", "5.0", "letter", "percentage"]).withMessage("Invalid grading scale"),
 ];
 
-// Update uses same rules — all fields optional
 export const updateSettingsValidation = createSettingsValidation.map((rule) => rule);

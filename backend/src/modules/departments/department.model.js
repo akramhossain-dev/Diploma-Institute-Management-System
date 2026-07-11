@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
 
-/**
- * Department — institute academic department (e.g. CST, EET, Civil)
- * Referenced by: students, teachers, courses, batches, notices
- */
 const departmentSchema = new mongoose.Schema(
   {
     name: {
@@ -32,7 +28,7 @@ const departmentSchema = new mongoose.Schema(
     headTeacherId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
-      default: null,                       // assigned in Phase 4 when teachers are built
+      default: null,                       
     },
     createdByAdminId: {
       type: mongoose.Schema.Types.ObjectId,

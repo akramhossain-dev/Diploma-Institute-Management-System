@@ -5,7 +5,7 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 const departmentService = {
 
   async createDepartment(data, adminId) {
-    // Check uniqueness for name and code
+    
     const [nameTaken, codeTaken] = await Promise.all([
       Department.findOne({ name: { $regex: `^${data.name}$`, $options: "i" } }),
       Department.findOne({ code: data.code.toUpperCase() }),
@@ -59,7 +59,7 @@ const departmentService = {
   },
 
   async updateDepartment(id, data) {
-    // If name is changing, check uniqueness
+    
     if (data.name) {
       const conflict = await Department.findOne({
         name: { $regex: `^${data.name}$`, $options: "i" },

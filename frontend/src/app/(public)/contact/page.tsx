@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main className="min-h-screen">
-      {/* Hero Banner */}
+      {}
       <section className="bg-[#0F172A] py-14 px-4">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">Contact MRIST</h1>
@@ -23,7 +23,7 @@ export default function ContactPage() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Contact Info */}
+          {}
           <div className="space-y-6">
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-6">Get in Touch</h2>
@@ -66,7 +66,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Admission Helpline */}
+            {}
             <div className="bg-[#DBEAFE]/40 border border-[#1D4ED8]/20 rounded-xl p-6">
               <h3 className="text-base font-bold text-[#1D4ED8] mb-2 flex items-center gap-2">
                 <Megaphone className="h-5 w-5 shrink-0" /> Admission Helpline
@@ -81,7 +81,7 @@ export default function ContactPage() {
               <p className="text-xs text-muted-foreground">Available: 9 AM – 5 PM, Sun–Thu</p>
             </div>
 
-            {/* Social Links */}
+            {}
             <div className="bg-card border rounded-xl p-5 space-y-3">
               <h3 className="text-base font-bold text-foreground">Follow Us</h3>
               <div className="flex gap-3">
@@ -105,9 +105,9 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Map + Contact Form */}
+          {}
           <div className="space-y-6">
-            {/* Map Embed Placeholder */}
+            {}
             <div className="rounded-xl overflow-hidden border h-[320px] bg-[#F1F5F9] flex items-center justify-center">
               <div className="text-center text-muted-foreground p-6">
                 <Map className="h-10 w-10 text-muted-foreground/70 mx-auto mb-3" />
@@ -125,7 +125,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Contact Form */}
+            {}
             <div className="bg-card border rounded-xl p-6 space-y-4">
               <h3 className="text-base font-bold text-foreground">Send a Message</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

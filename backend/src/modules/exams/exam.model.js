@@ -2,13 +2,6 @@ import mongoose from "mongoose";
 
 const { ObjectId } = mongoose.Schema.Types;
 
-/**
- * Exam — an academic examination event.
- *
- * Status machine:
- *   draft → scheduled → ongoing → completed → published
- *   Any non-terminal state → cancelled
- */
 const examSchema = new mongoose.Schema(
   {
     name: {
@@ -21,16 +14,13 @@ const examSchema = new mongoose.Schema(
     },
     description: { type: String, trim: true, default: null },
 
-    // ── Academic context ──────────────────────────────────────────────────
     departmentId:      { type: ObjectId, ref: "Department",      required: [true, "Department is required"] },
     semesterId:        { type: ObjectId, ref: "Semester",        required: [true, "Semester is required"] },
     academicSessionId: { type: ObjectId, ref: "AcademicSession", required: [true, "Academic session is required"] },
 
-    // ── Scheduling window (overall) ───────────────────────────────────────
     startDate: { type: Date, default: null },
     endDate:   { type: Date, default: null },
 
-    // ── Status ────────────────────────────────────────────────────────────
     examStatus: {
       type:    String,
       enum:    ["draft", "scheduled", "ongoing", "completed", "published", "cancelled"],
@@ -38,7 +28,6 @@ const examSchema = new mongoose.Schema(
     },
     publishedAt: { type: Date, default: null },
 
-    // ── Authorship ────────────────────────────────────────────────────────
     createdByAdminId: { type: ObjectId, ref: "Admin", default: null },
     notes:            { type: String, trim: true, default: null },
   },

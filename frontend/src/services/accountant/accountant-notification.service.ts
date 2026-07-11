@@ -10,7 +10,7 @@ let mockNotifications: Notification[] = [
     type: 'success',
     createdAt: '2026-07-09T09:45:00Z',
     read: false,
-    targetLink: '/accountant/payments', // Or other appropriate link if available
+    targetLink: '/accountant/payments', 
   },
   {
     _id: 'not-ac-2',
@@ -46,7 +46,7 @@ export const accountantNotificationService = {
     try {
       const response = await accountantAxios.get<ApiResponse<Notification[]>>('/notifications');
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn('[Accountant Service] GET /notifications failed. Falling back to mock notifications.');
       return [...mockNotifications];
     }
@@ -56,7 +56,7 @@ export const accountantNotificationService = {
     try {
       const response = await accountantAxios.patch<ApiResponse<Notification>>(`/notifications/${id}/read`);
       return response.data.data;
-    } catch (e) {
+    } catch {
       console.warn(`[Accountant Service] PATCH /notifications/${id}/read failed. Modifying mock state.`);
       const idx = mockNotifications.findIndex(n => n._id === id);
       if (idx !== -1) {
@@ -71,7 +71,7 @@ export const accountantNotificationService = {
     try {
       await accountantAxios.post('/notifications/read-all');
       return true;
-    } catch (e) {
+    } catch {
       console.warn('[Accountant Service] POST /notifications/read-all failed. Modifying mock state.');
       mockNotifications = mockNotifications.map(n => ({ ...n, read: true }));
       return true;

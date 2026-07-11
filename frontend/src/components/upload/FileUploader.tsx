@@ -1,14 +1,13 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { LucideIcon } from '../shared/navigation/LucideIcon';
 import { cn } from '@/lib/utils';
 import { adminFileManagerService } from '@/services/admin/file-manager.service';
 
 interface FileUploaderProps {
   onUploadSuccess: (url: string) => void;
-  allowedTypes?: string[]; // e.g. ['image/jpeg', 'image/png', 'application/pdf']
+  allowedTypes?: string[]; 
   maxSizeMB?: number;
   label?: string;
   className?: string;
@@ -47,7 +46,6 @@ export function FileUploader({
       return;
     }
 
-    // 3. Mock file upload progress
     setUploading(true);
     setProgress(0);
 
@@ -62,7 +60,7 @@ export function FileUploader({
     }, 100);
 
     try {
-      // Call real file upload API endpoint
+      
       const uploadedFile = await adminFileManagerService.uploadFile(file);
       clearInterval(interval);
       setProgress(100);
@@ -71,7 +69,7 @@ export function FileUploader({
         setUploading(false);
         onUploadSuccess(uploadedFile.url);
       }, 300);
-    } catch (err) {
+    } catch {
       clearInterval(interval);
       setUploading(false);
       setErrorMessage('Upload failed. Please try again.');

@@ -14,24 +14,21 @@ const { ObjectId } = mongoose.Schema.Types;
  */
 const markSchema = new mongoose.Schema(
   {
-    // ── Core links ────────────────────────────────────────────────────────
+    
     examId:              { type: ObjectId, ref: "Exam",              required: [true] },
     examCourseMappingId: { type: ObjectId, ref: "ExamCourseMapping", required: [true] },
     studentId:           { type: ObjectId, ref: "Student",           required: [true] },
 
-    // ── Denormalized for query efficiency ─────────────────────────────────
     courseId:          { type: ObjectId, ref: "Course",          required: [true] },
     teacherId:         { type: ObjectId, ref: "Teacher",         default: null },
     departmentId:      { type: ObjectId, ref: "Department",      required: [true] },
     semesterId:        { type: ObjectId, ref: "Semester",        required: [true] },
     academicSessionId: { type: ObjectId, ref: "AcademicSession", required: [true] },
 
-    // ── Marks ─────────────────────────────────────────────────────────────
     fullMarks:        { type: Number, required: [true] },
     passMarks:        { type: Number, required: [true] },
     obtainedMarks:    { type: Number, required: [true, "Obtained marks required"], min: 0 },
 
-    // Optional breakdown matching ExamCourseMapping.marksComponents
     componentMarks: [
       {
         component: { type: String, trim: true },
@@ -41,20 +38,17 @@ const markSchema = new mongoose.Schema(
       },
     ],
 
-    // ── Computed grade fields (set by service using grading.js) ───────────
     percentage:     { type: Number, default: 0 },
     gradePoint:     { type: Number, default: 0 },
     letterGrade:    { type: String, default: "F" },
     passFailStatus: { type: String, enum: ["pass", "fail"], default: "fail" },
 
-    // ── Entry lifecycle ───────────────────────────────────────────────────
     marksEntryStatus: {
       type:    String,
       enum:    ["draft", "finalized", "locked"],
       default: "draft",
     },
 
-    // ── Audit trail ───────────────────────────────────────────────────────
     enteredByTeacherId:  { type: ObjectId, ref: "Teacher", default: null },
     enteredByAdminId:    { type: ObjectId, ref: "Admin",   default: null },
     lastUpdatedByType:   { type: String, enum: ["teacher", "admin"], default: null },
@@ -65,7 +59,6 @@ const markSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// One mark per student per exam-course
 markSchema.index(
   { studentId: 1, examCourseMappingId: 1 },
   { unique: true, name: "unique_student_mark_per_mapping" }

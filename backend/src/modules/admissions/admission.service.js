@@ -2,7 +2,7 @@ import Admission from "./admission.model.js";
 import Department from "../departments/department.model.js";
 import Semester from "../semesters/semester.model.js";
 import AcademicSession from "../academicSessions/academicSession.model.js";
-// Models imported directly — does NOT import studentService (entity isolation rule)
+
 import Student from "../students/student.model.js";
 import StudentAuth from "../auth/student/studentAuth.model.js";
 import { hashPassword } from "../../utils/hashHelper.js";
@@ -10,20 +10,16 @@ import { generateStudentId } from "../../utils/generateEntityId.js";
 import ApiError from "../../utils/ApiError.js";
 import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination.js";
 
-// ── Allowed status transitions ──────────────────────────────────────────────
 const ALLOWED_TRANSITIONS = {
   pending:   ["reviewed", "cancelled"],
   reviewed:  ["approved", "rejected", "cancelled"],
-  approved:  ["cancelled"],              // can cancel before conversion
-  rejected:  [],                         // terminal
-  cancelled: [],                         // terminal
+  approved:  ["cancelled"],              
+  rejected:  [],                         
+  cancelled: [],                         
 };
 
 const admissionService = {
 
-  // ────────────────────────────────────────────────────────────────────────
-  // CREATE APPLICATION (can be public-facing for online admissions)
-  // ────────────────────────────────────────────────────────────────────────
   async createAdmission(data) {
     const { desiredDepartmentId, academicSessionId, targetSemesterId } = data;
 
@@ -64,9 +60,6 @@ const admissionService = {
     return admission;
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // LIST with pagination + filters
-  // ────────────────────────────────────────────────────────────────────────
   async getAllAdmissions(query) {
     const { page, limit, skip } = getPaginationParams(query);
     const { admissionStatus, desiredDepartmentId, academicSessionId, admissionSource, search } = query;
@@ -112,9 +105,6 @@ const admissionService = {
     return admission;
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // UPDATE (only allowed on pending/reviewed — not terminal states)
-  // ────────────────────────────────────────────────────────────────────────
   async updateAdmission(id, data) {
     const admission = await Admission.findById(id);
     if (!admission) throw new ApiError(404, "Admission record not found", "NOT_FOUND");
@@ -127,7 +117,6 @@ const admissionService = {
       );
     }
 
-    // Strip status fields — transitions handled by dedicated methods
     const {
       admissionStatus, reviewedByAdminId, reviewedAt, rejectionReason,
       convertedStudentId, convertedAt, convertedByAdminId,
@@ -143,9 +132,6 @@ const admissionService = {
     return updated;
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // STATUS TRANSITIONS
-  // ────────────────────────────────────────────────────────────────────────
   async _transition(id, targetStatus, adminId, extra = {}) {
     const admission = await Admission.findById(id);
     if (!admission) throw new ApiError(404, "Admission record not found", "NOT_FOUND");
@@ -186,11 +172,8 @@ const admissionService = {
     return this._transition(id, "cancelled", adminId);
   },
 
-  // ────────────────────────────────────────────────────────────────────────
-  // CONVERT TO STUDENT
   // Imports Student + StudentAuth models directly — does NOT call studentService
-  // to maintain service isolation while reusing model logic.
-  // ────────────────────────────────────────────────────────────────────────
+
   async convertToStudent(id, adminId, password) {
     const admission = await Admission.findById(id)
       .populate("desiredDepartmentId", "name code")
@@ -213,7 +196,6 @@ const admissionService = {
       throw new ApiError(409, `Student with email '${admission.email}' already exists`, "DUPLICATE_ENTRY");
     }
 
-    // Determine semesterId — use target or default to first semester
     let semesterId = admission.targetSemesterId?._id ?? null;
     if (!semesterId) {
       const firstSem = await Semester.findOne({ number: 1, status: "active" }).lean();
@@ -221,11 +203,9 @@ const admissionService = {
       semesterId = firstSem._id;
     }
 
-    // Auto-generate student ID
     const deptCode  = admission.desiredDepartmentId?.code || "STD";
     const studentId = await generateStudentId(Student, deptCode);
 
-    // Create student profile
     const student = await Student.create({
       studentId,
       fullName:          admission.fullName,
@@ -260,7 +240,6 @@ const admissionService = {
     // Link auth → student
     await Student.findByIdAndUpdate(student._id, { linkedAuthId: studentAuth._id });
 
-    // Mark admission as converted
     admission.convertedStudentId  = student._id;
     admission.convertedAt         = new Date();
     admission.convertedByAdminId  = adminId;

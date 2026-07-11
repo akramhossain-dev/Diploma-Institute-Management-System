@@ -3,9 +3,9 @@ import { z } from 'zod';
 export interface FeeStructure {
   _id: string;
   name: string;
-  departmentId?: string; // Empty means all departments
+  departmentId?: string; 
   departmentName?: string;
-  semesterId?: string; // Empty means all semesters
+  semesterId?: string; 
   semesterName?: string;
   sessionId: string;
   sessionName?: string;

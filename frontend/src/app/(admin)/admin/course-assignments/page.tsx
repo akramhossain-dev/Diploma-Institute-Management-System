@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PageContainer } from '@/components/shared/layout/PageContainer';
@@ -27,7 +27,6 @@ import { CourseAssignment, courseAssignmentSchema } from '@/types/admin/course-a
 export default function CourseAssignmentsPage() {
   const addToast = useUiStore((state) => state.addToast);
 
-  // Queries & Mutations
   const { data: assignments = [], isLoading } = useCourseAssignments();
   const { data: teachers = [], isLoading: teachersLoading } = useAdminTeachers();
   const { data: departments = [], isLoading: deptsLoading } = useAdminDepartments();
@@ -39,24 +38,20 @@ export default function CourseAssignmentsPage() {
   const updateMutation = useUpdateAssignment();
   const deleteMutation = useDeleteAssignment();
 
-  // State management
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState<CourseAssignment | null>(null);
 
-  // Form setup
   const {
     register,
     handleSubmit,
     reset,
     control,
-    setValue,
     formState: { errors },
   } = useForm<any>({
     resolver: zodResolver(courseAssignmentSchema),
   });
 
-  // Watch department selection to dynamically filter courses
   const selectedDept = useWatch({ control, name: 'departmentId' });
 
   const filteredCourses = React.useMemo(() => {
@@ -105,7 +100,7 @@ export default function CourseAssignmentsPage() {
         addToast('Teacher assigned to course successfully', 'success');
       }
       setIsFormOpen(false);
-    } catch (err) {
+    } catch {
       addToast('An error occurred. Please try again.', 'error');
     }
   };
@@ -116,7 +111,7 @@ export default function CourseAssignmentsPage() {
       await deleteMutation.mutateAsync(selectedAssignment._id);
       addToast('Course assignment removed successfully', 'success');
       setIsDeleteOpen(false);
-    } catch (err) {
+    } catch {
       addToast('Deletion failed. Please try again.', 'error');
     }
   };
@@ -129,7 +124,7 @@ export default function CourseAssignmentsPage() {
         data: { status: nextStatus },
       });
       addToast(`Assignment status updated to ${nextStatus}`, 'success');
-    } catch (err) {
+    } catch {
       addToast('Failed to switch status.', 'error');
     }
   };
@@ -185,7 +180,7 @@ export default function CourseAssignmentsPage() {
         searchPlaceholder="Search allocations by teacher name..."
       />
 
-      {/* Form Dialog */}
+      {}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

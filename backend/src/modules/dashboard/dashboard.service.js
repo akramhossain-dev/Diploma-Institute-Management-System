@@ -86,13 +86,12 @@ const dashboardService = {
     const todayAtt  = todayAttendance[0] || { sessions: 0, present: 0, absent: 0, total: 0 };
 
     return {
-      // original format for safety
+      
       people:   { totalStudents, activeStudents, totalTeachers, totalAccountants, totalDepartments, totalCourses },
       academic: { pendingAdmissions, activeNotices, todaysClasses, activeExams, publishedResults, studentsByDept },
       finance:  { ...finance, todaysCollection: todayCol.total, thisMonthCollection: monthCol.total },
       todayAttendance: todayAtt,
 
-      // flat format for frontend mapping
       totalStudents,
       totalTeachers,
       totalDepartments,

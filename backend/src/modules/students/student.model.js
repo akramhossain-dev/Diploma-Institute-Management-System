@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const { ObjectId } = mongoose.Schema.Types;
 
-// ── Reusable sub-schemas ────────────────────────────────────────────────────
 const addressSchema = new mongoose.Schema(
   {
     village:  { type: String, trim: true },
@@ -13,16 +12,11 @@ const addressSchema = new mongoose.Schema(
   { _id: false }
 );
 
-/**
- * Student — entity profile collection.
- * Auth credentials live in student_auth (Phase 2).
- * This collection stores domain/academic/business data only.
- */
 const studentSchema = new mongoose.Schema(
   {
-    // ── Identity ──────────────────────────────────────────────────────────
+    
     studentId: {
-      type: String, trim: true,    // e.g. CST-2024-001 (auto-generated)
+      type: String, trim: true,    
     },
     rollNumber: {
       type: String, trim: true, default: null,
@@ -40,7 +34,7 @@ const studentSchema = new mongoose.Schema(
       type: String, trim: true, default: null,
     },
     photo: {
-      type: String, default: null,               // Cloudinary URL
+      type: String, default: null,               
     },
     gender: {
       type: String, enum: ["Male", "Female", "Other"],
@@ -55,7 +49,6 @@ const studentSchema = new mongoose.Schema(
     },
     nidOrBirthReg: { type: String, trim: true, default: null },
 
-    // ── Academic ──────────────────────────────────────────────────────────
     departmentId: {
       type: ObjectId, ref: "Department", required: [true, "Department is required"],
     },
@@ -74,17 +67,14 @@ const studentSchema = new mongoose.Schema(
     section: { type: String, trim: true, default: null },
     group:   { type: String, trim: true, default: null },
 
-    // Future-ready: courses enrolled by this student
     enrolledCourseIds: [{ type: ObjectId, ref: "Course" }],
 
-    // ── Guardian / Contact ────────────────────────────────────────────────
     guardianName:     { type: String, trim: true, default: null },
     guardianPhone:    { type: String, trim: true, default: null },
     guardianRelation: { type: String, trim: true, default: null },
     presentAddress:   { type: addressSchema, default: null },
     permanentAddress: { type: addressSchema, default: null },
 
-    // ── System ────────────────────────────────────────────────────────────
     linkedAuthId: {
       type: ObjectId, ref: "StudentAuth", default: null,
     },

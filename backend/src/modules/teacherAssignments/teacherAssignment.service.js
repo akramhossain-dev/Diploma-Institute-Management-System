@@ -27,7 +27,6 @@ const teacherAssignmentService = {
     if (!semester) throw new ApiError(404, "Semester not found",         "NOT_FOUND");
     if (!session)  throw new ApiError(404, "Academic session not found", "NOT_FOUND");
 
-    // 2. Consistency: course must belong to the given department + semester
     if (String(course.departmentId) !== String(departmentId)) {
       throw new ApiError(
         400,
@@ -43,7 +42,6 @@ const teacherAssignmentService = {
       );
     }
 
-    // 3. Duplicate active assignment check
     const duplicate = await TeacherAssignment.findOne({
       teacherId,
       courseId,
@@ -111,7 +109,7 @@ const teacherAssignmentService = {
   },
 
   async updateAssignment(id, data) {
-    // Only allow updating non-core fields
+    
     const { teacherId, courseId, departmentId, semesterId, academicSessionId, assignedByAdminId, ...allowedUpdates } = data;
 
     const assignment = await TeacherAssignment.findByIdAndUpdate(

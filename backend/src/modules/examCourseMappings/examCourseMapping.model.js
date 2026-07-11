@@ -15,43 +15,38 @@ const { ObjectId } = mongoose.Schema.Types;
  */
 const examCourseMappingSchema = new mongoose.Schema(
   {
-    // ── Core link ─────────────────────────────────────────────────────────
+    
     examId:   { type: ObjectId, ref: "Exam",   required: [true, "Exam is required"] },
     courseId: { type: ObjectId, ref: "Course", required: [true, "Course is required"] },
 
-    // ── Optional teacher context ───────────────────────────────────────────
     teacherId:              { type: ObjectId, ref: "Teacher",          default: null },
     teacherAssignmentId:    { type: ObjectId, ref: "TeacherAssignment", default: null },
 
-    // ── Denormalized context (aligned with exam context) ──────────────────
     departmentId:      { type: ObjectId, ref: "Department",      required: [true] },
     semesterId:        { type: ObjectId, ref: "Semester",        required: [true] },
     academicSessionId: { type: ObjectId, ref: "AcademicSession", required: [true] },
 
-    // ── Per-course exam scheduling ─────────────────────────────────────────
     examDate:  { type: Date,   default: null },
-    startTime: { type: String, default: null },   // "HH:MM"
-    endTime:   { type: String, default: null },   // "HH:MM"
+    startTime: { type: String, default: null },   
+    endTime:   { type: String, default: null },   
     room:      { type: String, trim: true, default: null },
 
-    // ── Marks configuration ───────────────────────────────────────────────
     fullMarks: {
       type: Number, required: [true, "Full marks is required"], min: 1,
     },
     passMarks: {
       type: Number, required: [true, "Pass marks is required"], min: 0,
     },
-    // Optional breakdown: theory/practical/viva/attendance
+    
     marksComponents: [
       {
-        component: { type: String, trim: true },   // "theory", "practical", "viva"
+        component: { type: String, trim: true },   
         fullMarks:  { type: Number, min: 0 },
         passMarks:  { type: Number, min: 0 },
         _id:        false,
       },
     ],
 
-    // ── Lifecycle ─────────────────────────────────────────────────────────
     status: {
       type:    String,
       enum:    ["active", "inactive", "cancelled"],
@@ -69,7 +64,6 @@ const examCourseMappingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// One course per exam — no duplicates
 examCourseMappingSchema.index(
   { examId: 1, courseId: 1 },
   { unique: true, name: "unique_exam_course_mapping" }

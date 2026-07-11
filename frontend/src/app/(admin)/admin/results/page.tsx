@@ -34,7 +34,7 @@ export default function AdminResultsOverviewPage() {
           : 'Exam results sheet unpublished successfully',
         'success'
       );
-    } catch (err) {
+    } catch {
       addToast('Status toggle failed.', 'error');
     }
   };
@@ -98,7 +98,7 @@ export default function AdminResultsOverviewPage() {
         searchPlaceholder="Search sheets by exam name..."
       />
 
-      {/* Preview Sheet dialog modal */}
+      {}
       {selectedSheet && (
         <Dialog open={isPreviewOpen} onOpenChange={(open) => !open && setIsPreviewOpen(false)}>
           <DialogContent className="sm:max-w-[520px]">
@@ -114,7 +114,7 @@ export default function AdminResultsOverviewPage() {
                 <p><span className="font-semibold">Class GPA average:</span> 3.82</p>
               </div>
 
-              {/* Renders mock roster data logs */}
+              {}
               <Table>
                 <TableHeader>
                   <TableRow>

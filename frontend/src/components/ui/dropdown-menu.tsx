@@ -25,7 +25,6 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ children }) => {
     };
   }, [open]);
 
-  // Clone children to inject state and controls
   return (
     <div className="relative inline-block text-left" ref={containerRef}>
       {React.Children.map(children, (child) => {

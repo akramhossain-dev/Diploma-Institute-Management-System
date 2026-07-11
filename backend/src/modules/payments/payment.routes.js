@@ -9,7 +9,6 @@ import { createPaymentValidation, reversePaymentValidation } from "./payment.val
 const router = Router();
 const validateId = [param("id").isMongoId().withMessage("Invalid payment ID"), handleValidationErrors];
 
-// IMPORTANT: /reverse/:id before /:id to avoid route shadowing
 router.patch(
   "/:id/reverse",
   authenticate, authorizeEntity("admin"),

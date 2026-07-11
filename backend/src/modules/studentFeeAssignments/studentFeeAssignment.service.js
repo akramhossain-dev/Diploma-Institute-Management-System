@@ -6,7 +6,6 @@ import ApiError from "../../utils/ApiError.js";
 import { computeFinalAmount, computeBillingStatus, computeAmountRemaining } from "../../utils/finance.js";
 import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination.js";
 
-// ── Internal: compute + apply finance fields ────────────────────────────────
 function applyFinanceFields(amountDue, discountAmount = 0, waiverAmount = 0, fineAmount = 0, amountPaid = 0) {
   const finalAmount     = computeFinalAmount(amountDue, discountAmount, waiverAmount, fineAmount);
   const amountRemaining = computeAmountRemaining(finalAmount, amountPaid);
@@ -16,7 +15,6 @@ function applyFinanceFields(amountDue, discountAmount = 0, waiverAmount = 0, fin
 
 const studentFeeAssignmentService = {
 
-  // ── Manual assignment (single student, custom or fee-structure-based) ──────
   async createAssignment(data, adminId) {
     const { studentId, feeStructureId, amountDue, discountAmount = 0, waiverAmount = 0, fineAmount = 0 } = data;
 
@@ -47,7 +45,6 @@ const studentFeeAssignmentService = {
     return assignment;
   },
 
-  // ── Bulk assign a fee structure to all matching students ──────────────────
   async bulkAssign(data, adminId) {
     const { feeStructureId, departmentId, semesterId, academicSessionId, dueDate, discountAmount = 0, waiverAmount = 0, fineAmount = 0, notes } = data;
 
@@ -63,7 +60,6 @@ const studentFeeAssignmentService = {
 
     const { finalAmount, amountRemaining, billingStatus } = applyFinanceFields(fs.amount, discountAmount, waiverAmount, fineAmount);
 
-    // bulkWrite with upsert: skip students who already have this assignment
     const bulkOps = students.map((s) => ({
       updateOne: {
         filter: { studentId: s._id, feeStructureId, academicSessionId },
@@ -174,7 +170,6 @@ const studentFeeAssignmentService = {
     const update = { billingStatus: status };
     if (notes) update.notes = notes;
 
-    // If waived, mark amountRemaining = 0 and waiverAmount covers the rest
     if (status === "waived") {
       update.waiverAmount    = assignment.finalAmount - assignment.amountPaid;
       update.finalAmount     = assignment.amountPaid;
@@ -185,7 +180,6 @@ const studentFeeAssignmentService = {
     return updated;
   },
 
-  // ── LEDGER — aggregated finance summary per student ───────────────────────
   async getStudentLedger(studentId, query = {}) {
     const { academicSessionId } = query;
 

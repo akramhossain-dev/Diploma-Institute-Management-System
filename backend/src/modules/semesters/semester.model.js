@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
 
-/**
- * Semester — represents a semester level in the diploma program.
- * e.g. 1st Semester, 2nd Semester … 8th Semester
- *
- * Referenced by: courses, students (currentSemester), results
- */
 const semesterSchema = new mongoose.Schema(
   {
     name: {

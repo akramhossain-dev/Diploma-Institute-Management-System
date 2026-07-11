@@ -18,7 +18,6 @@ const validateMongoId = [
   handleValidationErrors,
 ];
 
-// All routes — admin only
 router.post(
   "/",
   authenticate, authorizeEntity("admin"),
@@ -26,7 +25,6 @@ router.post(
   teacherAssignmentController.create
 );
 
-// Teachers can view their own assignments
 router.get(
   "/",
   authenticate, authorizeEntity("admin", "teacher"),

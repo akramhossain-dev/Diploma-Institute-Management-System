@@ -5,9 +5,6 @@ import authorizeEntity from "../../middlewares/authorizeEntity.js";
 
 const router = Router();
 
-// All audit-log endpoints are admin-only
-
-// GET /api/audit-logs — paginated list with filters
 router.get(
   "/",
   authenticate,
@@ -15,7 +12,6 @@ router.get(
   auditLogController.getAuditLogs
 );
 
-// GET /api/audit-logs/filter-options — distinct modules/actions for UI dropdowns
 router.get(
   "/filter-options",
   authenticate,

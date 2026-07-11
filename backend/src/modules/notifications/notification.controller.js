@@ -4,7 +4,6 @@ import notificationService from "./notification.service.js";
 
 const notificationController = {
 
-  // GET /api/notifications
   getNotifications: asyncHandler(async (req, res) => {
     const { notifications, pagination } = await notificationService.getNotifications(req.query);
     return successResponse(res, {
@@ -15,7 +14,6 @@ const notificationController = {
     });
   }),
 
-  // POST /api/notifications
   createNotification: asyncHandler(async (req, res) => {
     const notification = await notificationService.createNotification(req.body);
     return successResponse(res, {
@@ -25,7 +23,6 @@ const notificationController = {
     });
   }),
 
-  // PATCH /api/notifications/:id/read
   markAsRead: asyncHandler(async (req, res) => {
     const notification = await notificationService.markAsRead(req.params.id);
     return successResponse(res, {
@@ -35,7 +32,6 @@ const notificationController = {
     });
   }),
 
-  // POST /api/notifications/read-all
   markAllAsRead: asyncHandler(async (req, res) => {
     const { recipientType } = req.body;
     const result = await notificationService.markAllAsRead(recipientType);
@@ -46,7 +42,6 @@ const notificationController = {
     });
   }),
 
-  // DELETE /api/notifications/:id
   deleteNotification: asyncHandler(async (req, res) => {
     await notificationService.deleteNotification(req.params.id);
     return successResponse(res, {
@@ -56,7 +51,6 @@ const notificationController = {
     });
   }),
 
-  // GET /api/notifications/unread-count
   getUnreadCount: asyncHandler(async (req, res) => {
     const count = await notificationService.getUnreadCount(req.query.recipientType);
     return successResponse(res, {

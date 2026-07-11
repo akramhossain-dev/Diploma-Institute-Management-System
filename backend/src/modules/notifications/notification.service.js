@@ -4,7 +4,6 @@ import { getPaginationParams, buildPaginationMeta } from "../../utils/pagination
 
 const notificationService = {
 
-  // ── LIST — admin can see all notifications in the system ──────────────────
   async getNotifications(query = {}) {
     const { page, limit, skip } = getPaginationParams(query);
     const { recipientType, read, type } = query;
@@ -26,7 +25,6 @@ const notificationService = {
     return { notifications, pagination: buildPaginationMeta(total, page, limit) };
   },
 
-  // ── CREATE — internal helper called from other services ───────────────────
   async createNotification({ recipientType, recipientId = null, title, message, type = "info", targetLink = null, createdBy = "system" }) {
     const notification = await Notification.create({
       recipientType,
@@ -40,7 +38,6 @@ const notificationService = {
     return notification;
   },
 
-  // ── MARK ONE AS READ ──────────────────────────────────────────────────────
   async markAsRead(id) {
     const notification = await Notification.findByIdAndUpdate(
       id,
@@ -51,7 +48,6 @@ const notificationService = {
     return notification;
   },
 
-  // ── MARK ALL AS READ (for a recipient type) ───────────────────────────────
   async markAllAsRead(recipientType) {
     const filter = { read: false };
     if (recipientType && recipientType !== "all") filter.recipientType = recipientType;
@@ -60,14 +56,12 @@ const notificationService = {
     return { modifiedCount: result.modifiedCount };
   },
 
-  // ── DELETE ────────────────────────────────────────────────────────────────
   async deleteNotification(id) {
     const notification = await Notification.findByIdAndDelete(id);
     if (!notification) throw new ApiError(404, "Notification not found", "NOT_FOUND");
     return notification;
   },
 
-  // ── UNREAD COUNT ──────────────────────────────────────────────────────────
   async getUnreadCount(recipientType) {
     const filter = { read: false };
     if (recipientType && recipientType !== "all") filter.recipientType = recipientType;

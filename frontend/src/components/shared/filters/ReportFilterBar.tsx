@@ -5,17 +5,15 @@ import { Semester } from '@/types/admin/semester.types';
 import Session from '@/types/admin/session.types';
 
 interface ReportFilterBarProps {
-  // Types
+  
   reportTypes?: { value: string; label: string }[];
   selectedReportType?: string;
   onReportTypeChange?: (val: string) => void;
 
-  // Departments
   departments: Department[];
   selectedDept: string;
   onDeptChange: (val: string) => void;
 
-  // Semesters
   semesters: Semester[];
   selectedSem: string;
   onSemChange: (val: string) => void;
@@ -25,13 +23,11 @@ interface ReportFilterBarProps {
   selectedSession: string;
   onSessionChange: (val: string) => void;
 
-  // Date range
   startDate: string;
   onStartDateChange: (val: string) => void;
   endDate: string;
   onEndDateChange: (val: string) => void;
 
-  // Reset
   onClear: () => void;
 }
 
@@ -57,7 +53,7 @@ export function ReportFilterBar({
   return (
     <div className="flex flex-wrap gap-4 items-center justify-between border rounded-lg p-4 mb-6 bg-card">
       <div className="flex flex-wrap gap-4 items-center">
-        {/* Report Type (Optional) */}
+        {}
         {reportTypes && onReportTypeChange && (
           <div className="space-y-1">
             <span className="text-xs font-bold text-muted-foreground">Report Type</span>
@@ -75,7 +71,7 @@ export function ReportFilterBar({
           </div>
         )}
 
-        {/* Department */}
+        {}
         <div className="space-y-1">
           <span className="text-xs font-bold text-muted-foreground">Department</span>
           <select
@@ -92,7 +88,7 @@ export function ReportFilterBar({
           </select>
         </div>
 
-        {/* Semester */}
+        {}
         <div className="space-y-1">
           <span className="text-xs font-bold text-muted-foreground">Semester</span>
           <select
@@ -126,7 +122,7 @@ export function ReportFilterBar({
           </select>
         </div>
 
-        {/* Date Filters */}
+        {}
         <div className="space-y-1">
           <span className="text-xs font-bold text-muted-foreground">Date Range</span>
           <div className="flex gap-2 items-center">
